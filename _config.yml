@@ -1,6 +1,6 @@
 # Site
 name: "Linuxera"
-description: "Linux, Containers and random stuff"
+description: "Linux, Containers and Open Source"
 meta_description: "linux, containers, openshift, kubernetes, k8s, ocp, okd, origin, redhat, centos, operators, controllers, golang, python"
 logo: 'assets/images/logo.png'
 favicon: 'assets/images/logo.png'
