@@ -5,6 +5,7 @@ meta_description: "linux, containers, openshift, kubernetes, k8s, ocp, okd, orig
 logo: 'assets/images/logo.png'
 favicon: 'assets/images/logo.png'
 baseurl: /
+url: "https://linuxera.org"
 google_analytics: 'UA-52346410-3'
 disqus: 'linuxera'
 mailchimp-list: ''
