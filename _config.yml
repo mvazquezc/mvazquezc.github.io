@@ -17,7 +17,7 @@ authors:
     gravatar: aacbe832d9aecb415cf4abcf8d8881cc
     email: ''
     twitter: https://twitter.com/vcmario
-    description: "Systems Engineer working on PaaS and Containers.
+    description: "Systems Engineer working on PaaS and Containers."
 # Plugins
 plugins: 
   - jekyll-paginate
