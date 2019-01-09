@@ -3,7 +3,7 @@ layout: post
 title:  "What is Jekyll"
 author: Mario
 categories: [ Jekyll, tutorial ]
-image: assets/images/11.jpg
+permalink: /something/
 featured: true
 hidden: true
 ---
