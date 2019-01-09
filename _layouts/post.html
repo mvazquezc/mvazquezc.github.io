@@ -30,7 +30,7 @@ post_class: post-template
 					</div>
 					<div class="col-md-10">
 						<a target="_blank" class="link-dark" href="{{ author.web }}">{{ author.display_name }}</a><a target="_blank" href="{{ author.twitter }}" class="btn follow">Follow</a>
-						<span class="author-description">{{ author.description }}</span>						
+						<p><span class="author-description">{{ author.description }}</span></p>
 					</div>
 				</div>				
                 {% endif %}
@@ -40,7 +40,7 @@ post_class: post-template
                                 <!-- New post date added on 09/01/2019 -->
                                 <small><span class="post-date"><time class="post-date" datetime="{{ page.date | date:"%Y-%m-%d" }}">Posted: {{ page.date | date_to_string }}</time></span>
                                 {% if page.last_modified_at %}
-                                (<br><span class="post-date">Last update: <time datetime="{{ page.last_modified_at | date_to_xmlschema }}" itemprop="dateModified">{{ page.last_modified_at | date: "%b %-d, %Y" }}</time></span>)
+                                (<p><span class="post-date">Last update: <time datetime="{{ page.last_modified_at | date_to_xmlschema }}" itemprop="dateModified">{{ page.last_modified_at | date: "%b %-d, %Y" }}</time></span></p>)
                                 {% endif %}
                                 </small>         
 			</div>
