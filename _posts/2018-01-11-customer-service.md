@@ -4,6 +4,7 @@ title:  "What is Jekyll"
 author: Mario
 categories: [ Jekyll, tutorial ]
 featured: true
+permalink: /what-is-jekyll/
 hidden: true
 ---
 
