@@ -1,7 +1,7 @@
 /* 
 Template Name: Mediumish 
 Copyright: Sal, WowThemes.net, https://www.wowthemes.net 
-Version: 1.0.2 
+Version: 1.0.22 
 License: https://www.wowthemes.net/freebies-license/ 
 */
  .mainheading {
@@ -88,7 +88,7 @@ License: https://www.wowthemes.net/freebies-license/
      transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
  .listfeaturedtag .wrapthumbnail {
-     min-height:290px;
+     height:290px;
      flex:0 0 auto;
      height: 100%;
 }
@@ -98,8 +98,6 @@ License: https://www.wowthemes.net/freebies-license/
 }
  .listfeaturedtag .card, .card-footer {
      border: 0;
-}
- .listfeaturedtag:hover {
 }
  .listfeaturedtag .thumbnail {
      background-size:cover;
@@ -245,8 +243,8 @@ License: https://www.wowthemes.net/freebies-license/
 }
  .article-post {
      font-family:Merriweather;
-     font-size:1.2rem;
-     line-height:1.8;
+     font-size:1.1rem;
+     line-height:1.84;
      color:rgba(0,0,0,.8);
 }
  blockquote {
@@ -582,6 +580,10 @@ License: https://www.wowthemes.net/freebies-license/
  iframe {
     max-width:100%;
 }
+.transpdark {    
+    background: rgba(0,0,0,0.75);
+    color: #fff;
+}
  @media (min-width:768px) {
      .jumbotron.fortags {
          margin-bottom:-50px;
@@ -595,17 +597,17 @@ License: https://www.wowthemes.net/freebies-license/
      .jumbotron.fortags .col-md-4 {
          background:rgba(0,0,0,0.75);
          color:#fff;
-         height:350px;
-         margin-left:0;
-         padding-left:0;
-         padding-top:13%;
-    }
-     .jumbotron.fortags .col-md-4 h2 {
-         font-weight:300;
     }
      .jumbotron.fortags .row {
          margin:0;
     }
+}
+.jumbotron.fortags { 
+         margin-top: 3rem;
+         padding:0;
+         border-radius:0;
+         background-image: url(../images/jumbotron.jpg);
+         background-size:cover;
 }
  .jumbotron.fortags a {
      padding: 5px 10px 7px;
