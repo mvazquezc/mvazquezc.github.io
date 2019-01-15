@@ -13,6 +13,8 @@ permalink: /your-permalink/
 hidden: false
 ---
 
+[comment]: <> (Images can be optimized with:  jpegoptim --size=250k tecmint.jpeg)
+
 # Title1
 Your content here.
 
