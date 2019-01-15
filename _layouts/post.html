@@ -46,7 +46,7 @@ post_class: post-template
 			</div>
 
 			<!-- Post Featured Image -->
-			{% if page.image %}<img class="featured-image img-fluid" src="{% if page.image contains "://" %}{{ page.image }}{% else %}{{ page.image | absolute_url }}{% endif %}" alt="{{ page.title }}">{% endif %}
+			{% if page.image %}<img class="featured-image img-fluid" src="{% if page.image contains "://" %}{{ page.image }}{% else %}{{ page.image | absolute_url }}{% endif %}" alt="{{ page.title }}"><small><span class="post-date">Photo by <a href="{{ page.image-author-link }}">{{ page.image-author }}</a> on <a href="{{ page.image-source-link }}">{{ page.image-source }}</a></span></small>{% endif %}
 			<!-- End Featured Image -->
 
 			<!-- Post Content -->
