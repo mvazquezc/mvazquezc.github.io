@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: List
+items:
+- apiVersion: primitives.federation.k8s.io/v1alpha1
+  kind: FederatedPersistentVolumeClaim
+  metadata:
+    name: mongo
+    namespace: federated-mongo
+    labels:
+      name: mongo
+  spec:
+    template:
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+- apiVersion: primitives.federation.k8s.io/v1alpha1
+  kind: FederatedPersistentVolumeClaimPlacement
+  metadata:
+    name: mongo
+    namespace: federated-mongo
+  spec:
+    clusterNames:
+    - cluster1
+    - cluster2
+    - cluster3
