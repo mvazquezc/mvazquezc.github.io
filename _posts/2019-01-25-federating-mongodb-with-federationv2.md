@@ -84,10 +84,18 @@ kubefed2 join cluster3 --host-cluster-context cluster1 --add-to-registry --v=2 -
 
 ## Deploying a Federated MongoDB ReplicaSet
 
+**Resources**
+
+* [00-mongo-federated-namespace.yaml](assets/post_resources/2019-01-25-federating-mongodb-with-federationv2/00-mongo-federated-namespace.yaml)
+* [01-mongo-federated-secret.yaml](assets/post_resources/2019-01-25-federating-mongodb-with-federationv2/01-mongo-federated-secret.yaml)
+* [02-mongo-federated-service.yaml](assets/post_resources/2019-01-25-federating-mongodb-with-federationv2/02-mongo-federated-service.yaml)
+* [03-mongo-federated-pvc.yaml](assets/post_resources/2019-01-25-federating-mongodb-with-federationv2/03-mongo-federated-pvc.yaml)
+* [04-mongo-federated-deployment-rs.yaml](assets/post_resources/2019-01-25-federating-mongodb-with-federationv2/04-mongo-federated-deployment-rs.yaml)
+
 1. First, a Namespace and a FederatedNamespacePlacement is created into the cluster running the Federation Control Plane, Cluster1 in this case
     
     ```sh
-    oc --context=cluster1 create -f [00-mongo-federated-namespace.yaml](assets/post_resources/2019-01-25-federating-mongodb-with-federationv2/00-mongo-federated-namespace.yaml)
+    oc --context=cluster1 create -f 00-mongo-federated-namespace.yaml
     ```
   1. At this point we have the "federated-mongo" Namespace across three different clusters (Cluster1, Cluster3 and Cluster2)
       
@@ -105,10 +113,10 @@ kubefed2 join cluster3 --host-cluster-context cluster1 --add-to-registry --v=2 -
   2. You should generate your own certs and modify the federated secret definition
       
       ```sh
-      cat [01-mongo-federated-secret.yaml](assets/post_resources/2019-01-25-federating-mongodb-with-federationv2/01-mongo-federated-secret.yaml) | grep mongodb.pem | awk -F ": " '{print $2}' | base64 -d | openssl x509 -text | grep DNS
+      cat 01-mongo-federated-secret.yaml | grep mongodb.pem | awk -F ": " '{print $2}' | base64 -d | openssl x509 -text | grep DNS
       DNS:localhost, DNS:localhost.localdomain, DNS:mongo.apps.cluster1.linuxlabs.org, DNS:mongo.apps.cluster3.linuxlabs.org, DNS:mongo.apps.cluster2.linuxlabs.org, DNS:mongo, DNS:mongo.federated-mongo, DNS:mongo.federated-mongo.svc.cluster.local, IP Address:127.0.0.1
 
-      oc --context=cluster1 create -f [01-mongo-federated-secret.yaml](assets/post_resources/2019-01-25-federating-mongodb-with-federationv2/01-mongo-federated-secret.yaml)
+      oc --context=cluster1 create -f 01-mongo-federated-secret.yaml
       ```
   3. A federatedSecret has been created across the federated clusters, the secrets include the certificates and user/password details
       
@@ -127,7 +135,7 @@ kubefed2 join cluster3 --host-cluster-context cluster1 --add-to-registry --v=2 -
 3. We need a service on each cluster, so we are going to create a federatedservice for that purpouse 
     
     ```sh
-    oc --context=cluster1 create -f [02-mongo-federated-service.yaml](assets/post_resources/2019-01-25-federating-mongodb-with-federationv2/02-mongo-federated-service.yaml)
+    oc --context=cluster1 create -f 02-mongo-federated-service.yaml
     for cluster in cluster1 cluster2 cluster3;do echo "**Cluster ${cluster}**";oc --context=$cluster -n federated-mongo get services;done
     **Cluster cluster1**
     NAME      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)     AGE
@@ -143,7 +151,7 @@ kubefed2 join cluster3 --host-cluster-context cluster1 --add-to-registry --v=2 -
 
     ```sh
     kubefed2 federate enable PersistentVolumeClaim --host-cluster-context cluster1
-    oc --context=cluster1 create -f [03-mongo-federated-pvc.yaml](assets/post_resources/2019-01-25-federating-mongodb-with-federationv2/03-mongo-federated-pvc.yaml)
+    oc --context=cluster1 create -f 03-mongo-federated-pvc.yaml
     for cluster in cluster1 cluster2 cluster3;do echo "**Cluster ${cluster}**";oc --context=$cluster -n federated-mongo get pvc;done
     **Cluster cluster1**
     NAME      STATUS    VOLUME    CAPACITY   ACCESS MODES   STORAGECLASS   AGE
@@ -158,7 +166,7 @@ kubefed2 join cluster3 --host-cluster-context cluster1 --add-to-registry --v=2 -
 5. Now, we are ready to deploy the MongoDB Replicas, for this demo we will be federating a deployment with one replica. So we will have three MongoDB pods, one pod on each cluster.
     
     ```sh
-    oc --context=cluster1 create -f [04-mongo-federated-deployment-rs.yaml](assets/post_resources/2019-01-25-federating-mongodb-with-federationv2/04-mongo-federated-deployment-rs.yaml)
+    oc --context=cluster1 create -f 04-mongo-federated-deployment-rs.yaml
     for cluster in cluster1 cluster2 cluster3;do echo "**Cluster ${cluster}**";oc --context=$cluster -n federated-mongo get pods;done
     **Cluster cluster1**
     NAME                     READY     STATUS    RESTARTS   AGE
