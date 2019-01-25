@@ -86,11 +86,11 @@ kubefed2 join cluster3 --host-cluster-context cluster1 --add-to-registry --v=2 -
 
 **Resources**
 
-* [00-mongo-federated-namespace.yaml](assets/post_resources/2019-01-25-federating-mongodb-with-federationv2/00-mongo-federated-namespace.yaml)
-* [01-mongo-federated-secret.yaml](assets/post_resources/2019-01-25-federating-mongodb-with-federationv2/01-mongo-federated-secret.yaml)
-* [02-mongo-federated-service.yaml](assets/post_resources/2019-01-25-federating-mongodb-with-federationv2/02-mongo-federated-service.yaml)
-* [03-mongo-federated-pvc.yaml](assets/post_resources/2019-01-25-federating-mongodb-with-federationv2/03-mongo-federated-pvc.yaml)
-* [04-mongo-federated-deployment-rs.yaml](assets/post_resources/2019-01-25-federating-mongodb-with-federationv2/04-mongo-federated-deployment-rs.yaml)
+* [00-mongo-federated-namespace.yaml](https://linuxera.org/assets/post_resources/2019-01-25-federating-mongodb-with-federationv2/00-mongo-federated-namespace.yaml)
+* [01-mongo-federated-secret.yaml](https://linuxera.org/assets/post_resources/2019-01-25-federating-mongodb-with-federationv2/01-mongo-federated-secret.yaml)
+* [02-mongo-federated-service.yaml](https://linuxera.org/assets/post_resources/2019-01-25-federating-mongodb-with-federationv2/02-mongo-federated-service.yaml)
+* [03-mongo-federated-pvc.yaml](https://linuxera.org/assets/post_resources/2019-01-25-federating-mongodb-with-federationv2/03-mongo-federated-pvc.yaml)
+* [04-mongo-federated-deployment-rs.yaml](https://linuxera.org/assets/post_resources/2019-01-25-federating-mongodb-with-federationv2/04-mongo-federated-deployment-rs.yaml)
 
 1. First, a Namespace and a FederatedNamespacePlacement is created into the cluster running the Federation Control Plane, Cluster1 in this case
     
