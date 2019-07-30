@@ -246,7 +246,7 @@ Now we are going to access to our application using our browser and authenticati
 
 ![Scenario 2 Login](https://linuxera.org/assets/post_resources/2019-07-30-openshift-oauth-proxy/scenario2-login.gif)
 
-## Scenario 3 - Limiting Access to Authenticated Specific Users
+## Scenario 3 - Limiting Access to Specific Authenticated Users
 
 In this scenario we are going to modify the OAuth Proxy configuration so only users with access to the _reverse-words_ `Namespace` can access the application.
 
