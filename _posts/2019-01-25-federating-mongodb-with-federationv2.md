@@ -3,7 +3,7 @@ layout: post
 title:  "Federating MongoDB on OKD with Federation V2"
 author: "Mario"
 categories: [ okd, origin, openshift, containers, kubernetes, federation, federationv2 ]
-featured: true
+featured: false
 image: assets/images/2019-01-25-federating-mongodb-with-federationv2.jpg
 image-author: "Erwan Hesry"
 image-author-link: "https://unsplash.com/photos/RJjY5Hpnifk?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
