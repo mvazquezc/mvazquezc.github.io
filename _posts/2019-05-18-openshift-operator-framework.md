@@ -151,18 +151,20 @@ The Operator will be in charge of deploying a simple [GoLang application](https:
 
 At the moment of this writing the following versions were used:
 
-* golang-1.12.2
-* dep-0.5.0
-* Operator Framework SDK 0.6.0
+* golang-1.12.7
+* Operator Framework SDK 0.10.0
 * Minishift v1.33.0+ba29431
 
 ## Installing the Operator Framework SDK
 
 ```sh
-go get github.com/operator-framework/operator-sdk
-git checkout tags/v0.6.0
-make dep
-make install
+RELEASE_VERSION=v0.10.0
+# Linux
+curl -L https://github.com/operator-framework/operator-sdk/releases/download/${RELEASE_VERSION}/operator-sdk-${RELEASE_VERSION}-x86_64-linux-gnu -o /usr/local/bin/operator-sdk
+# macOS
+curl -L https://github.com/operator-framework/operator-sdk/releases/download/${RELEASE_VERSION}/operator-sdk-${RELEASE_VERSION}-x86_64-apple-darwin -o /usr/local/bin/operator-sdk
+# Linux / macOS
+chmod +x /usr/local/bin/operator-sdk
 ```
 
 ## Initializing the Operator Project
@@ -170,8 +172,8 @@ make install
 First, a new new project for our Operator will be initialized.
 
 ```sh
-mkdir -p $GOPATH/src/github.com/<github_user> && cd $_
-operator-sdk new reverse-words-operator
+mkdir -p ~/operators-projects/ && cd $_
+operator-sdk new reverse-words-operator --repo=github.com/<github_user>/reverse-words-operator
 cd reverse-words-operator
 ```
 
@@ -196,7 +198,7 @@ In the Status we will use:
 The Types are defined within the following file:
 
 ```sh
-vim $GOPATH/src/github.com/<github_user>/reverse-words-operator/pkg/apis/linuxera/v1alpha1/reversewordsapp_types.go
+vim pkg/apis/linuxera/v1alpha1/reversewordsapp_types.go
 ```
 
 Replicas will be defined as an `int32` and will reference the Spec property `replicas`. For the status AppPods will be defined as a `stringList` and will reference the Status property `appPods`.
@@ -211,19 +213,20 @@ import (
 // ReverseWordsAppSpec defines the desired state of ReverseWordsApp
 // +k8s:openapi-gen=true
 type ReverseWordsAppSpec struct {
-	Replicas int32  `json:"replicas"`
+     Replicas int32  `json:"replicas"`
 }
 
 // ReverseWordsAppStatus defines the observed state of ReverseWordsApp
 // +k8s:openapi-gen=true
 type ReverseWordsAppStatus struct {
-	AppPods []string `json:"appPods"`
+    AppPods []string `json:"appPods"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
 // ReverseWordsApp is the Schema for the reversewordsapps API
 // +k8s:openapi-gen=true
+// +kubebuilder:subresource:status
 type ReverseWordsApp struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -252,6 +255,16 @@ With above changes in-place we need to re-generate some boilerplate code to take
 operator-sdk generate k8s
 ```
 
+**OpenAPI Validation**
+
+To update the OpenAPI Validation section in the CRD definition YAML file run the following command:
+
+> **NOTE**: This is not required for the operator to work, but it will ensure CRD types in the schema are enforced when sending CRs to the API.
+
+```sh
+operator-sdk generate openapi
+```
+
 ## Add a Controller to your Operator
 
 Now it's time to add a Controller to our Operator, this Controller will take care of our new object `ReverseWordsApp`. 
@@ -272,7 +285,7 @@ Our application consists of a Deployment and a Service, so our Operator will dep
 Below the code (commented) for our Controller.
 
 ```
-vim $GOPATH/src/github.com/<github_user>/reverse-words-operator/pkg/controller/reversewordsapp/reversewordsapp_controller.go
+vim pkg/controller/reversewordsapp/reversewordsapp_controller.go
 ```
 
 ```go
@@ -458,7 +471,6 @@ func (r *ReconcileReverseWordsApp) Reconcile(request reconcile.Request) (reconci
 	listOpts := &client.ListOptions{
 		Namespace: deploymentFound.Namespace,
 		LabelSelector: labelSelector,
-		
 	}
 	err = r.client.List(context.TODO(), listOpts, podList)
 	if err != nil {
@@ -555,7 +567,7 @@ func getRunningPodNames(pods []corev1.Pod) []string {
 	var podNames []string
 	for _, pod := range pods {
 		if pod.GetObjectMeta().GetDeletionTimestamp() != nil {
-			continue	
+			continue
 		}
 		if pod.Status.Phase == corev1.PodPending || pod.Status.Phase == corev1.PodRunning {
 			podNames = append(podNames, pod.Name)
@@ -572,7 +584,7 @@ We have our Operator business logic ready, so now it's time to build our Operato
 First, we will build the operator and once the image is built, we will push it to the [Quay Registry](https://quay.io/).
 
 ```sh
-operator-sdk build quay.io/<your_user>/reverse-words-operator:latest
+operator-sdk build quay.io/<your_user>/reverse-words-operator:latest --image-builder <[podman, buildah, docker]>
 podman push quay.io/<your_user>/reverse-words-operator:latest
 ```
 
@@ -599,7 +611,7 @@ podman push quay.io/<your_user>/reverse-words-operator:latest
 4. Configure the operator deployment to use your operator's image 
 
     ```sh
-    sed -i "s/REPLACE_IMAGE/quay.io\/mavazque\/reverse-words-operator:latest/g" deploy/operator.yaml
+    sed -i "s|REPLACE_IMAGE|quay.io/mavazque/reverse-words-operator:latest|g" deploy/operator.yaml
     ```
 5. Deploy the Operator
 
