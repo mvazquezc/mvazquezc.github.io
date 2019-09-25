@@ -10,6 +10,7 @@ image-author-link: "https://unsplash.com/@dlohmar"
 image-source: "Unsplash"
 image-source-link: "https://unsplash.com/photos/0zeb4q6odlE"
 permalink: /writing-operators-using-operator-framework/
+last_modified_at: "2019-09-25"
 hidden: false
 ---
 
