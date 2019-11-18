@@ -198,12 +198,12 @@ In the Status we will use:
 
 Below a link to the code for our Type:
 
-* [reversewordsapp_types.go](https://linuxera.org/assets/post_resources/2019-05-18-openshift-operator-framework/reversewordsapp_types.go)
+* [reversewordsapp_types.go](https://linuxera.org/assets/post_resources/2019-05-18-openshift-operator-framework/reversewordsapp_types.go.txt)
 
 The Types are defined within the following file:
 
 ```sh
-curl -Ls https://linuxera.org/assets/post_resources/2019-05-18-openshift-operator-framework/reversewordsapp_types.go -o pkg/apis/linuxera/v1alpha1/reversewordsapp_types.go
+curl -Ls https://linuxera.org/assets/post_resources/2019-05-18-openshift-operator-framework/reversewordsapp_types.go.txt -o pkg/apis/linuxera/v1alpha1/reversewordsapp_types.go
 ```
 
 Replicas will be defined as an `int32` and will reference the Spec property `replicas`. For the status AppPods will be defined as a `stringList` and will reference the Status property `appPods`.
@@ -243,10 +243,10 @@ Our application consists of a Deployment and a Service, so our Operator will dep
 
 Below a link to the code (commented) for our Controller:
 
-* [reversewordsapp_controller.go](https://linuxera.org/assets/post_resources/2019-05-18-openshift-operator-framework/reversewordsapp_controller.go)
+* [reversewordsapp_controller.go](https://linuxera.org/assets/post_resources/2019-05-18-openshift-operator-framework/reversewordsapp_controller.go.txt)
 
 ```
-curl -Ls https://linuxera.org/assets/post_resources/2019-05-18-openshift-operator-framework/reversewordsapp_controller.go -o pkg/controller/reversewordsapp/reversewordsapp_controller.go
+curl -Ls https://linuxera.org/assets/post_resources/2019-05-18-openshift-operator-framework/reversewordsapp_controller.go.txt -o pkg/controller/reversewordsapp/reversewordsapp_controller.go
 ```
 
 ## Build the Operator
