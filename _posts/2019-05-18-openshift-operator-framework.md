@@ -10,7 +10,7 @@ image-author-link: "https://unsplash.com/@dlohmar"
 image-source: "Unsplash"
 image-source-link: "https://unsplash.com/photos/0zeb4q6odlE"
 permalink: /writing-operators-using-operator-framework/
-last_modified_at: "2019-09-25"
+last_modified_at: "2019-11-18"
 hidden: false
 ---
 
@@ -152,8 +152,8 @@ The Operator will be in charge of deploying a simple [GoLang application](https:
 
 At the moment of this writing the following versions were used:
 
-* golang-1.12.7
-* Operator Framework SDK 0.10.0
+* golang-1.13.4
+* Operator Framework SDK v0.12.0
 * Minishift v1.33.0+ba29431
 
 ## Installing the Operator Framework SDK
@@ -473,7 +473,7 @@ func (r *ReconcileReverseWordsApp) Reconcile(request reconcile.Request) (reconci
 		Namespace: deploymentFound.Namespace,
 		LabelSelector: labelSelector,
 	}
-	err = r.client.List(context.TODO(), listOpts, podList)
+	err = r.client.List(context.TODO(), podList, listOpts)
 	if err != nil {
 		reqLogger.Error(err, "Failed to list Pods.", "Deployment.Namespace", deploymentFound.Namespace, "Deployment.Name", deploymentFound.Name)
 		return reconcile.Result{}, err
