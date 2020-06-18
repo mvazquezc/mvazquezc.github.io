@@ -29,8 +29,8 @@
                                 <span class="author-meta">
                                 <span class="post-name"><a target="_blank" href="{{ author.web }}">{{ author.display_name }}</a></span><br/>
                                 {% endif %}
-                                {% if page.last_modified_at %}
-                                <span class="post-date"><time datetime="{{ page.last_modified_at | date_to_xmlschema }}" itemprop="dateModified">{{ page.last_modified_at | date: "%b %-d, %Y" }}</time></span>
+                                {% if post.last_modified_at %}
+                                <span class="post-date"><time datetime="{{ post.last_modified_at | date_to_xmlschema }}" itemprop="dateModified">{{ post.last_modified_at | date: "%b %-d, %Y" }}</time></span>
                                 {% else %}
                                 <span class="post-date">{{ post.date | date_to_string }}</span>
                                 {% endif %}
