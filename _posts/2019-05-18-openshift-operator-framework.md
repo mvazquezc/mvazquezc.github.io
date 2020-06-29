@@ -10,7 +10,7 @@ image-author-link: "https://unsplash.com/@dlohmar"
 image-source: "Unsplash"
 image-source-link: "https://unsplash.com/photos/0zeb4q6odlE"
 permalink: /writing-operators-using-operator-framework/
-last_modified_at: "2020-06-18"
+last_modified_at: "2020-06-29"
 hidden: false
 ---
 
@@ -106,7 +106,7 @@ A MetaNamespaceKey is a key-value reference for an object. It has the namespace 
 
 As we said before, is a shared data cache which distributes the data to all the `Listers` interested in knowing about changes happening to specific objects.
 
-The most important part of the `haredInformer` are the `EventHandlers`. Using an `EventHandler` is how you register your interest in specific object updates like addition, creation, updation or deletion.
+The most important part of the `SharedInformer` are the `EventHandlers`. Using an `EventHandler` is how you register your interest in specific object updates like addition, creation, updation or deletion.
 
 When an update occurs, the object will be put into the WorkQueue so it gets processed by the Controller in the Control Loop.
 
