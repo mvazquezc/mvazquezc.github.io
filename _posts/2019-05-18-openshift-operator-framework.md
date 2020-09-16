@@ -10,7 +10,7 @@ image-author-link: "https://unsplash.com/@dlohmar"
 image-source: "Unsplash"
 image-source-link: "https://unsplash.com/photos/0zeb4q6odlE"
 permalink: /writing-operators-using-operator-framework/
-last_modified_at: "2020-06-29"
+last_modified_at: "2020-09-16"
 hidden: false
 ---
 
@@ -153,13 +153,13 @@ The Operator will be in charge of deploying a simple [GoLang application](https:
 At the moment of this writing the following versions were used:
 
 * golang-1.14.3
-* Operator Framework SDK v0.18.1
+* Operator Framework SDK v1.0.0
 * Kubernetes 1.18
 
 ## Installing the Operator Framework SDK
 
 ~~~sh
-RELEASE_VERSION=v0.18.1
+RELEASE_VERSION=v1.0.0
 # Linux
 curl -L https://github.com/operator-framework/operator-sdk/releases/download/${RELEASE_VERSION}/operator-sdk-${RELEASE_VERSION}-x86_64-linux-gnu -o /usr/local/bin/operator-sdk
 # macOS
@@ -173,21 +173,21 @@ chmod +x /usr/local/bin/operator-sdk
 First, a new new project for our Operator will be initialized.
 
 ~~~sh
-mkdir -p ~/operators-projects/ && cd $_
+mkdir -p ~/operators-projects/reverse-words-operator && cd $_
 export GO111MODULE=on
 export GOPROXY=https://proxy.golang.org
-operator-sdk new reverse-words-operator --repo=github.com/<github_user>/reverse-words-operator
-cd reverse-words-operator
+export GH_USER=<github_user>
+operator-sdk init --domain=linuxera.org --repo=github.com/$GH_USER/reverse-words-operator
 ~~~
 
 ## Create the Operator API Types
 
 As previously discussed, Operators extend the Kubernetes API, the API itself is organized in groups and versions. Our Operator will define a new Group, object Kind and its versioning.
 
-In the example below we will define a new API Group called `linuxera.org`, a new object Kind `ReverseWordsApp` and its versioning `v1alpha1`.
+In the example below we will define a new API Group called `apps` under domain `linuxera.org`, a new object Kind `ReverseWordsApp` and its versioning `v1alpha1`.
 
 ~~~sh
-operator-sdk add api --api-version=linuxera.org/v1alpha1 --kind=ReverseWordsApp
+operator-sdk create api --group=apps --version=v1alpha1 --kind=ReverseWordsApp --resource=true --controller=true
 ~~~
 
 Now it's time to define the structure of our new Object. The Spec properties that we will be using are:
@@ -203,52 +203,65 @@ In the Status we will use:
 Below the code for our Types:
 
 ~~~go
+/*
+
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 package v1alpha1
 
 import (
-    metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-    corev1 "k8s.io/api/core/v1"
-    "github.com/operator-framework/operator-sdk/pkg/status"
+	"github.com/operator-framework/operator-lib/status"
+	corev1 "k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // ReverseWordsAppSpec defines the desired state of ReverseWordsApp
-// +k8s:openapi-gen=true
 type ReverseWordsAppSpec struct {
-     Replicas int32  `json:"replicas"`
-     AppVersion string `json:"appVersion,omitempty"`
+	Replicas   int32  `json:"replicas"`
+	AppVersion string `json:"appVersion,omitempty"`
 }
 
 // ReverseWordsAppStatus defines the observed state of ReverseWordsApp
-// +k8s:openapi-gen=true
 type ReverseWordsAppStatus struct {
-    AppPods []string `json:"appPods"`
-    Conditions status.Conditions `json:"conditions"`
+	AppPods    []string          `json:"appPods"`
+	Conditions status.Conditions `json:"conditions"`
 }
 
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+// +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
 
 // ReverseWordsApp is the Schema for the reversewordsapps API
-// +k8s:openapi-gen=true
-// +kubebuilder:subresource:status
 type ReverseWordsApp struct {
-    metav1.TypeMeta   `json:",inline"`
-    metav1.ObjectMeta `json:"metadata,omitempty"`
+	metav1.TypeMeta   `json:",inline"`
+	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-    Spec   ReverseWordsAppSpec   `json:"spec,omitempty"`
-    Status ReverseWordsAppStatus `json:"status,omitempty"`
+	Spec   ReverseWordsAppSpec   `json:"spec,omitempty"`
+	Status ReverseWordsAppStatus `json:"status,omitempty"`
 }
 
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+// +kubebuilder:object:root=true
 
 // ReverseWordsAppList contains a list of ReverseWordsApp
 type ReverseWordsAppList struct {
-    metav1.TypeMeta `json:",inline"`
-    metav1.ListMeta `json:"metadata,omitempty"`
-    Items           []ReverseWordsApp `json:"items"`
+	metav1.TypeMeta `json:",inline"`
+	metav1.ListMeta `json:"metadata,omitempty"`
+	Items           []ReverseWordsApp `json:"items"`
 }
 
 func init() {
-    SchemeBuilder.Register(&ReverseWordsApp{}, &ReverseWordsAppList{})
+	SchemeBuilder.Register(&ReverseWordsApp{}, &ReverseWordsAppList{})
 }
 
 // Conditions
@@ -274,11 +287,10 @@ func (rwa *ReverseWordsApp) SetCondition(conditionType status.ConditionType, val
 }
 ~~~
 
-
 You can download the Types file:
 
 ~~~sh
-curl -Ls https://linuxera.org/assets/post_resources/2019-05-18-openshift-operator-framework/reversewordsapp_types.go -o pkg/apis/linuxera/v1alpha1/reversewordsapp_types.go
+curl -Ls https://linuxera.org/assets/post_resources/2019-05-18-openshift-operator-framework/reversewordsapp_types.go -o ~/operators-projects/reverse-words-operator/api/v1alpha1/reversewordsapp_types.go
 ~~~
 
 Replicas will be defined as an `int32` and will reference the Spec property `replicas`. For the status AppPods will be defined as a `stringList` and will reference the Status property `appPods`.
@@ -286,25 +298,7 @@ Replicas will be defined as an `int32` and will reference the Spec property `rep
 With above changes in-place we need to re-generate some boilerplate code to take into account the latest changes in our types.
 
 ~~~sh
-operator-sdk generate k8s
-~~~
-
-**CRD Validation**
-
-To update the OpenAPI Validation section in the CRD definition YAML file run the following command:
-
-> **NOTE**: This is not required for the operator to work, but it will ensure CRD types in the schema are enforced when sending CRs to the API.
-
-~~~sh
-operator-sdk generate crds
-~~~
-
-## Add a Controller to your Operator
-
-Now it's time to add a Controller to our Operator, this Controller will take care of our new object `ReverseWordsApp`. 
-
-~~~sh
-operator-sdk add controller --api-version=linuxera.org/v1alpha1 --kind=ReverseWordsApp
+make generate
 ~~~
 
 ## Code your Operator business logic
@@ -319,465 +313,433 @@ Our application consists of a Deployment and a Service, so our Operator will dep
 Below code (commented) for our Controller:
 
 ~~~go
-package reversewordsapp
+/*
+
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+package controllers
 
 import (
-    "context"
-    "reflect"
-    linuxerav1alpha1 "github.com/mvazquezc/reverse-words-operator/pkg/apis/linuxera/v1alpha1"
-    "github.com/go-logr/logr"
-    corev1 "k8s.io/api/core/v1"
-    "k8s.io/apimachinery/pkg/api/errors"
-    metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-    "k8s.io/apimachinery/pkg/runtime"
-    "k8s.io/apimachinery/pkg/types"
-    "k8s.io/apimachinery/pkg/util/intstr"
-    "sigs.k8s.io/controller-runtime/pkg/client"
-    "sigs.k8s.io/controller-runtime/pkg/controller"
-    "sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
-    "sigs.k8s.io/controller-runtime/pkg/handler"
-    "sigs.k8s.io/controller-runtime/pkg/manager"
-    "sigs.k8s.io/controller-runtime/pkg/reconcile"
-    logf "sigs.k8s.io/controller-runtime/pkg/runtime/log"
-    "sigs.k8s.io/controller-runtime/pkg/source"
-    appsv1 "k8s.io/api/apps/v1"
+	"context"
+	"github.com/go-logr/logr"
+	appsv1alpha1 "github.com/mvazquezc/reverse-words-operator/api/v1alpha1"
+	appsv1 "k8s.io/api/apps/v1"
+	corev1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/api/errors"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/types"
+	"k8s.io/apimachinery/pkg/util/intstr"
+	"reflect"
+	ctrl "sigs.k8s.io/controller-runtime"
+	"sigs.k8s.io/controller-runtime/pkg/client"
+	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 )
 
-var log = logf.Log.WithName("controller_reversewordsapp")
-
-// Add creates a new ReverseWordsApp Controller and adds it to the Manager. The Manager will set fields on the Controller
-// and Start it when the Manager is Started.
-func Add(mgr manager.Manager) error {
-    return add(mgr, newReconciler(mgr))
-}
-
-// newReconciler returns a new reconcile.Reconciler
-func newReconciler(mgr manager.Manager) reconcile.Reconciler {
-    return &ReconcileReverseWordsApp{client: mgr.GetClient(), scheme: mgr.GetScheme()}
-}
-
-// add adds a new Controller to mgr with r as the reconcile.Reconciler
-func add(mgr manager.Manager, r reconcile.Reconciler) error {
-    // Create a new controller
-    c, err := controller.New("reversewordsapp-controller", mgr, controller.Options{Reconciler: r})
-    if err != nil {
-        return err
-    }
-
-    // Watch for changes to primary resource ReverseWordsApp
-    err = c.Watch(&source.Kind{Type: &linuxerav1alpha1.ReverseWordsApp{}}, &handler.EnqueueRequestForObject{})
-    if err != nil {
-        return err
-    }
-
-    // Watch for changes to secondary resources Deployments and Services and requeue the owner ReverseWordsApp
-    ownedObjects := []runtime.Object{
-        &appsv1.Deployment{},
-        &corev1.Service{},
-    }
-
-    for _, ownedObject := range ownedObjects {
-        err = c.Watch(&source.Kind{Type: ownedObject}, &handler.EnqueueRequestForOwner{
-            IsController: true,
-            OwnerType:    &linuxerav1alpha1.ReverseWordsApp{},
-        })
-        if err != nil {
-            return err
-        }
-    }
-
-    return nil
-}
-// blank assignment to ensure that ReconcileReverseWordsApp implements reconcile.Reconciler
-var _ reconcile.Reconciler = &ReconcileReverseWordsApp{}
-
-// ReconcileReverseWordsApp reconciles a ReverseWordsApp object
-type ReconcileReverseWordsApp struct {
-    // This client, initialized using mgr.Client() above, is a split client
-    // that reads objects from the cache and writes to the apiserver
-    client client.Client
-    scheme *runtime.Scheme
+// ReverseWordsAppReconciler reconciles a ReverseWordsApp object
+type ReverseWordsAppReconciler struct {
+	client.Client
+	Log    logr.Logger
+	Scheme *runtime.Scheme
 }
 
 // Finalizer for our objects
-const reverseWordsAppFinalizer = "finalizer.reversewordsapp.linuxera.org"
+const reverseWordsAppFinalizer = "finalizer.reversewordsapp.apps.linuxera.org"
 
-// Reconcile reads that state of the cluster for a ReverseWordsApp object and makes changes based on the state read
-// and what is in the ReverseWordsApp.Spec
-// Note:
-// The Controller will requeue the Request to be processed again if the returned error is non-nil or
-// Result.Requeue is true, otherwise upon completion it will remove the work from the queue.
-func (r *ReconcileReverseWordsApp) Reconcile(request reconcile.Request) (reconcile.Result, error) {
-    reqLogger := log.WithValues("Request.Namespace", request.Namespace, "Request.Name", request.Name)
-    reqLogger.Info("Reconciling ReverseWordsApp")
+// +kubebuilder:rbac:groups=apps.linuxera.org,resources=reversewordsapps,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=apps.linuxera.org,resources=reversewordsapps/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=apps,resources=deployments,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=core,resources=services,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=core,resources=pods,verbs=get;list;watch
 
-    // Fetch the ReverseWordsApp instance
-    instance := &linuxerav1alpha1.ReverseWordsApp{}
-    err := r.client.Get(context.TODO(), request.NamespacedName, instance)
-    if err != nil {
-        if errors.IsNotFound(err) {
-            // Request object not found, could have been deleted after reconcile request.
-            // Owned objects are automatically garbage collected. For additional cleanup logic use finalizers.
-            // Return and don't requeue
-            return reconcile.Result{}, nil
-        }
-        // Error reading the object - requeue the request.
-        return reconcile.Result{}, err
-    }
+func (r *ReverseWordsAppReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
+	ctx := context.Background()
+	log := r.Log.WithValues("reversewordsapp", req.NamespacedName)
 
-    // Check if the CR is marked to be deleted
-    isInstanceMarkedToBeDeleted := instance.GetDeletionTimestamp() != nil
-    if isInstanceMarkedToBeDeleted {
-        reqLogger.Info("Instance marked for deletion, running finalizers")
-        if contains(instance.GetFinalizers(), reverseWordsAppFinalizer) {
-            // Run the finalizer logic
-            err := r.finalizeReverseWordsApp(reqLogger, instance)
-            if err != nil {
-                // Don't remove the finalizer if we failed to finalize the object
-                return reconcile.Result{}, err
-            }
-            reqLogger.Info("Instance finalizers completed")
-            // Remove finalizer once the finalizer logic has run
-            controllerutil.RemoveFinalizer(instance, reverseWordsAppFinalizer)
-            err = r.client.Update(context.TODO(), instance)
-            if err != nil {
-                // If the object update fails, requeue
-				return reconcile.Result{}, err
-            }
-        }
-        reqLogger.Info("Instance can be deleted now")
-        return reconcile.Result{}, nil
-    }
-
-    // Add Finalizers to the CR
-    if !contains(instance.GetFinalizers(), reverseWordsAppFinalizer) {
-        if err := r.addFinalizer(reqLogger, instance); err != nil {
-            return reconcile.Result{}, err
+	// Fetch the ReverseWordsApp instance
+	instance := &appsv1alpha1.ReverseWordsApp{}
+	err := r.Get(ctx, req.NamespacedName, instance)
+	if err != nil {
+		if errors.IsNotFound(err) {
+			// Request object not found, could have been deleted after reconcile request.
+			// Owned objects are automatically garbage collected. For additional cleanup logic use finalizers.
+			// Return and don't requeue
+			log.Info("ReverseWordsApp resource not found. Ignoring since object must be deleted")
+			return ctrl.Result{}, nil
 		}
-    }
+		// Error reading the object - requeue the request.
+		log.Error(err, "Failed to get ReverseWordsApp")
+		return ctrl.Result{}, err
+	}
 
-    // Reconcile Deployment object
-    result, err := r.reconcileDeployment(instance, reqLogger)
-    if err != nil {
-        return result, err
-    }
-    // Reconcile Service object
-    result, err = r.reconcileService(instance, reqLogger)
-    if err != nil {
-        return result, err
-    }
+	// Check if the CR is marked to be deleted
+	isInstanceMarkedToBeDeleted := instance.GetDeletionTimestamp() != nil
+	if isInstanceMarkedToBeDeleted {
+		log.Info("Instance marked for deletion, running finalizers")
+		if contains(instance.GetFinalizers(), reverseWordsAppFinalizer) {
+			// Run the finalizer logic
+			err := r.finalizeReverseWordsApp(log, instance)
+			if err != nil {
+				// Don't remove the finalizer if we failed to finalize the object
+				return ctrl.Result{}, err
+			}
+			log.Info("Instance finalizers completed")
+			// Remove finalizer once the finalizer logic has run
+			controllerutil.RemoveFinalizer(instance, reverseWordsAppFinalizer)
+			err = r.Update(ctx, instance)
+			if err != nil {
+				// If the object update fails, requeue
+				return ctrl.Result{}, err
+			}
+		}
+		log.Info("Instance can be deleted now")
+		return ctrl.Result{}, nil
+	}
 
-    // The CR status is updated in the Deployment reconcile method
+	// Add Finalizers to the CR
+	if !contains(instance.GetFinalizers(), reverseWordsAppFinalizer) {
+		if err := r.addFinalizer(log, instance); err != nil {
+			return ctrl.Result{}, err
+		}
+	}
 
-    return reconcile.Result{}, err
+	// Reconcile Deployment object
+	result, err := r.reconcileDeployment(instance, log)
+	if err != nil {
+		return result, err
+	}
+	// Reconcile Service object
+	result, err = r.reconcileService(instance, log)
+	if err != nil {
+		return result, err
+	}
+
+	// The CR status is updated in the Deployment reconcile method
+
+	return ctrl.Result{}, nil
 }
 
-func (r *ReconcileReverseWordsApp) reconcileDeployment(cr *linuxerav1alpha1.ReverseWordsApp, reqLogger logr.Logger) (reconcile.Result, error) {
-    // Define a new Deployment object
-    deployment := newDeploymentForCR(cr)
+func (r *ReverseWordsAppReconciler) SetupWithManager(mgr ctrl.Manager) error {
+	return ctrl.NewControllerManagedBy(mgr).
+		For(&appsv1alpha1.ReverseWordsApp{}).
+		Owns(&appsv1.Deployment{}).
+		Owns(&corev1.Service{}).
+		Complete(r)
+}
 
-    // Set ReverseWordsApp instance as the owner and controller of the Deployment
-    if err := controllerutil.SetControllerReference(cr, deployment, r.scheme); err != nil {
-        return reconcile.Result{}, err
-    }
+func (r *ReverseWordsAppReconciler) reconcileDeployment(cr *appsv1alpha1.ReverseWordsApp, log logr.Logger) (ctrl.Result, error) {
+	// Define a new Deployment object
+	deployment := newDeploymentForCR(cr)
 
-    // Check if this Deployment already exists
-    deploymentFound := &appsv1.Deployment{}
-    err := r.client.Get(context.TODO(), types.NamespacedName{Name: deployment.Name, Namespace: deployment.Namespace}, deploymentFound)
-    if err != nil && errors.IsNotFound(err) {
-        reqLogger.Info("Creating a new Deployment", "Deployment.Namespace", deployment.Namespace, "Deployment.Name", deployment.Name)
-        err = r.client.Create(context.TODO(), deployment)
-        if err != nil {
-            return reconcile.Result{}, err
-        }
-        // Get existing deployment again
-        //deploymentFound = &appsv1.Deployment{}
-        //err = r.client.Get(context.TODO(), types.NamespacedName{Name: deployment.Name, Namespace: deployment.Namespace}, deploymentFound)
-        // Requeue the object to update its status
-        return reconcile.Result{Requeue: true}, nil
-    } else if err != nil {
-        return reconcile.Result{}, err
-    } else {
-        // Deployment already exists
-        reqLogger.Info("Deployment already exists", "Deployment.Namespace", deploymentFound.Namespace, "Deployment.Name", deploymentFound.Name)
-    }
+	// Set ReverseWordsApp instance as the owner and controller of the Deployment
+	if err := ctrl.SetControllerReference(cr, deployment, r.Scheme); err != nil {
+		return ctrl.Result{}, err
+	}
 
-    // Ensure deployment replicas match the desired state
-    if !reflect.DeepEqual(deploymentFound.Spec.Replicas, deployment.Spec.Replicas) {
-        reqLogger.Info("Current deployment replicas do not match ReverseWordsApp configured Replicas")
-        // Update the replicas
-        err = r.client.Update(context.TODO(), deployment)
-        if err != nil {
-            reqLogger.Error(err, "Failed to update Deployment.", "Deployment.Namespace", deploymentFound.Namespace, "Deployment.Name", deploymentFound.Name)
-            return reconcile.Result{}, err
-        }
-    }
-    // Ensure deployment container image match the desired state, returns true if deployment needs to be updated
-    if checkDeploymentImage(deploymentFound, deployment) {
-        reqLogger.Info("Current deployment image version do not match ReverseWordsApp configured version")
-        // Update the image
-        err = r.client.Update(context.TODO(), deployment)
-        if err != nil {
-            reqLogger.Error(err, "Failed to update Deployment.", "Deployment.Namespace", deploymentFound.Namespace, "Deployment.Name", deploymentFound.Name)
-            return reconcile.Result{}, err
-        }
-    }
+	// Check if this Deployment already exists
+	deploymentFound := &appsv1.Deployment{}
+	err := r.Get(context.Background(), types.NamespacedName{Name: deployment.Name, Namespace: deployment.Namespace}, deploymentFound)
+	if err != nil && errors.IsNotFound(err) {
+		log.Info("Creating a new Deployment", "Deployment.Namespace", deployment.Namespace, "Deployment.Name", deployment.Name)
+		err = r.Create(context.Background(), deployment)
+		if err != nil {
+			return ctrl.Result{}, err
+		}
+		// Requeue the object to update its status
+		return ctrl.Result{Requeue: true}, nil
+	} else if err != nil {
+		return ctrl.Result{}, err
+	} else {
+		// Deployment already exists
+		log.Info("Deployment already exists", "Deployment.Namespace", deploymentFound.Namespace, "Deployment.Name", deploymentFound.Name)
+	}
 
-    // Check if the deployment is ready
+	// Ensure deployment replicas match the desired state
+	if !reflect.DeepEqual(deploymentFound.Spec.Replicas, deployment.Spec.Replicas) {
+		log.Info("Current deployment replicas do not match ReverseWordsApp configured Replicas")
+		// Update the replicas
+		err = r.Update(context.Background(), deployment)
+		if err != nil {
+			log.Error(err, "Failed to update Deployment.", "Deployment.Namespace", deploymentFound.Namespace, "Deployment.Name", deploymentFound.Name)
+			return ctrl.Result{}, err
+		}
+	}
+	// Ensure deployment container image match the desired state, returns true if deployment needs to be updated
+	if checkDeploymentImage(deploymentFound, deployment) {
+		log.Info("Current deployment image version do not match ReverseWordsApp configured version")
+		// Update the image
+		err = r.Update(context.Background(), deployment)
+		if err != nil {
+			log.Error(err, "Failed to update Deployment.", "Deployment.Namespace", deploymentFound.Namespace, "Deployment.Name", deploymentFound.Name)
+			return ctrl.Result{}, err
+		}
+	}
 
-    deploymentReady := isDeploymentReady(deploymentFound) 
-    
-    if deploymentReady {
-        // List the pods for this ReverseWordsApp deployment
-        podList := &corev1.PodList{}
-        listOpts := []client.ListOption{
-            client.InNamespace(deploymentFound.Namespace),
-            client.MatchingLabels(deploymentFound.Labels),
-        }
-        err = r.client.List(context.TODO(), podList, listOpts...)
-        if err != nil {
-            reqLogger.Error(err, "Failed to list Pods.", "Deployment.Namespace", deploymentFound.Namespace, "Deployment.Name", deploymentFound.Name)
-            return reconcile.Result{}, err
-        }
+	// Check if the deployment is ready
+	deploymentReady := isDeploymentReady(deploymentFound)
 
-        podNames := getRunningPodNames(podList.Items)
-        // Update the status
-        cr.Status.AppPods = podNames
-        cr.SetCondition(linuxerav1alpha1.ConditionTypeReverseWordsDeploymentNotReady, false)    
-        cr.SetCondition(linuxerav1alpha1.ConditionTypeReady, true)
-    } else {
-        cr.SetCondition(linuxerav1alpha1.ConditionTypeReverseWordsDeploymentNotReady, true)    
-        cr.SetCondition(linuxerav1alpha1.ConditionTypeReady, false)
-    }
-
-    // Reconcile the new status for the instance
-    cr, err = r.updateReverseWordsAppStatus(cr, reqLogger)
-    if err != nil {
-        reqLogger.Error(err, "Failed to update ReverseWordsApp Status.")
-		return reconcile.Result{}, err
-    }
-
-    // Deployment reconcile finished
-    return reconcile.Result{}, nil
+	// Create list options for listing deployment pods
+	podList := &corev1.PodList{}
+	listOpts := []client.ListOption{
+		client.InNamespace(deploymentFound.Namespace),
+		client.MatchingLabels(deploymentFound.Labels),
+	}
+	// List the pods for this ReverseWordsApp deployment
+	err = r.List(context.Background(), podList, listOpts...)
+	if err != nil {
+		log.Error(err, "Failed to list Pods.", "Deployment.Namespace", deploymentFound.Namespace, "Deployment.Name", deploymentFound.Name)
+		return ctrl.Result{}, err
+	}
+	// Get running Pods from listing above (if any)
+	podNames := getRunningPodNames(podList.Items)
+	if deploymentReady {
+		// Update the status to ready
+		cr.Status.AppPods = podNames
+		cr.SetCondition(appsv1alpha1.ConditionTypeReverseWordsDeploymentNotReady, false)
+		cr.SetCondition(appsv1alpha1.ConditionTypeReady, true)
+	} else {
+		// Update the status to not ready
+		cr.Status.AppPods = podNames
+		cr.SetCondition(appsv1alpha1.ConditionTypeReverseWordsDeploymentNotReady, true)
+		cr.SetCondition(appsv1alpha1.ConditionTypeReady, false)
+	}
+	// Reconcile the new status for the instance
+	cr, err = r.updateReverseWordsAppStatus(cr, log)
+	if err != nil {
+		log.Error(err, "Failed to update ReverseWordsApp Status.")
+		return ctrl.Result{}, err
+	}
+	// Deployment reconcile finished
+	return ctrl.Result{}, nil
 }
 
 // updateReverseWordsAppStatus updates the Status of a given CR
-func (r *ReconcileReverseWordsApp) updateReverseWordsAppStatus(cr *linuxerav1alpha1.ReverseWordsApp, reqLogger logr.Logger) (*linuxerav1alpha1.ReverseWordsApp, error) {
-    reverseWordsApp := &linuxerav1alpha1.ReverseWordsApp{}
-    err := r.client.Get(context.TODO(), types.NamespacedName{Name: cr.Name, Namespace: cr.Namespace}, reverseWordsApp)
-    if err != nil {
+func (r *ReverseWordsAppReconciler) updateReverseWordsAppStatus(cr *appsv1alpha1.ReverseWordsApp, log logr.Logger) (*appsv1alpha1.ReverseWordsApp, error) {
+	reverseWordsApp := &appsv1alpha1.ReverseWordsApp{}
+	err := r.Get(context.Background(), types.NamespacedName{Name: cr.Name, Namespace: cr.Namespace}, reverseWordsApp)
+	if err != nil {
 		return reverseWordsApp, err
-    }
+	}
 
-    if !reflect.DeepEqual(cr.Status, reverseWordsApp.Status) {
-        reqLogger.Info("Updating ReverseWordsApp Status.")
-        // We need to update the status      
-        err = r.client.Status().Update(context.TODO(), cr)
-        if err != nil {
+	if !reflect.DeepEqual(cr.Status, reverseWordsApp.Status) {
+		log.Info("Updating ReverseWordsApp Status.")
+		// We need to update the status
+		err = r.Status().Update(context.Background(), cr)
+		if err != nil {
 			return cr, err
-        }
-        updatedReverseWordsApp := &linuxerav1alpha1.ReverseWordsApp{}
-        err = r.client.Get(context.TODO(), types.NamespacedName{Name: cr.Name, Namespace: cr.Namespace}, updatedReverseWordsApp)
-        if err != nil {
+		}
+		updatedReverseWordsApp := &appsv1alpha1.ReverseWordsApp{}
+		err = r.Get(context.Background(), types.NamespacedName{Name: cr.Name, Namespace: cr.Namespace}, updatedReverseWordsApp)
+		if err != nil {
 			return cr, err
-        }
-        cr = updatedReverseWordsApp.DeepCopy()
-    }
-    return cr, nil
+		}
+		cr = updatedReverseWordsApp.DeepCopy()
+	}
+	return cr, nil
 
 }
 
 // addFinalizer adds a given finalizer to a given CR
-func (r *ReconcileReverseWordsApp) addFinalizer(reqLogger logr.Logger, cr *linuxerav1alpha1.ReverseWordsApp) error {
-	reqLogger.Info("Adding Finalizer for the ReverseWordsApp")
+func (r *ReverseWordsAppReconciler) addFinalizer(log logr.Logger, cr *appsv1alpha1.ReverseWordsApp) error {
+	log.Info("Adding Finalizer for the ReverseWordsApp")
 	controllerutil.AddFinalizer(cr, reverseWordsAppFinalizer)
 
 	// Update CR
-	err := r.client.Update(context.TODO(), cr)
+	err := r.Update(context.Background(), cr)
 	if err != nil {
-		reqLogger.Error(err, "Failed to update ReverseWordsApp with finalizer")
+		log.Error(err, "Failed to update ReverseWordsApp with finalizer")
 		return err
 	}
 	return nil
 }
 
 // finalizeReverseWordsApp runs required tasks before deleting the objects owned by the CR
-func (r *ReconcileReverseWordsApp) finalizeReverseWordsApp(reqLogger logr.Logger, cr *linuxerav1alpha1.ReverseWordsApp) error {
+func (r *ReverseWordsAppReconciler) finalizeReverseWordsApp(log logr.Logger, cr *appsv1alpha1.ReverseWordsApp) error {
 	// TODO(user): Add the cleanup steps that the operator
 	// needs to do before the CR can be deleted. Examples
 	// of finalizers include performing backups and deleting
 	// resources that are not owned by this CR, like a PVC.
-	reqLogger.Info("Successfully finalized ReverseWordsApp")
+	log.Info("Successfully finalized ReverseWordsApp")
 	return nil
 }
 
-func (r *ReconcileReverseWordsApp) reconcileService(cr *linuxerav1alpha1.ReverseWordsApp, reqLogger logr.Logger) (reconcile.Result, error) {
-    // Define a new Service object
-    service := newServiceForCR(cr)
+func (r *ReverseWordsAppReconciler) reconcileService(cr *appsv1alpha1.ReverseWordsApp, log logr.Logger) (ctrl.Result, error) {
+	// Define a new Service object
+	service := newServiceForCR(cr)
 
-    // Set ReverseWordsApp instance as the owner and controller of the Service
-    if err := controllerutil.SetControllerReference(cr, service, r.scheme); err != nil {
-        return reconcile.Result{}, err
-    }
+	// Set ReverseWordsApp instance as the owner and controller of the Service
+	if err := controllerutil.SetControllerReference(cr, service, r.Scheme); err != nil {
+		return ctrl.Result{}, err
+	}
 
-    // Check if this Service already exists
-    serviceFound := &corev1.Service{}
-    err := r.client.Get(context.TODO(), types.NamespacedName{Name: service.Name, Namespace: service.Namespace}, serviceFound)
-    if err != nil && errors.IsNotFound(err) {
-        reqLogger.Info("Creating a new Service", "Service.Namespace", service.Namespace, "Service.Name", service.Name)
-        err = r.client.Create(context.TODO(), service)
-        if err != nil {
-            return reconcile.Result{}, err
-        }
-        // Service created successfully - don't requeue
-        return reconcile.Result{}, nil
-    } else if err != nil {
-        return reconcile.Result{}, err
-    } else {
-        // Service already exists
-        reqLogger.Info("Service already exists", "Service.Namespace", serviceFound.Namespace, "Service.Name", serviceFound.Name)
-    }
-    // Service reconcile finished
-    return reconcile.Result{}, nil
+	// Check if this Service already exists
+	serviceFound := &corev1.Service{}
+	err := r.Get(context.Background(), types.NamespacedName{Name: service.Name, Namespace: service.Namespace}, serviceFound)
+	if err != nil && errors.IsNotFound(err) {
+		log.Info("Creating a new Service", "Service.Namespace", service.Namespace, "Service.Name", service.Name)
+		err = r.Create(context.Background(), service)
+		if err != nil {
+			return ctrl.Result{}, err
+		}
+		// Service created successfully - don't requeue
+		return ctrl.Result{}, nil
+	} else if err != nil {
+		return ctrl.Result{}, err
+	} else {
+		// Service already exists
+		log.Info("Service already exists", "Service.Namespace", serviceFound.Namespace, "Service.Name", serviceFound.Name)
+	}
+	// Service reconcile finished
+	return ctrl.Result{}, nil
 }
-
 
 // Returns a new deployment without replicas configured
 // replicas will be configured in the sync loop
-func newDeploymentForCR(cr *linuxerav1alpha1.ReverseWordsApp) *appsv1.Deployment {
-    labels := map[string]string{
-        "app": cr.Name,
-    }
-    replicas := cr.Spec.Replicas
-    // Minimum replicas will be 1
-    if replicas == 0 {
-        replicas = 1
-    }
-    appVersion := "latest"
-    if cr.Spec.AppVersion != "" {
-        appVersion = cr.Spec.AppVersion
-    }
-    // TODO:Check if application version exists
-    containerImage := "quay.io/mavazque/reversewords:" + appVersion
-    probe := &corev1.Probe{
-        Handler: corev1.Handler{
-            HTTPGet: &corev1.HTTPGetAction{
-                Path: "/health",
-                Port: intstr.FromInt(8080),
-            },
-        },
-        InitialDelaySeconds: 5,
-        TimeoutSeconds: 2,
-        PeriodSeconds: 15,
-    }
-    return &appsv1.Deployment{
-        TypeMeta: metav1.TypeMeta{
-            APIVersion: "apps/v1",
-            Kind:       "Deployment",
-        },
-        ObjectMeta: metav1.ObjectMeta{
-            Name:      "deployment-" + cr.Name,
-            Namespace: cr.Namespace,
-            Labels:    labels,
-        },
-        Spec: appsv1.DeploymentSpec{
-            Replicas: &replicas,
-            Selector: &metav1.LabelSelector{
-                MatchLabels: labels,
-            },
-            Template: corev1.PodTemplateSpec{
-                ObjectMeta: metav1.ObjectMeta{
-                    Labels: labels,
-                },
-                Spec: corev1.PodSpec{
-                    Containers: []corev1.Container{
-                        {
-                            Image: containerImage,
-                            Name:  "reversewords",
-                            Ports: []corev1.ContainerPort{
-                                {
-                                    ContainerPort: 8080,
-                                    Name: "reversewords",
-                                },
-                            },
-                            LivenessProbe: probe,
-                            ReadinessProbe: probe,
-                        },
-                    },
-                },
-            },
-        },
-    }
+func newDeploymentForCR(cr *appsv1alpha1.ReverseWordsApp) *appsv1.Deployment {
+	labels := map[string]string{
+		"app": cr.Name,
+	}
+	replicas := cr.Spec.Replicas
+	// Minimum replicas will be 1
+	if replicas == 0 {
+		replicas = 1
+	}
+	appVersion := "latest"
+	if cr.Spec.AppVersion != "" {
+		appVersion = cr.Spec.AppVersion
+	}
+	// TODO:Check if application version exists
+	containerImage := "quay.io/mavazque/reversewords:" + appVersion
+	probe := &corev1.Probe{
+		Handler: corev1.Handler{
+			HTTPGet: &corev1.HTTPGetAction{
+				Path: "/health",
+				Port: intstr.FromInt(8080),
+			},
+		},
+		InitialDelaySeconds: 5,
+		TimeoutSeconds:      2,
+		PeriodSeconds:       15,
+	}
+	return &appsv1.Deployment{
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: "apps/v1",
+			Kind:       "Deployment",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "dp-" + cr.Name,
+			Namespace: cr.Namespace,
+			Labels:    labels,
+		},
+		Spec: appsv1.DeploymentSpec{
+			Replicas: &replicas,
+			Selector: &metav1.LabelSelector{
+				MatchLabels: labels,
+			},
+			Template: corev1.PodTemplateSpec{
+				ObjectMeta: metav1.ObjectMeta{
+					Labels: labels,
+				},
+				Spec: corev1.PodSpec{
+					Containers: []corev1.Container{
+						{
+							Image: containerImage,
+							Name:  "reversewords",
+							Ports: []corev1.ContainerPort{
+								{
+									ContainerPort: 8080,
+									Name:          "reversewords",
+								},
+							},
+							LivenessProbe:  probe,
+							ReadinessProbe: probe,
+						},
+					},
+				},
+			},
+		},
+	}
 }
 
 // Returns a new service
-func newServiceForCR(cr *linuxerav1alpha1.ReverseWordsApp) *corev1.Service {
-    labels := map[string]string{
-        "app": cr.Name,
-    }
-    return &corev1.Service{
-        TypeMeta: metav1.TypeMeta{
-            APIVersion: "v1",
-            Kind:       "Service",
-        },
-        ObjectMeta: metav1.ObjectMeta{
-            Name:      "service-" + cr.Name,
-            Namespace: cr.Namespace,
-            Labels: labels,
-        },
-        Spec: corev1.ServiceSpec{
-            Type:     corev1.ServiceTypeLoadBalancer,
-            Selector: labels,
-            Ports: []corev1.ServicePort{
-                {
-                    Name: "http",
-                    Port: 8080,
-                },
-            },
-        },
-    }
+func newServiceForCR(cr *appsv1alpha1.ReverseWordsApp) *corev1.Service {
+	labels := map[string]string{
+		"app": cr.Name,
+	}
+	return &corev1.Service{
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: "v1",
+			Kind:       "Service",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "service-" + cr.Name,
+			Namespace: cr.Namespace,
+			Labels:    labels,
+		},
+		Spec: corev1.ServiceSpec{
+			Type:     corev1.ServiceTypeLoadBalancer,
+			Selector: labels,
+			Ports: []corev1.ServicePort{
+				{
+					Name: "http",
+					Port: 8080,
+				},
+			},
+		},
+	}
 }
 
 // isDeploymentReady returns a true bool if the deployment has all its pods ready
 func isDeploymentReady(deployment *appsv1.Deployment) bool {
-    configuredReplicas := deployment.Status.Replicas
-    readyReplicas := deployment.Status.ReadyReplicas
-    deploymentReady := false
-    if configuredReplicas == readyReplicas {
-        deploymentReady = true
-    }
-    return deploymentReady
+	configuredReplicas := deployment.Status.Replicas
+	readyReplicas := deployment.Status.ReadyReplicas
+	deploymentReady := false
+	if configuredReplicas == readyReplicas {
+		deploymentReady = true
+	}
+	return deploymentReady
 }
-
 
 // getRunningPodNames returns the pod names for the pods running in the array of pods passed in
 func getRunningPodNames(pods []corev1.Pod) []string {
-    // Create an empty []string, so if no podNames are returned, instead of nil we get an empty slice
-    var podNames []string = make([]string, 0)
-    for _, pod := range pods {
-        if pod.GetObjectMeta().GetDeletionTimestamp() != nil {
-            continue
-        }
-        if pod.Status.Phase == corev1.PodPending || pod.Status.Phase == corev1.PodRunning {
-            podNames = append(podNames, pod.Name)
-        }
-    }
-    return podNames
+	// Create an empty []string, so if no podNames are returned, instead of nil we get an empty slice
+	var podNames []string = make([]string, 0)
+	for _, pod := range pods {
+		if pod.GetObjectMeta().GetDeletionTimestamp() != nil {
+			continue
+		}
+		if pod.Status.Phase == corev1.PodPending || pod.Status.Phase == corev1.PodRunning {
+			podNames = append(podNames, pod.Name)
+		}
+	}
+	return podNames
 }
 
 // checkDeploymentImage returns wether the deployment image is different or not
 func checkDeploymentImage(current *appsv1.Deployment, desired *appsv1.Deployment) bool {
-    for _, curr := range current.Spec.Template.Spec.Containers {
-        for _, des := range desired.Spec.Template.Spec.Containers {
-            // Only compare the images of containers with the same name
-            if curr.Name == des.Name {
-                if curr.Image != des.Image {
-                    return true
-                }
-            }
-        }
-    }
-    return false
+	for _, curr := range current.Spec.Template.Spec.Containers {
+		for _, des := range desired.Spec.Template.Spec.Containers {
+			// Only compare the images of containers with the same name
+			if curr.Name == des.Name {
+				if curr.Image != des.Image {
+					return true
+				}
+			}
+		}
+	}
+	return false
 }
 
 // contains returns true if a string is found on a slice
@@ -791,83 +753,248 @@ func contains(list []string, s string) bool {
 }
 ~~~
 
-
 You can download the controller code, remember to change the GitHub ID before bulding the operator:
 
 ~~~sh
-# Remember to change import: linuxerav1alpha1 "github.com/mvazquezc/reverse-words-operator/pkg/apis/linuxera/v1alpha1"
+# Remember to change import: appsv1alpha1 "github.com/mvazquezc/reverse-words-operator/api/v1alpha1"
 
-curl -Ls https://linuxera.org/assets/post_resources/2019-05-18-openshift-operator-framework/reversewordsapp_controller.go -o pkg/controller/reversewordsapp/reversewordsapp_controller.go
+curl -Ls https://linuxera.org/assets/post_resources/2019-05-18-openshift-operator-framework/reversewordsapp_controller.go -o ~/operators-projects/reverse-words-operator/controllers/reversewordsapp_controller.go
 ~~~
+
+## Setup Watch namespaces
+
+By default, the controller will watch all namespaces, in this case we want it to watch only the namespace where it runs, in order to do so we need to update the Controler options in the `main.go` file.
+
+~~~go
+/*
+
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+package main
+
+import (
+	"flag"
+	"fmt"
+	"k8s.io/apimachinery/pkg/runtime"
+	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
+	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
+	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
+	"os"
+	ctrl "sigs.k8s.io/controller-runtime"
+	"sigs.k8s.io/controller-runtime/pkg/log/zap"
+
+	appsv1alpha1 "github.com/mvazquezc/reverse-words-operator/api/v1alpha1"
+	"github.com/mvazquezc/reverse-words-operator/controllers"
+	// +kubebuilder:scaffold:imports
+)
+
+var (
+	scheme   = runtime.NewScheme()
+	setupLog = ctrl.Log.WithName("setup")
+)
+
+func init() {
+	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
+
+	utilruntime.Must(appsv1alpha1.AddToScheme(scheme))
+	// +kubebuilder:scaffold:scheme
+}
+
+func main() {
+	var metricsAddr string
+	var enableLeaderElection bool
+	flag.StringVar(&metricsAddr, "metrics-addr", ":8080", "The address the metric endpoint binds to.")
+	flag.BoolVar(&enableLeaderElection, "enable-leader-election", false,
+		"Enable leader election for controller manager. "+
+			"Enabling this will ensure there is only one active controller manager.")
+	flag.Parse()
+
+	ctrl.SetLogger(zap.New(zap.UseDevMode(true)))
+
+	watchNamespace, err := getWatchNamespace()
+	if err != nil {
+		setupLog.Error(err, "unable to get WatchNamespace, "+"the manager will watch and manage resources in all namespaces")
+	}
+
+	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
+		Scheme:             scheme,
+		MetricsBindAddress: metricsAddr,
+		Port:               9443,
+		LeaderElection:     enableLeaderElection,
+		LeaderElectionID:   "1ef59d40.linuxera.org",
+		Namespace:          watchNamespace, // namespaced-scope when the value is not an empty string
+	})
+	if err != nil {
+		setupLog.Error(err, "unable to start manager")
+		os.Exit(1)
+	}
+
+	if err = (&controllers.ReverseWordsAppReconciler{
+		Client: mgr.GetClient(),
+		Log:    ctrl.Log.WithName("controllers").WithName("ReverseWordsApp"),
+		Scheme: mgr.GetScheme(),
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "ReverseWordsApp")
+		os.Exit(1)
+	}
+	// +kubebuilder:scaffold:builder
+
+	setupLog.Info("starting manager")
+	if err := mgr.Start(ctrl.SetupSignalHandler()); err != nil {
+		setupLog.Error(err, "problem running manager")
+		os.Exit(1)
+	}
+}
+
+// getWatchNamespace returns the Namespace the operator should be watching for changes
+func getWatchNamespace() (string, error) {
+	// WatchNamespaceEnvVar is the constant for env variable WATCH_NAMESPACE
+	// which specifies the Namespace to watch.
+	// An empty value means the operator is running with cluster scope.
+	var watchNamespaceEnvVar = "WATCH_NAMESPACE"
+
+	ns, found := os.LookupEnv(watchNamespaceEnvVar)
+	if !found {
+		return "", fmt.Errorf("%s must be set", watchNamespaceEnvVar)
+	}
+	return ns, nil
+}
+~~~
+
+You can download the `main.go`, remember to change the GitHub ID before bulding the operator:
+
+~~~sh
+# Remember to change import: appsv1alpha1 "github.com/mvazquezc/reverse-words-operator/api/v1alpha1"
+
+curl -Ls https://linuxera.org/assets/post_resources/2019-05-18-openshift-operator-framework/main.go -o ~/operators-projects/reverse-words-operator/main.go
+~~~
+
+## Specify permissions and generate RBAC manifests
+
+Our controller needs some RBAC permissions to interact with the resources it manages. These has been specified via RBAC Markers in our controller code:
+
+~~~go
+// +kubebuilder:rbac:groups=apps.linuxera.org,resources=reversewordsapps,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=apps.linuxera.org,resources=reversewordsapps/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=apps,resources=deployments,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=core,resources=services,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=core,resources=pods,verbs=get;list;
+
+func (r *ReverseWordsAppReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
+~~~
+
+The ClusterRole manifest at config/rbac/role.yaml is generated from the above markers via controller-gen with the following command:
+
+~~~sh
+make manifests
+~~~
+
+## Run Tests
+
+We have our Operator business logic ready, we need to run the required tests before building the operator image. As of 09/15/2020 this step requires the user to download some utilities first.
+
+1. Download Setup EnvTest
+
+    ~~~sh
+    curl https://raw.githubusercontent.com/kubernetes-sigs/controller-runtime/v0.6.2/hack/setup-envtest.sh -o /tmp/setup-envtest.sh
+    source /tmp/setup-envtest.sh
+    fetch_envtest_tools ~/operators-projects/reverse-words-operator/testbin
+    set +o errexit
+    set +o pipefail
+    ~~~
+2. Configure EnvTest and Run tests
+
+    ~~~sh
+    export KUBEBUILDER_ASSETS=~/operators-projects/reverse-words-operator/testbin/bin
+    make test
+    ~~~
 
 ## Build the Operator
 
-We have our Operator business logic ready, so now it's time to build our Operator and deploy it onto our cluster.
-
 First, we will build the operator and once the image is built, we will push it to the [Quay Registry](https://quay.io/).
 
+Before we start building the operator, we need access to a Kubernetes cluster. If you don't have one you can use [Kind](https://github.com/kubernetes-sigs/kind/), [Minikube](https://github.com/kubernetes/minikube) or my prefered one, [KCli](https://github.com/karmab/kcli)
+
+In order to get a local cluster with KCli, just run this command:
+
 ~~~sh
-operator-sdk build quay.io/<your_user>/reverse-words-operator:latest --image-builder <[podman, buildah, docker]>
-podman push quay.io/<your_user>/reverse-words-operator:latest
+kcli create kube generic -P masters=1 -P workers=1 -P master_memory=4096 -P numcpus=2 -P worker_memory=4096 -P sdn=calico -P version=1.18 -P ingress=true -P ingress_method=nginx -P metallb=true -P domain=linuxera.org operatorscluster
+~~~
+
+Now that we have the cluster up and running we will build and push the operator.
+
+> **NOTE**: If you use podman instead of docker you can edit the Makefile and change docker commands by podman commands
+
+~~~sh
+export USERNAME=<quay-username>
+export KUBEBUILDER_ASSETS=~/operators-projects/reverse-words-operator/testbin/bin
+make docker-build docker-push IMG=quay.io/$USERNAME/reversewords-operator:v0.0.1
 ~~~
 
 ## Deploy the Operator
 
-1. Create a namespace for deploying and testing our operator
+1. Create the required CRDs in the cluster
 
     ~~~sh
-    kubectl create ns operator-test
+    make install
     ~~~
-2. Deploy the required RBAC
+2. Deploy the operator
 
-    ~~~sh
-    kubectl -n operator-test create -f deploy/role.yaml
-    kubectl -n operator-test create -f deploy/role_binding.yaml
-    kubectl -n operator-test create -f deploy/service_account.yaml
-    ~~~
-3. Load the CRD definition onto the cluster
+    > **NOTE**: While developing you can run the operator locally (you need a valid kubeconfig) by running `make run ENABLE_WEBHOOKS=false`
 
-    ~~~sh
-    kubectl -n operator-test create -f deploy/crds/linuxera.org_reversewordsapps_crd.yaml
-    ~~~
-4. Configure the operator deployment to use your operator's image 
+    In order to deploy the different operator pieces, Kustomize is used. There is a Kustomization file (`~/operators-projects/reverse-words-operator/config/default/kustomization.yaml`) where you can define some defaults for your operator, like the namePrefix for the different objects or the namespace where it will be deployed. 
 
-    ~~~sh
-    sed -i "s|REPLACE_IMAGE|quay.io/mavazque/reverse-words-operator:latest|g" deploy/operator.yaml
-    ~~~
-5. Deploy the Operator
+    1. Edit the default kustomization file `~/operators-projects/reverse-words-operator/config/default/kustomization.yaml` and specify the namespace where your operator should run by modifying the `namespace` property
 
-    ~~~sh
-    kubectl -n operator-test create -f deploy/operator.yaml
-    ~~~
+        ~~~sh
+        export NAMESPACE=operators-test
+        sed -i "s/namespace: .*/namespace: $NAMESPACE/g" ~/operators-projects/reverse-words-operator/config/default/kustomization.yaml
+        ~~~   
+    
+    2. Create the namespace and Deploy the operator
+
+        ~~~sh
+        kubectl create ns $NAMESPACE
+        export USERNAME=<quay_username>
+        make deploy IMG=quay.io/$USERNAME/reversewords-operator:v0.0.1
+        ~~~
+    3. Patch the controller deployment so it only watches the namespace where it's running
+   
+        ~~~sh
+        kubectl -n $NAMESPACE patch deployment reverse-words-operator-controller-manager -p '{"spec":{"template":{"spec":{"$setElementOrder/containers":[{"name":"kube-rbac-proxy"},{"name":"manager"}],"containers":[{"env":[{"name":"WATCH_NAMESPACE","valueFrom":{"fieldRef":{"fieldPath":"metadata.namespace"}}}],"name":"manager"}]}}}}'
+        ~~~
 6. We should see our operator pod up and running
 
     ~~~
-    {"level":"info","ts":1592487536.755071,"logger":"cmd","msg":"Operator Version: 0.0.1"}
-    {"level":"info","ts":1592487536.755109,"logger":"cmd","msg":"Go Version: go1.14.3"}
-    {"level":"info","ts":1592487536.755112,"logger":"cmd","msg":"Go OS/Arch: linux/amd64"}
-    {"level":"info","ts":1592487536.7551138,"logger":"cmd","msg":"Version of operator-sdk: v0.18.1"}
-    {"level":"info","ts":1592487536.7552574,"logger":"leader","msg":"Trying to become the leader."}
-    {"level":"info","ts":1592487537.1796994,"logger":"leader","msg":"No pre-existing lock was found."}
-    {"level":"info","ts":1592487537.1892998,"logger":"leader","msg":"Became the leader."}
-    {"level":"info","ts":1592487537.594534,"logger":"controller-runtime.metrics","msg":"metrics server is starting to listen","addr":"0.0.0.0:8383"}
-    {"level":"info","ts":1592487537.5949817,"logger":"cmd","msg":"Registering Components."}
-    {"level":"info","ts":1592487538.4341457,"logger":"metrics","msg":"Metrics Service object created","Service.Name":"reverse-words-operator-metrics","Service.Namespace":"operator-test"}
-    {"level":"info","ts":1592487538.8361359,"logger":"cmd","msg":"Could not create ServiceMonitor object","error":"no ServiceMonitor registered with the API"}
-    {"level":"info","ts":1592487538.8361676,"logger":"cmd","msg":"Install prometheus-operator in your cluster to create ServiceMonitor objects","error":"no ServiceMonitor registered with the API"}
-    {"level":"info","ts":1592487538.8361745,"logger":"cmd","msg":"Starting the Cmd."}
-    {"level":"info","ts":1592487538.8364465,"logger":"controller-runtime.manager","msg":"starting metrics server","path":"/metrics"}
-    {"level":"info","ts":1592487538.8366175,"logger":"controller-runtime.controller","msg":"Starting EventSource","controller":"reversewordsapp-controller","source":"kind source: /, Kind="}
-    {"level":"info","ts":1592487538.9373057,"logger":"controller-runtime.controller","msg":"Starting EventSource","controller":"reversewordsapp-controller","source":"kind source: /, Kind="}
-    {"level":"info","ts":1592487539.0381253,"logger":"controller-runtime.controller","msg":"Starting EventSource","controller":"reversewordsapp-controller","source":"kind source: /, Kind="}
-    {"level":"info","ts":1592487539.1386664,"logger":"controller-runtime.controller","msg":"Starting Controller","controller":"reversewordsapp-controller"}
-    {"level":"info","ts":1592487539.1387355,"logger":"controller-runtime.controller","msg":"Starting workers","controller":"reversewordsapp-controller","worker count":1}
+    2020-09-16T08:57:58.546Z	INFO	controller-runtime.metrics	metrics server is starting to listen	{"addr": "127.0.0.1:8080"}
+    2020-09-16T08:57:58.547Z	INFO	setup	starting manager
+    I0916 08:57:58.548253       1 leaderelection.go:242] attempting to acquire leader lease  operators-test/1ef59d40.linuxera.org...
+    2020-09-16T08:57:58.548Z	INFO	controller-runtime.manager	starting metrics server	{"path": "/metrics"}
+    I0916 08:58:16.047589       1 leaderelection.go:252] successfully acquired lease operators-test/1ef59d40.linuxera.org
+    2020-09-16T08:58:16.047Z	DEBUG	controller-runtime.manager.events	Normal	{"object": {"kind":"ConfigMap","namespace":"operators-test","name":"1ef59d40.linuxera.org","uid":"32d4ccff-81be-4e2b-83e6-34a465ce1a73","apiVersion":"v1","resourceVersion":"558"}, "reason": "LeaderElection", "message": "reverse-words-operator-controller-manager-64bccdd6fd-4c2xj_30f1caae-7779-4780-8996-9ad1a6ed1c71 became leader"}
+    2020-09-16T08:58:16.052Z	INFO	controller	Starting EventSource	{"reconcilerGroup": "apps.linuxera.org", "reconcilerKind": "ReverseWordsApp", "controller": "reversewordsapp", "source": "kind source: /, Kind="}
+    2020-09-16T08:58:16.154Z	INFO	controller	Starting EventSource	{"reconcilerGroup": "apps.linuxera.org", "reconcilerKind": "ReverseWordsApp", "controller": "reversewordsapp", "source": "kind source: /, Kind="}
+    2020-09-16T08:58:16.255Z	INFO	controller	Starting EventSource	{"reconcilerGroup": "apps.linuxera.org", "reconcilerKind": "ReverseWordsApp", "controller": "reversewordsapp", "source": "kind source: /, Kind="}
+    2020-09-16T08:58:16.355Z	INFO	controller	Starting Controller	{"reconcilerGroup": "apps.linuxera.org", "reconcilerKind": "ReverseWordsApp", "controller": "reversewordsapp"}
+    2020-09-16T08:58:16.355Z	INFO	controller	Starting workers	{"reconcilerGroup": "apps.linuxera.org", "reconcilerKind": "ReverseWordsApp", "controller": "reversewordsapp", "worker count": 1}
     ~~~
 7. Now it's time to create ReverseWordsApp instances
 
     ~~~sh
-    cat <<EOF | kubectl -n operator-test create -f -
-    apiVersion: linuxera.org/v1alpha1
+    cat <<EOF | kubectl -n $NAMESPACE create -f -
+    apiVersion: apps.linuxera.org/v1alpha1
     kind: ReverseWordsApp
     metadata:
         name: example-reversewordsapp
@@ -875,8 +1002,8 @@ podman push quay.io/<your_user>/reverse-words-operator:latest
         replicas: 1
     EOF
 
-    cat <<EOF | kubectl -n operator-test create -f -
-    apiVersion: linuxera.org/v1alpha1
+    cat <<EOF | kubectl -n $NAMESPACE create -f -
+    apiVersion: apps.linuxera.org/v1alpha1
     kind: ReverseWordsApp
     metadata:
         name: example-reversewordsapp-2
@@ -887,38 +1014,38 @@ podman push quay.io/<your_user>/reverse-words-operator:latest
 8. We should see two deployments and services being created, and if wee look at the status of our object we should see the pods backing the instance
 
     ~~~sh
-    kubectl -n operator-test get reversewordsapps example-reversewordsapp -o yaml
+    kubectl -n $NAMESPACE get reversewordsapps example-reversewordsapp -o yaml
 
-    apiVersion: linuxera.org/v1alpha1
+    apiVersion: apps.linuxera.org/v1alpha1
     kind: ReverseWordsApp
     metadata:
-      creationTimestamp: "2020-06-18T13:41:32Z"
+      creationTimestamp: "2020-09-16T09:00:30Z"
       finalizers:
-      - finalizer.reversewordsapp.linuxera.org
+      - finalizer.reversewordsapp.apps.linuxera.org
       generation: 1
       name: example-reversewordsapp
-      namespace: operator-test
-      resourceVersion: "34887"
-      selfLink: /apis/linuxera.org/v1alpha1/namespaces/operator-test/reversewordsapps/example-reversewordsapp
-      uid: 0a1eb6f5-dcaf-4d5f-996b-3ea9e2711527
+      namespace: operators-test
+      resourceVersion: "740"
+      selfLink: /apis/apps.linuxera.org/v1alpha1/namespaces/operators-test/reversewordsapps/example-reversewordsapp
+      uid: 089b5402-83cb-4663-b265-e6cc8658cb33
     spec:
       replicas: 1
     status:
       appPods:
-      - deployment-example-reversewordsapp-5786d986c5-56wpn
+      - dp-example-reversewordsapp-8cd4f5d64-qvk4r
       conditions:
-      - lastTransitionTime: "2020-06-18T13:41:46Z"
-        status: "True"
-        type: Ready
-      - lastTransitionTime: "2020-06-18T13:41:46Z"
+      - lastTransitionTime: "2020-09-16T09:00:31Z"
         status: "False"
+        type: Ready
+      - lastTransitionTime: "2020-09-16T09:00:31Z"
+        status: "True"
         type: ReverseWordsDeploymentNotReady
     ~~~
 
 9. We can test our application now
 
     ~~~sh
-    LB_ENDPOINT=$(kubectl -n operator-test get svc --selector='app=example-reversewordsapp' -o jsonpath='{.items[*].status.loadBalancer.ingress[*].hostname}')
+    LB_ENDPOINT=$(kubectl -n $NAMESPACE get svc --selector='app=example-reversewordsapp' -o jsonpath='{.items[*].status.loadBalancer.ingress[*].hostname}')
     
     curl -X POST -d '{"word":"PALC"}' http://$LB_ENDPOINT:8080
     {"reverse_word":"CLAP"}
@@ -926,11 +1053,9 @@ podman push quay.io/<your_user>/reverse-words-operator:latest
 10. Cleanup
 
     ~~~sh
-    kubectl -n operator-test delete reversewordsapp example-reversewordsapp
-    kubectl -n operator-test delete reversewordsapp example-reversewordsapp-2
-    kubectl -n operator-test delete -f deploy/operator.yaml
-    kubectl -n operator-test delete -f deploy/crds/linuxera.org_reversewordsapps_crd.yaml
-    kubectl delete ns operator-test
+    kubectl -n $NAMESPACE delete reversewordsapp example-reversewordsapp example-reversewordsapp-2
+    kubectl delete -f config/crd/bases/apps.linuxera.org_reversewordsapps.yaml 
+    kubectl delete ns operators-test
     ~~~
 11. That's it!
 
