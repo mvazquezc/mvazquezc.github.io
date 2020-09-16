@@ -1061,7 +1061,7 @@ make docker-build docker-push IMG=quay.io/$USERNAME/reversewords-operator:v0.0.1
 
 # In the next episode:
 
-* We will look at how to use OLM to release our operator
+* [We will look at how to use OLM to release our operator](https://linuxera.org/integrating-operators-olm/)
 * We will see a K8s controllers deep dive
 
 # Sources
