@@ -83,14 +83,8 @@ Comma-separated list of keywords for your operator (required):
 Comma-separated list of maintainers and their emails (e.g. 'name1:email1, name2:email2') (required): 
 > mario@linuxera.org
 
-which: no controller-gen in (/home/mario/.local/bin:/home/mario/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/home/mario/.krew/bin:/home/mario/.krew/bin)
-which: no kustomize in (/home/mario/.local/bin:/home/mario/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/home/mario/.krew/bin:/home/mario/.krew/bin)
-go: creating new go.mod: module tmp
-go: found sigs.k8s.io/controller-tools/cmd/controller-gen in sigs.k8s.io/controller-tools v0.3.0
-/home/mario/go/bin/controller-gen "crd:trivialVersions=true" rbac:roleName=manager-role webhook paths="./..." output:crd:artifacts:config=config/crd/bases
-operator-sdk generate kustomize manifests -q
-cd config/manager && /home/mario/go/bin/kustomize edit set image controller=controller:latest
-/home/mario/go/bin/kustomize build config/manifests | operator-sdk generate bundle -q --overwrite --version 0.0.1  
+cd config/manager && /home/mario/go/bin/kustomize edit set image controller=quay.io/mavazque/reversewords-operator:v0.0.1
+/home/mario/go/bin/kustomize build config/manifests | operator-sdk generate bundle -q --overwrite --version 0.0.1 --channels=alpha --default-channel=alpha
 INFO[0000] Building annotations.yaml                    
 INFO[0000] Writing annotations.yaml in /home/mario/operators-projects/reverse-words-operator/bundle/metadata 
 INFO[0000] Building Dockerfile                          
@@ -125,7 +119,6 @@ We need to tweak the ClusterServiceVersion a bit:
 You can download the modified CSV here:
 
 ~~~sh
-QUAY_USERNAME=<username>
 curl -Ls https://linuxera.org/assets/post_resources/2020-09-16-operator-sdk-olm-integration/reverse-words-operator.clusterserviceversion_v0.0.1.yaml -o ~/operators-projects/reverse-words-operator/bundle/manifests/reverse-words-operator.clusterserviceversion.yaml
 sed -i "s/QUAY_USER/$QUAY_USERNAME/g" ~/operators-projects/reverse-words-operator/bundle/manifests/reverse-words-operator.clusterserviceversion.yaml
 ~~~
@@ -137,7 +130,6 @@ Now that we have the Operator Bundle ready we can build it and push it to [Quay]
 1. Build the bundle
 
     ~~~sh
-    QUAY_USERNAME=<username>
     podman build -f bundle.Dockerfile -t quay.io/$QUAY_USERNAME/reversewords-operator-bundle:v0.0.1
     ~~~
 2. Push and validate the bundle
@@ -200,6 +192,7 @@ At this point we can create a `Subscription` to our operator:
     NAMESPACE=test-operator-subscription
     kubectl create ns $NAMESPACE
     ~~~
+2. Create the subscription in the namespace we just created
 
     ~~~sh
     cat <<EOF | kubectl -n $NAMESPACE create -f - 
@@ -223,7 +216,7 @@ At this point we can create a `Subscription` to our operator:
       - $NAMESPACE
     EOF
     ~~~
-2. The operator will be deployed in the namespace
+3. The operator will be deployed in the namespace
 
     ~~~sh
     kubectl -n $NAMESPACE get pods
@@ -241,7 +234,6 @@ In the previous steps we create the version `v0.0.1` for our Operator, we are go
 First we create a new CSV version in the same channel we used for v0.0.1:
 
 ~~~sh
-QUAY_USERNAME=<username>
 make bundle VERSION=0.0.2 CHANNELS=alpha DEFAULT_CHANNEL=alpha IMG=quay.io/$QUAY_USERNAME/reversewords-operator:v0.0.2
 ~~~
 
@@ -254,7 +246,6 @@ We need to tweak the ClusterServiceVersion a bit:
 You can download the modified CSV here:
 
 ~~~sh
-QUAY_USERNAME=<username>
 curl -Ls https://linuxera.org/assets/post_resources/2020-09-16-operator-sdk-olm-integration/reverse-words-operator.clusterserviceversion_v0.0.2.yaml -o ~/operators-projects/reverse-words-operator/bundle/manifests/reverse-words-operator.clusterserviceversion.yaml
 sed -i "s/QUAY_USER/$QUAY_USERNAME/g" ~/operators-projects/reverse-words-operator/bundle/manifests/reverse-words-operator.clusterserviceversion.yaml
 ~~~
@@ -264,7 +255,6 @@ Now that we have the new Operator Bundle ready we can build it and push it to [Q
 1. Build the new bundle
 
     ~~~sh
-    QUAY_USERNAME=<username>
     podman build -f bundle.Dockerfile -t quay.io/$QUAY_USERNAME/reversewords-operator-bundle:v0.0.2
     ~~~
 2. Push and validate the new bundle
