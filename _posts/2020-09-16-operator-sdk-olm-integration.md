@@ -293,3 +293,10 @@ The catalog pod will be recreated with the new index image and the package manif
 ## Updating to a new Operator version
 
 Depending on the `installPlanApproval` you selected when you created the subscription the operator will be updated automatically when a new version is published or you may need to approve the `installPlan` so the operator gets updated.
+
+# Sources
+
+* [OLM Generation Docs](https://github.com/operator-framework/operator-sdk/blob/master/website/content/en/docs/olm-integration/generation.md)
+* [Operator Registry Docs](https://github.com/operator-framework/operator-registry/blob/master/README.md)
+* [Operator SDK OLM Integration Bundle Quickstart](https://sdk.operatorframework.io/docs/olm-integration/quickstart-bundle/)
+* [Operator SDK Generating Manifests and Metadata](https://sdk.operatorframework.io/docs/olm-integration/generation/)
