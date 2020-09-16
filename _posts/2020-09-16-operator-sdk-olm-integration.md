@@ -133,6 +133,7 @@ sed -i "s/QUAY_USER/$QUAY_USERNAME/g" ~/operators-projects/reverse-words-operato
 Now that we have the Operator Bundle ready we can build it and push it to [Quay](https://quay.io). After that we will build the index image and once the index image is ready, we will use it to deploy our operator.
 
 > **NOTE**: I'll be using podman, you can use docker as well
+
 1. Build the bundle
 
     ~~~sh
