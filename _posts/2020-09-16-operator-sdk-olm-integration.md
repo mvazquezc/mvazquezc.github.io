@@ -3,7 +3,7 @@ layout: post
 title:  "Integrating our Operators with OLM"
 author: "Mario"
 categories: [ okd, origin, containers, kubernetes, operators, controllers, operator framework, operator sdk, operator lifecycle manager, olm ]
-featured: true
+featured: false
 image: assets/images/2020-09-16-operator-sdk-olm-integration.jpg
 image-author: "Ammiel Jr"
 image-author-link: "https://unsplash.com/@helloitsammiel"

@@ -3,7 +3,7 @@ layout: post
 title:  "Writing Operators using the Operator Framework SDK"
 author: "Mario"
 categories: [ okd, origin, containers, kubernetes, operators, controllers, operator framework, operator sdk, openshift ]
-featured: true
+featured: false
 image: assets/images/2019-05-18-openshift-operator-framework.jpg
 image-author: "Dan Lohmar"
 image-author-link: "https://unsplash.com/@dlohmar"

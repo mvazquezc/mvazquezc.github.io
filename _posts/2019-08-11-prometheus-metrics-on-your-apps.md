@@ -3,7 +3,7 @@ layout: post
 title:  "Enabling Prometheus Metrics on your Applications"
 author: "Mario"
 categories: [ prometheus, golang, metrics, development ]
-featured: true
+featured: false
 image: assets/images/2019-08-11-prometheus-metrics-on-your-apps.jpg
 image-author: "Mitchel Boot"
 image-author-link: "https://unsplash.com/@valeon?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
