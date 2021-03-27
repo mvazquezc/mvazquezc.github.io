@@ -175,6 +175,7 @@ During the following scenarios we will get capabilities assigned to processes, t
     ~~~
 
     > **NOTE**: The command returns the different capability sets in hex format, we will use a tool to decode that information.
+
     ~~~sh
     CapInh:	00000000800405fb
     CapPrm:	00000000800405fb
@@ -189,6 +190,7 @@ During the following scenarios we will get capabilities assigned to processes, t
     ~~~
 
     > **NOTE**: As you can see below capabilities were assigned since those are the [runtime's defaults](https://github.com/containers/common/blob/v0.33.1/pkg/config/default.go#L62-L77) and our container is running with UID 0 so no capabilities were dropped.
+
     ~~~
     0x00000000800405fb=cap_chown,cap_dac_override,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_net_bind_service,cap_sys_chroot,cap_setfcap
     ~~~
@@ -251,6 +253,7 @@ We explained the different behaviour between a container running with root's UID
     ~~~
 
     > **NOTE**: As you can see since we're running with a nonroot UID our `permitted` and `effective` set were cleared. We could still use file capabilities.
+
     ~~~
     CapInh:	00000000800405fb
     CapPrm:	0000000000000000
@@ -273,6 +276,7 @@ We explained the different behaviour between a container running with root's UID
     ~~~
 
     > **NOTE**: You can see that we got some capability in the `permitted` and `effective` set, let's decode it.
+
     ~~~
     CapInh:	00000000800405fb
     CapPrm:	0000000000000400
@@ -287,6 +291,7 @@ We explained the different behaviour between a container running with root's UID
     ~~~
 
     > **NOTE**: As expected, the NET_BIND_SERVICE capability was added to the containers `permitted` and `effective` set.
+
     ~~~
     0x0000000000000400=cap_net_bind_service
     ~~~
@@ -311,6 +316,7 @@ We have our test application, it runs a small web-service on a given port. We wa
     ~~~
 
     > **NOTE**: As you can see the application is running properly.
+
     ~~~
     2021/03/27 17:12:49 Starting Reverse Api v0.0.18 Release: NotSet
     2021/03/27 17:12:49 Listening on port 8080
@@ -323,6 +329,7 @@ We have our test application, it runs a small web-service on a given port. We wa
     ~~~
 
     > **NOTE**: We got a permission denied, if you remember since we're running with a nonroot UID the capability sets were cleared.
+
     ~~~
     2021/03/27 17:15:56 Starting Reverse Api v0.0.18 Release: NotSet
     2021/03/27 17:15:56 Listening on port 80
@@ -335,6 +342,7 @@ We have our test application, it runs a small web-service on a given port. We wa
     ~~~
 
     > **NOTE**: Now the application was able to bind to port 80 even if it's running with a nonroot user because the capability `NET_BIND_SERVICE` was added to the thread's effective set.
+
     ~~~
     2021/03/27 17:18:07 Starting Reverse Api v0.0.18 Release: NotSet
     2021/03/27 17:18:07 Listening on port 80
@@ -346,6 +354,7 @@ We have our test application, it runs a small web-service on a given port. We wa
 For this example we're using the same application, but this time we set file capabilities to our application binary using the `setcap` command:
 
 > **NOTE**: We added the `NET_BIND_SERVICE` in the `effective` and `permitted` file capability set.
+
 ~~~sh
 setcap 'cap_net_bind_service+ep' /usr/bin/reverse-words
 ~~~
@@ -362,6 +371,7 @@ setcap 'cap_net_bind_service+ep' /usr/bin/reverse-words
     ~~~
 
     > **NOTE**: As previously mentioned, `NET_BIND_SERVICE` capability was added.
+
     ~~~
     /usr/bin/reverse-words = cap_net_bind_service+ep
     ~~~
@@ -372,6 +382,7 @@ setcap 'cap_net_bind_service+ep' /usr/bin/reverse-words
     ~~~
 
     > **NOTE**: We don't have the `NET_BIND_SERVICE` capability in the effective set, which means that we won't be able to bind to port 80 under normal circumstances. If we decode the `inherited` set we will see that the `NET_BIND_SERVICE` capability is present, that means that we should be able to use file capabilities to get that capability in the `effective` and `permitted` set.
+
     ~~~
     CapInh:	00000000800405fb
     CapPrm:	0000000000000000
@@ -386,6 +397,7 @@ setcap 'cap_net_bind_service+ep' /usr/bin/reverse-words
     ~~~
 
     > **NOTE**: We were able to bind to port 80 since the file capability granted access to `NET_BIND_SERVICE` to our application thread.
+
     ~~~
     2021/03/27 17:26:51 Starting Reverse Api v0.0.18 Release: NotSet
     2021/03/27 17:26:51 Listening on port 80
@@ -408,6 +420,7 @@ setcap 'cap_net_bind_service+ep' /usr/bin/reverse-words
     ~~~
 
     > **NOTE**: We don't have any capability in any capability set for the thread.
+
     ~~~
     CapInh:	0000000000000000
     CapPrm:	0000000000000000
@@ -418,6 +431,7 @@ setcap 'cap_net_bind_service+ep' /usr/bin/reverse-words
 8. If we try to run our application:
 
     > **NOTE**: The kernel stopped us from getting the `NET_BIND_SERVICE` and thus executing our app.
+
     ~~~sh
     bash: /usr/bin/reverse-words: Operation not permitted
     ~~~
@@ -456,6 +470,7 @@ In this scenario we will generate a `seccomp` profile for our container, in orde
     ~~~
 
     > **NOTE**: We can see the `syscalls` that were made by our container in order to run the `ls /` command.
+
     ~~~json
     {
       "defaultAction": "SCMP_ACT_ERRNO",
@@ -515,6 +530,7 @@ In this scenario we will generate a `seccomp` profile for our container, in orde
     ~~~
 
     > **NOTE**: The `ls -l` command failed because it requires additional `syscalls` that are not permitted by our `seccomp` profile.
+
     ~~~
     ls: cannot access '/': Operation not permitted
     ~~~
@@ -530,6 +546,7 @@ In this scenario we will generate a `seccomp` profile for our container, in orde
     ~~~
 
     > **NOTE**: We can see the additional `syscalls` required by the `ls -l` command below.
+    
     ~~~
     42a43,61
     >     },
