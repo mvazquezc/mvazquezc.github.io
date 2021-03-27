@@ -179,6 +179,8 @@ These resources may exist in multiple spaces. The list of existing namespaces ar
 | User | User and Group IDs |
 | UTS | Hostname and NIS domain name |
 
+<br>
+
 ### Creating namespaces with unshare
 
 Creating namespaces is just a single [syscall (unshare)](https://man7.org/linux/man-pages/man2/unshare.2.html). There is also a `unshare` command line tool that provides a nice wrapper around the syscall.
@@ -512,7 +514,7 @@ As you know, Linux containers run directly on top of the host system and share m
 
 In order to limit the attack surface there are many technologies involved in limiting the power of processes running in the container such as SELinux, Security Compute Profiles and Linux Capabilities.
 
-In a future blog post we will go over Security Compute Profiles and Linux Capabilities.
+You can learn more in [this blogpost](https://linuxera.org/container-security-capabilities-seccomp/).
 
 # Closing Thoughts
 
