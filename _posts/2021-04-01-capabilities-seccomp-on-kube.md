@@ -20,6 +20,7 @@ In a [previous post](https://linuxera.org/container-security-capabilities-seccom
 We will need a Kubernetes cluster, I'm going to use [kcli](https://github.com/karmab/kcli) in order to get one. Below command will deploy a Kubernetes cluster on VMs:
 
 > **NOTE**: You can create a [parameters file](https://kcli.readthedocs.io/en/latest/index.html#create-a-parameters-yml) with the cluster configuration as well.
+
 ~~~sh
 # Create a Kubernetes 1.20 cluster with 1 master and 1 worker using calico as SDN, nginx as ingress controller, metallb for loadbalancer services and CRI-O as container runtime
 kcli create kube generic -P masters=1 -P workers=1  -P master_memory=4096 -P numcpus=2 -P worker_memory=4096 -P sdn=calico -P version=1.20 -P ingress=true -P ingress_method=nginx -P metallb=true -P engine=crio -P domain=linuxera.org caps-cluster
@@ -52,7 +53,7 @@ Capabilities on Kubernetes are configured for pods or containers via the [Securi
 
 In the next scenarios we are going to see how we can configure different capabilities for our containers and how they behave depending on the user running our container.
 
-We will be using a demo application that listens on a given port, by default the application image uses a non-root user. In a [previous post](https://linuxera.org/container-security-capabilities-seccomp/) we mentioned how capabilities behave differently depending on the user that runs the process, we will see how that affect when running on containers.
+We will be using a demo application that listens on a given port, by default the application image uses a non-root user. In a [previous post](https://linuxera.org/container-security-capabilities-seccomp/) we mentioned how capabilities behave differently depending on the user that runs the process, we will see how that affects when running on containers.
 
 ### Container Runtime Default Capabilities
 
@@ -164,11 +165,11 @@ The capabilities in the list above will be the ones added to containers by defau
 
 You can see how the `effective` and `permissive` sets were cleared. We explained that behaviour in our [previous post](https://linuxera.org/container-security-capabilities-seccomp/). That happens because we're doing `execve` to an unprivileged process so those capability sets get cleared.
 
-This has some consecuences when running our workloads on Kubernetes, outside Kubernetes we could use `Ambient` capabilities, but at the time of this writing, Ambient capabilities [are not supported on Kubernetes](https://github.com/kubernetes/kubernetes/issues/56374). This means that we can only use file capabilities or capability aware programs in order to get capabilities on programs running as nonroot on Kubernetes.
+This has some consequences when running our workloads on Kubernetes, outside Kubernetes we could use `Ambient` capabilities, but at the time of this writing, Ambient capabilities [are not supported on Kubernetes](https://github.com/kubernetes/kubernetes/issues/56374). This means that we can only use file capabilities or capability aware programs in order to get capabilities on programs running as nonroot on Kubernetes.
 
 ### Configuring capabilities for our workloads
 
-At this point we know what are the differences with regards to capabilities when running our workloads with a `root` or a `nonroot` UID. In the next scenarios we are going to see how we can configure or workloads so they only get the required capabilities they need in order to run.
+At this point we know what are the differences with regards to capabilities when running our workloads with a `root` or a `nonroot` UID. In the next scenarios we are going to see how we can configure our workloads so they only get the required capabilities they need in order to run.
 
 **Workload running with root UID**
 
@@ -390,7 +391,7 @@ We are going to create the two seccomp profiles that we will be using in the nod
 
 Create below file on every node that can run workloads as `/var/lib/kubelet/seccomp/centos8-ls.json`:
 
-> **NOTE**: This is the seccomp profile that allow us to run a `centos8` image that runs `ls /` as we saw in the previus post.
+> **NOTE**: This is the seccomp profile that allows us to run a `centos8` image that runs `ls /` as we saw in the previous post.
 
 ~~~json
 {
@@ -533,8 +534,8 @@ Create below file on every node that can run workloads as `/var/lib/kubelet/secc
 
 # Closing Thoughts
 
-At this point you should've a clear unerstanding of when your workloads will benefit from using capabilities or seccomp profiles.
+At this point you should've a clear understanding of when your workloads will benefit from using capabilities or seccomp profiles.
 
-We've not been throught how we can control which capabilities / seccomp a specific user can use, `PodSecurityPolicies` can be used to control such things on Kubernetes. In [OpenShift](openshift.com) you can use `SecurityContextConstraints`.
+We've not been through how we can control which capabilities / seccomp a specific user can use, `PodSecurityPolicies` can be used to control such things on Kubernetes. In [OpenShift](openshift.com) you can use `SecurityContextConstraints`.
 
 If you want to learn more around these topics feel free to take a look at the following SCCs lab: https://github.com/mvazquezc/scc-fun/blob/main/README.md
