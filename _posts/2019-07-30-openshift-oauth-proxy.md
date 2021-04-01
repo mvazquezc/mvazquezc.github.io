@@ -3,7 +3,7 @@ layout: post
 title:  "Using OpenShift OAuth Proxy to secure your Applications on OpenShift"
 author: "Mario"
 categories: [ okd, origin, containers, kubernetes, openshift, oauth, proxy ]
-featured: true
+featured: false
 image: assets/images/2019-07-30-openshift-oauth-secure-apps.jpg
 image-author: "Micah Williams"
 image-author-link: "https://unsplash.com/@mr_williams_photography"

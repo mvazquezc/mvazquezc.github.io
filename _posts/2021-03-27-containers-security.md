@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Container Security - Linux Capabilities and Security Compute Profiles"
+title:  "Container Security - Linux Capabilities and Secure Compute Profiles"
 author: "Mario"
 categories: [ linux, seccomp, containers, kubernetes, capabilities, security, profiles, devsecops ]
 featured: true
@@ -13,13 +13,13 @@ permalink: /container-security-capabilities-seccomp/
 hidden: false
 ---
 
-# Container Security - Linux Capabilities and Security Compute Profiles
+# Container Security - Linux Capabilities and Secure Compute Profiles
 
 In this post we are going to see two security mechanisms used in Linux Containers in order to provide a security layer for our workloads.
 
-We will see how Linux Capabilities and Security Compute Profiles can be used for limiting the attack surface for our containers.
+We will see how Linux Capabilities and Secure Compute Profiles can be used for limiting the attack surface for our containers.
 
-The first part of the blog post will be an introduction to Linux Capabilities and Security Compute Profiles, second part will show how these technologies work through the use of demos.
+The first part of the blog post will be an introduction to Linux Capabilities and Secure Compute Profiles, second part will show how these technologies work through the use of demos.
 
 ## Linux Capabilities
 
@@ -58,7 +58,7 @@ Container runtimes have some of these capabilities enabled by default, for examp
 
 One potential question you might have could be "What capabilities are required for my application?" - Well, knowing which capabilities are required by your applications requires a very good knowledge of the application by the developer. There is no magic tool that will tell you which capabilities are actually required.
 
-## Security Compute Profiles (Seccomp)
+## Secure Compute Profiles (Seccomp)
 
 Containers typically run a single application with a set of well-defined tasks, these applications usually require a small subset of the underlying operating system kernel APIs. For example, an _httpd_ server does not require the [mount _syscall_](https://man7.org/linux/man-pages/man2/mount.2.html) at all, why should the app have access to this _syscall_?
 
@@ -75,7 +75,7 @@ Creating your own _seccomp_ profiles can be tedious and often requires deep know
 * [strace](https://man7.org/linux/man-pages/man1/strace.1.html)
 * etc
 
-Security Compute Profiles can be defined using JSON, below we will see an example:
+Secure Compute Profiles can be defined using JSON, below we will see an example:
 
 ~~~json
 {
@@ -452,7 +452,7 @@ If our application was that smarter it would've raised the `NET_BIND_SERVICE` be
 For example, we can build capability aware programs in go by using a library like [this](https://pkg.go.dev/kernel.org/pub/linux/libs/security/libcap/cap).
 
 
-## Security Compute Profiles in Action
+## Secure Compute Profiles in Action
 
 In this scenario we will generate a `seccomp` profile for our container, in order to do that we will use the [OCI Hook project](https://github.com/containers/oci-seccomp-bpf-hook).
 
