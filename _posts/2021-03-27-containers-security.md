@@ -120,31 +120,23 @@ Above policy can be interpreted as:
 In the previous section on capabilities we said that capabilities are a per-thread attribute, and as such every thread has the following capability sets containing zero or more capabilities:
 
 * Permitted Set
-
     * Capabilities that the thread may assume. It also limits the capabilities that may be added to the inheritable set by a thread that has the **SETPCAP** capability in its effective set. If a thread drops a capability from its permitted set, it can never reacquire that capability unless it **[execve](https://man7.org/linux/man-pages/man2/execve.2.html)** either a SETUID program or a program with that capability set as a permitted file capability.
 * Inheritable Set
-
     * Capabilities preserved across an **[execve](https://man7.org/linux/man-pages/man2/execve.2.html)**. Inheritable capabilities remain inheritable when executing any program, and they will be added to the permitted set when executing a program that has that capability set as inheritable file capability. Keep in mind that inheritable capabilities are not generally preserved across **[execve](https://man7.org/linux/man-pages/man2/execve.2.html)** when running as a non-root user, for such uses cases consider using ambient capabilities.
 * Effective Set
-
     * Capabilities used by the kernel to perform permission checks for the thread.
 * Bounding Set
-
     * Used to limit which capabilities can be gained during **[execve](https://man7.org/linux/man-pages/man2/execve.2.html)**.
 * Ambient Set
-
     * Capabilities that are preserved across an **[execve](https://man7.org/linux/man-pages/man2/execve.2.html)** of a program that is not privileged. No capability can ever be ambient if it's not both permitted and inheritable. Executing a program that changes UID or GID due to SETUID or SETGID bits or executing a program that has file capabilities set will clear the ambient set. Ambient capabilities are added to the permitted set and assigned to the effective set when **[execve](https://man7.org/linux/man-pages/man2/execve.2.html)** is called.
 
 On top of **thread capabilities** we have **file capabilities**, which are capabilities assigned to an executable file and that upon execution will be granted to the thread. These file capabilities are stored using one bit, but they act as different file capability sets:
 
 * Permitted Set
-
     * Capabilities that are automatically permitted to the thread, regardless of the thread's inheritable capabilities.
 * Inheritable
-
     * Capabilities that are ANDed with the thread's inheritable set to determine which inheritable capabilities are enabled in the permitted set of the thread after the **[execve](https://man7.org/linux/man-pages/man2/execve.2.html)**.
 * Effective
-
     * This is not a capability set, but rather just a single bit. If set, during an **[execve](https://man7.org/linux/man-pages/man2/execve.2.html)** all of the thread's permitted capabilities are also raised in the effective set. If not set, after an **[execve](https://man7.org/linux/man-pages/man2/execve.2.html)**, none of the thread's permitted capabilities are raised in the effective set. Enabling a capability in the file effective set implies that the thread will acquire that capability in its permitted set.
 
 ### Capabilities and containers
