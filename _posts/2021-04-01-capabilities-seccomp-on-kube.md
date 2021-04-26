@@ -163,7 +163,7 @@ The capabilities in the list above will be the ones added to containers by defau
     CapAmb:	0000000000000000
     ~~~
 
-You can see how the `effective` and `permissive` sets were cleared. We explained that behaviour in our [previous post](https://linuxera.org/container-security-capabilities-seccomp/). That happens because we're doing `execve` to an unprivileged process so those capability sets get cleared.
+You can see how the `effective` and `permitted` sets were cleared. We explained that behaviour in our [previous post](https://linuxera.org/container-security-capabilities-seccomp/). That happens because we're doing `execve` to an unprivileged process so those capability sets get cleared.
 
 This has some consequences when running our workloads on Kubernetes, outside Kubernetes we could use `Ambient` capabilities, but at the time of this writing, Ambient capabilities [are not supported on Kubernetes](https://github.com/kubernetes/kubernetes/issues/56374). This means that we can only use file capabilities or capability aware programs in order to get capabilities on programs running as nonroot on Kubernetes.
 
