@@ -46,6 +46,8 @@ The `Prometheus Client` provides some metrics enabled by default, among those me
 
 ## Enable Prometheus Metrics Endpoint
 
+> **NOTE**: Make sure you're following [metrics name best practices](https://prometheus.io/docs/practices/naming/#metric-names) when defining your metrics.
+
 1. First, we need to import some required modules:
 
     ```go
@@ -58,7 +60,7 @@ The `Prometheus Client` provides some metrics enabled by default, among those me
     var (
 	    totalWordsReversed = prometheus.NewCounter(
 		    prometheus.CounterOpts{
-			    Name: "total_reversed_words",
+			    Name: "reversewords_reversed_words_total",
 			    Help: "Total number of reversed words",
 		    },
 	    )
@@ -70,7 +72,7 @@ The `Prometheus Client` provides some metrics enabled by default, among those me
     var (
 	    endpointsAccessed = prometheus.NewCounterVec(
 		    prometheus.CounterOpts{
-			    Name: "endpoints_accessed",
+			    Name: "reversewords_endpoints_accessed_total",
 			    Help: "Total number of accessed to a given endpoint",
 		    },
 		    []string{"accessed_endpoint"},
