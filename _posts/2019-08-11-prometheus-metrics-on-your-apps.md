@@ -54,7 +54,7 @@ The `Prometheus Client` provides some metrics enabled by default, among those me
     "github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
     ```
-2. Define `total_reversed_words` metric. This metric is a simple counter metric.
+2. Define `reversewords_reversed_words_total` metric. This metric is a simple counter metric.
 
     ```go
     var (
@@ -66,7 +66,7 @@ The `Prometheus Client` provides some metrics enabled by default, among those me
 	    )
     )
     ```
-3. Define `endpoints_accessed` metric. This metric is a vector counter metric.
+3. Define `reversewords_endpoints_accessed_total` metric. This metric is a vector counter metric.
 
     ```go
     var (
@@ -87,7 +87,7 @@ The `Prometheus Client` provides some metrics enabled by default, among those me
 	router.HandleFunc("/hostname", ReturnHostname).Methods("GET")
 	router.HandleFunc("/health", ReturnHealth).Methods("GET")
     ```
-5. The `total_reversed_words` metric will be increased every time the function `ReverseWord` is called:
+5. The `reversewords_reversed_words_total` metric will be increased every time the function `ReverseWord` is called:
 
     ```go
     func ReverseWord(w http.ResponseWriter, r *http.Request) {
@@ -96,7 +96,7 @@ The `Prometheus Client` provides some metrics enabled by default, among those me
 	   <OUTPUT_OMITTED>
     }
     ```
-6. The `endpoints_accessed` metric will be increased every time the functions `ReverseWord`, `ReturnRelease`, `ReturnHostname` or `ReturnHealth` are called:
+6. The `reversewords_endpoints_accessed_total` metric will be increased every time the functions `ReverseWord`, `ReturnRelease`, `ReturnHostname` or `ReturnHealth` are called:
 
     ```go
     func ReturnRelease(w http.ResponseWriter, r *http.Request) {
@@ -248,9 +248,9 @@ promhttp_metric_handler_requests_in_flight 1
 promhttp_metric_handler_requests_total{code="200"} 0
 promhttp_metric_handler_requests_total{code="500"} 0
 promhttp_metric_handler_requests_total{code="503"} 0
-# HELP total_reversed_words Total number of reversed words
-# TYPE total_reversed_words counter
-total_reversed_words 0
+# HELP reversewords_reversed_words_total Total number of reversed words
+# TYPE reversewords_reversed_words_total counter
+reversewords_reversed_words_total 0
 ```
 
 Now, let's see how our metrics increase as we use our application:
@@ -265,18 +265,19 @@ Healthy
 $ curl -s http://127.0.0.1:8080/hostname
 Hostname: reverse-words-22j33j
 
-$ curl -s http://127.0.0.1:8080/metrics | grep -E "total_reversed_words|endpoints_accessed"
-# HELP endpoints_accessed Total number of accessed to a given endpoint
-# TYPE endpoints_accessed counter
-endpoints_accessed{accessed_endpoint="health"} 1
-endpoints_accessed{accessed_endpoint="hostname"} 1
-endpoints_accessed{accessed_endpoint="reverseword"} 1
-# HELP total_reversed_words Total number of reversed words
-# TYPE total_reversed_words counter
-total_reversed_words 1
+$ curl -s http://127.0.0.1:8080/metrics | grep "reversewords_"
+
+# HELP reversewords_endpoints_accessed_total Total number of accessed to a given endpoint
+# TYPE reversewords_endpoints_accessed_total counter
+reversewords_endpoints_accessed_total{accessed_endpoint="health"} 1
+reversewords_endpoints_accessed_total{accessed_endpoint="hostname"} 1
+reversewords_endpoints_accessed_total{accessed_endpoint="reverseword"} 1
+# HELP reversewords_reversed_words_total Total number of reversed words
+# TYPE reversewords_reversed_words_total counter
+reversewords_reversed_words_total 1
 ```
 
-As you can see the `total_reversed_words` has increased by 1 and the `endpoints_accessed` metrics now show the total number of times a given endpoint has been accessed.
+As you can see the `reversewords_reversed_words_total` has increased by 1 and the `reversewords_endpoints_accessed_total` metrics now show the total number of times a given endpoint has been accessed.
 
 # Next Steps
 
