@@ -64,8 +64,6 @@ Containers typically run a single application with a set of well-defined tasks, 
 
 In order to limit the attack vector of a subverted process running in a container, the _seccomp_ Linux kernel feature can be used to limit which _syscalls_ a process has access to. We can think of _seccomp_ like a firewall for _syscalls_.
 
-Some container runtimes ship with a default _seccomp_ profile that is used by default unless otherwise specified, for example the default _seccomp_ profile that ships with CRI-O cuts the number of available _syscalls_ from over 300 to roughly half.
-
 Creating your own _seccomp_ profiles can be tedious and often requires deep knowledge of the application. For example, a developer must be aware that a framework that sets up a network server to accept connections would translate into calling _socket_, _bind_ and _listen_ system calls. This time, there is some tooling that can help us getting the list of _syscalls_ used by our applications:
 
 * [_oci-seccomp-bpf-hook_](https://github.com/containers/oci-seccomp-bpf-hook)
