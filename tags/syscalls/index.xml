@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>syscalls on Linuxera</title>
+    <link>https://linuxera.org/tags/syscalls/</link>
+    <description>Recent content in syscalls on Linuxera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 01 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/syscalls/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Capabilities and Seccomp Profiles on Kubernetes</title>
+      <link>https://linuxera.org/capabilities-seccomp-kubernetes/</link>
+      <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://linuxera.org/capabilities-seccomp-kubernetes/</guid>
+      <description>Capabilities and Seccomp Profiles on Kubernetes In a previous post we talked about Linux Capabilities and Secure Compute Profiles, in this post we are going to see how we can leverage them on Kubernetes.
+We will need a Kubernetes cluster, I&amp;rsquo;m going to use kcli in order to get one. Below command will deploy a Kubernetes cluster on VMs:
+NOTE: You can create a parameters file with the cluster configuration as well.</description>
+    </item>
+    
+  </channel>
+</rss>

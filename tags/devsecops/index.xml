@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>devsecops on Linuxera</title>
+    <link>https://linuxera.org/tags/devsecops/</link>
+    <description>Recent content in devsecops on Linuxera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 27 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/devsecops/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Container Security - Linux Capabilities and Secure Compute Profiles</title>
+      <link>https://linuxera.org/container-security-capabilities-seccomp/</link>
+      <pubDate>Sat, 27 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://linuxera.org/container-security-capabilities-seccomp/</guid>
+      <description>Container Security - Linux Capabilities and Secure Compute Profiles In this post we are going to see two security mechanisms used in Linux Containers in order to provide a security layer for our workloads.
+We will see how Linux Capabilities and Secure Compute Profiles can be used for limiting the attack surface for our containers.
+The first part of the blog post will be an introduction to Linux Capabilities and Secure Compute Profiles, second part will show how these technologies work through the use of demos.</description>
+    </item>
+    
+  </channel>
+</rss>

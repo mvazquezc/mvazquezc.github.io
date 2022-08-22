@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>proxy on Linuxera</title>
+    <link>https://linuxera.org/tags/proxy/</link>
+    <description>Recent content in proxy on Linuxera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 30 Jul 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/proxy/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Using OpenShift OAuth Proxy to secure your Applications on OpenShift</title>
+      <link>https://linuxera.org/oauth-proxy-secure-applications-openshift/</link>
+      <pubDate>Tue, 30 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://linuxera.org/oauth-proxy-secure-applications-openshift/</guid>
+      <description>What is OAuth Proxy A reverse proxy and static file server that provides authentication and authorization to an OpenShift OAuth server or Kubernetes master supporting the 1.6+ remote authorization endpoints to validate access to content. It is intended for use withing OpenShift clusters to make it easy to run both end-user and infrastructure services that do not provider their own authentication.
+[Source]
+Securing an Application with OAuth Proxy In this blog post we are going to deploy OAuth Proxy in front of a simple application.</description>
+    </item>
+    
+  </channel>
+</rss>

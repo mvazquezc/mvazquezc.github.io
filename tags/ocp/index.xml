@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>ocp on Linuxera</title>
+    <link>https://linuxera.org/tags/ocp/</link>
+    <description>Recent content in ocp on Linuxera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 18 May 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/ocp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Writing Operators using the Operator Framework SDK</title>
+      <link>https://linuxera.org/writing-operators-using-operator-framework/</link>
+      <pubDate>Sat, 18 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://linuxera.org/writing-operators-using-operator-framework/</guid>
+      <description>Operators, operators everywhere As you may have noticed, Kubernetes operators are becoming more an more popular those days. In this post we are going to explain the basics around Operators and we will develop a simple Operator using the Operator Framework SDK.
+What is an Operator An operator aims to automate actions usually performed manually while lessening the likelihood of error and simplifying complexity.
+We can think of an operator as a method of packaging, deploying and managing a Kubernetes enabled application.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>containers on Linuxera</title>
+    <link>https://linuxera.org/tags/containers/</link>
+    <description>Recent content in containers on Linuxera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 01 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/containers/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Capabilities and Seccomp Profiles on Kubernetes</title>
+      <link>https://linuxera.org/capabilities-seccomp-kubernetes/</link>
+      <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://linuxera.org/capabilities-seccomp-kubernetes/</guid>
+      <description>Capabilities and Seccomp Profiles on Kubernetes In a previous post we talked about Linux Capabilities and Secure Compute Profiles, in this post we are going to see how we can leverage them on Kubernetes.
+We will need a Kubernetes cluster, I&amp;rsquo;m going to use kcli in order to get one. Below command will deploy a Kubernetes cluster on VMs:
+NOTE: You can create a parameters file with the cluster configuration as well.</description>
+    </item>
+    
+    <item>
+      <title>Container Security - Linux Capabilities and Secure Compute Profiles</title>
+      <link>https://linuxera.org/container-security-capabilities-seccomp/</link>
+      <pubDate>Sat, 27 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://linuxera.org/container-security-capabilities-seccomp/</guid>
+      <description>Container Security - Linux Capabilities and Secure Compute Profiles In this post we are going to see two security mechanisms used in Linux Containers in order to provide a security layer for our workloads.
+We will see how Linux Capabilities and Secure Compute Profiles can be used for limiting the attack surface for our containers.
+The first part of the blog post will be an introduction to Linux Capabilities and Secure Compute Profiles, second part will show how these technologies work through the use of demos.</description>
+    </item>
+    
+    <item>
+      <title>Containers under the Hood</title>
+      <link>https://linuxera.org/containers-under-the-hood/</link>
+      <pubDate>Thu, 25 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://linuxera.org/containers-under-the-hood/</guid>
+      <description>Containers are Linux You probably already heard this expression, in today&amp;rsquo;s post we are going to desmitify container technologies by decomposing them part by part and describing which Linux technologies make containers possible.
+We can describe a container as an isolated process running on a host. In order to isolate the process the container runtimes leverage Linux kernel technologies such as: namespaces, chroots, cgroups, etc. plus security layers like SELinux.</description>
+    </item>
+    
+    <item>
+      <title>Integrating our Operators with OLM</title>
+      <link>https://linuxera.org/integrating-operators-olm/</link>
+      <pubDate>Wed, 16 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://linuxera.org/integrating-operators-olm/</guid>
+      <description>Introduction This post is a continuation of our previous blog Writing Operators using the Operator Framework SDK.
+We will continue working on the operator created on the previous blog, if you want to be able to follow this blog, you will need to run the steps from the previous blog.
+Operator Lifecycle Manager The Operator Lifecycle Manager is an open source toolkit to manage Operators in an effective, automated and scalable way.</description>
+    </item>
+    
+    <item>
+      <title>Using OpenShift OAuth Proxy to secure your Applications on OpenShift</title>
+      <link>https://linuxera.org/oauth-proxy-secure-applications-openshift/</link>
+      <pubDate>Tue, 30 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://linuxera.org/oauth-proxy-secure-applications-openshift/</guid>
+      <description>What is OAuth Proxy A reverse proxy and static file server that provides authentication and authorization to an OpenShift OAuth server or Kubernetes master supporting the 1.6+ remote authorization endpoints to validate access to content. It is intended for use withing OpenShift clusters to make it easy to run both end-user and infrastructure services that do not provider their own authentication.
+[Source]
+Securing an Application with OAuth Proxy In this blog post we are going to deploy OAuth Proxy in front of a simple application.</description>
+    </item>
+    
+    <item>
+      <title>Writing Operators using the Operator Framework SDK</title>
+      <link>https://linuxera.org/writing-operators-using-operator-framework/</link>
+      <pubDate>Sat, 18 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://linuxera.org/writing-operators-using-operator-framework/</guid>
+      <description>Operators, operators everywhere As you may have noticed, Kubernetes operators are becoming more an more popular those days. In this post we are going to explain the basics around Operators and we will develop a simple Operator using the Operator Framework SDK.
+What is an Operator An operator aims to automate actions usually performed manually while lessening the likelihood of error and simplifying complexity.
+We can think of an operator as a method of packaging, deploying and managing a Kubernetes enabled application.</description>
+    </item>
+    
+  </channel>
+</rss>

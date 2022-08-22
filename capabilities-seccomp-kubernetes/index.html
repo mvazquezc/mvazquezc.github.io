@@ -1,0 +1,307 @@
+<!doctype html><html lang=en dir=auto><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Capabilities and Seccomp Profiles on Kubernetes | Linuxera</title><meta name=keywords content="okd,origin,containers,kubernetes,capabilities,securitycontext,seccomp,syscalls"><meta name=description content="Capabilities and Seccomp Profiles on Kubernetes In a previous post we talked about Linux Capabilities and Secure Compute Profiles, in this post we are going to see how we can leverage them on Kubernetes.
+We will need a Kubernetes cluster, I&rsquo;m going to use kcli in order to get one. Below command will deploy a Kubernetes cluster on VMs:
+NOTE: You can create a parameters file with the cluster configuration as well."><meta name=author content="Mario"><link rel=canonical href=https://linuxera.org/capabilities-seccomp-kubernetes/><link crossorigin=anonymous href=/assets/css/stylesheet.b183800e2cfbb62c3bce2b2ba56cdb2dd33af76c75cf4550173d5dfebd7c68a6.css integrity="sha256-sYOADiz7tiw7zisrpWzbLdM692x1z0VQFz1d/r18aKY=" rel="preload stylesheet" as=style><link rel=icon href=https://linuxera.org/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://linuxera.org/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://linuxera.org/favicon-32x32.png><link rel=apple-touch-icon href=https://linuxera.org/apple-touch-icon.png><link rel=mask-icon href=https://linuxera.org/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--hljs-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-52346410-3","auto"),ga("send","pageview"))</script><meta property="og:title" content="Capabilities and Seccomp Profiles on Kubernetes"><meta property="og:description" content="Capabilities and Seccomp Profiles on Kubernetes In a previous post we talked about Linux Capabilities and Secure Compute Profiles, in this post we are going to see how we can leverage them on Kubernetes.
+We will need a Kubernetes cluster, I&rsquo;m going to use kcli in order to get one. Below command will deploy a Kubernetes cluster on VMs:
+NOTE: You can create a parameters file with the cluster configuration as well."><meta property="og:type" content="article"><meta property="og:url" content="https://linuxera.org/capabilities-seccomp-kubernetes/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2021-04-01T00:00:00+00:00"><meta property="article:modified_time" content="2021-04-01T00:00:00+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Capabilities and Seccomp Profiles on Kubernetes"><meta name=twitter:description content="Capabilities and Seccomp Profiles on Kubernetes In a previous post we talked about Linux Capabilities and Secure Compute Profiles, in this post we are going to see how we can leverage them on Kubernetes.
+We will need a Kubernetes cluster, I&rsquo;m going to use kcli in order to get one. Below command will deploy a Kubernetes cluster on VMs:
+NOTE: You can create a parameters file with the cluster configuration as well."><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://linuxera.org/posts/"},{"@type":"ListItem","position":2,"name":"Capabilities and Seccomp Profiles on Kubernetes","item":"https://linuxera.org/capabilities-seccomp-kubernetes/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Capabilities and Seccomp Profiles on Kubernetes","name":"Capabilities and Seccomp Profiles on Kubernetes","description":"Capabilities and Seccomp Profiles on Kubernetes In a previous post we talked about Linux Capabilities and Secure Compute Profiles, in this post we are going to see how we can leverage them on Kubernetes.\nWe will need a Kubernetes cluster, I\u0026rsquo;m going to use kcli in order to get one. Below command will deploy a Kubernetes cluster on VMs:\nNOTE: You can create a parameters file with the cluster configuration as well.","keywords":["okd","origin","containers","kubernetes","capabilities","securitycontext","seccomp","syscalls"],"articleBody":"Capabilities and Seccomp Profiles on Kubernetes In a previous post we talked about Linux Capabilities and Secure Compute Profiles, in this post we are going to see how we can leverage them on Kubernetes.\nWe will need a Kubernetes cluster, I’m going to use kcli in order to get one. Below command will deploy a Kubernetes cluster on VMs:\nNOTE: You can create a parameters file with the cluster configuration as well.\n# Create a Kubernetes 1.20 cluster with 1 master and 1 worker using calico as SDN, nginx as ingress controller, metallb for loadbalancer services and CRI-O as container runtime kcli create kube generic -P masters=1 -P workers=1 -P master_memory=4096 -P numcpus=2 -P worker_memory=4096 -P sdn=calico -P version=1.20 -P ingress=true -P ingress_method=nginx -P metallb=true -P engine=crio -P domain=linuxera.org caps-cluster After a few moments we will get the kubeconfig for accessing our cluster:\nKubernetes cluster caps-cluster deployed!!! INFO export KUBECONFIG=$HOME/.kcli/clusters/caps-cluster/auth/kubeconfig INFO export PATH=$PWD:$PATH We can start using it right away:\nexport KUBECONFIG=$HOME/.kcli/clusters/caps-cluster/auth/kubeconfig kubectl get nodes NAME STATUS ROLES AGE VERSION caps-cluster-master-0.linuxera.org Ready control-plane,master 8m19s v1.20.5 caps-cluster-worker-0.linuxera.org Ready worker 3m33s v1.20.5 Capabilities on Kubernetes Capabilities on Kubernetes are configured for pods or containers via the SecurityContext.\nIn the next scenarios we are going to see how we can configure different capabilities for our containers and how they behave depending on the user running our container.\nWe will be using a demo application that listens on a given port, by default the application image uses a non-root user. In a previous post we mentioned how capabilities behave differently depending on the user that runs the process, we will see how that affects when running on containers.\nContainer Runtime Default Capabilities As previously mentioned, container runtimes come with a set of enabled capabilities that will be assigned to every container if not otherwise specified. We’re using CRI-O in our Kubernetes cluster and we can find the default capabilities in the CRI-O configuration file at /etc/crio/crio.conf present in the nodes:\ndefault_capabilities = [ \"CHOWN\", \"DAC_OVERRIDE\", \"FSETID\", \"FOWNER\", \"SETGID\", \"SETUID\", \"SETPCAP\", \"NET_BIND_SERVICE\", \"KILL\", ] The capabilities in the list above will be the ones added to containers by default.\nPod running with root UID\nCreate a namespace:\nNAMESPACE=test-capabilities kubectl create ns ${NAMESPACE} Create a pod running our test application with UID 0:\ncat \u003c","wordCount":"1841","inLanguage":"en","datePublished":"2021-04-01T00:00:00Z","dateModified":"2021-04-01T00:00:00Z","author":{"@type":"Person","name":"Mario"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://linuxera.org/capabilities-seccomp-kubernetes/"},"publisher":{"@type":"Organization","name":"Linuxera","logo":{"@type":"ImageObject","url":"https://linuxera.org/favicon.ico"}}}</script></head><body id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=https://linuxera.org/ accesskey=h title="Linuxera (Alt + H)">Linuxera</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://linuxera.org/archives title=Archive><span>Archive</span></a></li><li><a href=https://linuxera.org/search title="Search (Alt + /)" accesskey=/><span>Search</span></a></li><li><a href=https://linuxera.org/tags title=Tags><span>Tags</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><div class=breadcrumbs><a href=https://linuxera.org/>Home</a>&nbsp;»&nbsp;<a href=https://linuxera.org/posts/>Posts</a></div><h1 class=post-title>Capabilities and Seccomp Profiles on Kubernetes</h1><div class=post-meta><span title='2021-04-01 00:00:00 +0000 UTC'>Published on April 1, 2021</span>&nbsp;·&nbsp;<span title='2021-04-01 00:00:00 +0000 UTC'>Last updated on April 1, 2021</span>&nbsp;·&nbsp;9 min&nbsp;·&nbsp;Mario</div></header><div class=toc><details><summary accesskey=c title="(Alt + C)"><span class=details>Table of Contents</span></summary><div class=inner><ul><li><a href=#capabilities-and-seccomp-profiles-on-kubernetes aria-label="Capabilities and Seccomp Profiles on Kubernetes">Capabilities and Seccomp Profiles on Kubernetes</a><ul><li><a href=#capabilities-on-kubernetes aria-label="Capabilities on Kubernetes">Capabilities on Kubernetes</a><ul><li><a href=#container-runtime-default-capabilities aria-label="Container Runtime Default Capabilities">Container Runtime Default Capabilities</a></li><li><a href=#configuring-capabilities-for-our-workloads aria-label="Configuring capabilities for our workloads">Configuring capabilities for our workloads</a></li></ul></li><li><a href=#seccomp-profiles-on-kubernetes aria-label="Seccomp Profiles on Kubernetes">Seccomp Profiles on Kubernetes</a><ul><li><a href=#configuring-seccomp-profiles-on-the-cluster-nodes aria-label="Configuring Seccomp Profiles on the cluster nodes">Configuring Seccomp Profiles on the cluster nodes</a></li><li><a href=#configuring-seccomp-profiles-for-our-workloads aria-label="Configuring seccomp profiles for our workloads">Configuring seccomp profiles for our workloads</a></li></ul></li></ul></li><li><a href=#closing-thoughts aria-label="Closing Thoughts">Closing Thoughts</a></li></ul></div></details></div><div class=post-content><h1 id=capabilities-and-seccomp-profiles-on-kubernetes>Capabilities and Seccomp Profiles on Kubernetes<a hidden class=anchor aria-hidden=true href=#capabilities-and-seccomp-profiles-on-kubernetes>#</a></h1><p>In a <a href=https://linuxera.org/container-security-capabilities-seccomp/>previous post</a> we talked about <strong>Linux Capabilities</strong> and <strong>Secure Compute Profiles</strong>, in this post we are going to see how we can leverage them on <a href=https://kubernetes.io/>Kubernetes</a>.</p><p>We will need a Kubernetes cluster, I&rsquo;m going to use <a href=https://github.com/karmab/kcli>kcli</a> in order to get one. Below command will deploy a Kubernetes cluster on VMs:</p><blockquote><p><strong>NOTE</strong>: You can create a <a href=https://kcli.readthedocs.io/en/latest/index.html#create-a-parameters-yml>parameters file</a> with the cluster configuration as well.</p></blockquote><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl><span class=c1># Create a Kubernetes 1.20 cluster with 1 master and 1 worker using calico as SDN, nginx as ingress controller, metallb for loadbalancer services and CRI-O as container runtime</span>
+</span></span><span class=line><span class=cl>kcli create kube generic -P <span class=nv>masters</span><span class=o>=</span><span class=m>1</span> -P <span class=nv>workers</span><span class=o>=</span><span class=m>1</span>  -P <span class=nv>master_memory</span><span class=o>=</span><span class=m>4096</span> -P <span class=nv>numcpus</span><span class=o>=</span><span class=m>2</span> -P <span class=nv>worker_memory</span><span class=o>=</span><span class=m>4096</span> -P <span class=nv>sdn</span><span class=o>=</span>calico -P <span class=nv>version</span><span class=o>=</span>1.20 -P <span class=nv>ingress</span><span class=o>=</span><span class=nb>true</span> -P <span class=nv>ingress_method</span><span class=o>=</span>nginx -P <span class=nv>metallb</span><span class=o>=</span><span class=nb>true</span> -P <span class=nv>engine</span><span class=o>=</span>crio -P <span class=nv>domain</span><span class=o>=</span>linuxera.org caps-cluster
+</span></span></code></pre></div><p>After a few moments we will get the <code>kubeconfig</code> for accessing our cluster:</p><pre tabindex=0><code>Kubernetes cluster caps-cluster deployed!!!
+INFO export KUBECONFIG=$HOME/.kcli/clusters/caps-cluster/auth/kubeconfig
+INFO export PATH=$PWD:$PATH
+</code></pre><p>We can start using it right away:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl><span class=nb>export</span> <span class=nv>KUBECONFIG</span><span class=o>=</span><span class=nv>$HOME</span>/.kcli/clusters/caps-cluster/auth/kubeconfig
+</span></span><span class=line><span class=cl>kubectl get nodes
+</span></span></code></pre></div><pre tabindex=0><code>NAME                                 STATUS   ROLES                  AGE     VERSION
+caps-cluster-master-0.linuxera.org   Ready    control-plane,master   8m19s   v1.20.5
+caps-cluster-worker-0.linuxera.org   Ready    worker                 3m33s   v1.20.5
+</code></pre><h2 id=capabilities-on-kubernetes>Capabilities on Kubernetes<a hidden class=anchor aria-hidden=true href=#capabilities-on-kubernetes>#</a></h2><p>Capabilities on Kubernetes are configured for pods or containers via the <a href=https://kubernetes.io/docs/tasks/configure-pod-container/security-context/>SecurityContext</a>.</p><p>In the next scenarios we are going to see how we can configure different capabilities for our containers and how they behave depending on the user running our container.</p><p>We will be using a demo application that listens on a given port, by default the application image uses a non-root user. In a <a href=https://linuxera.org/container-security-capabilities-seccomp/>previous post</a> we mentioned how capabilities behave differently depending on the user that runs the process, we will see how that affects when running on containers.</p><h3 id=container-runtime-default-capabilities>Container Runtime Default Capabilities<a hidden class=anchor aria-hidden=true href=#container-runtime-default-capabilities>#</a></h3><p>As previously mentioned, container runtimes come with a set of enabled capabilities that will be assigned to every container if not otherwise specified. We&rsquo;re using CRI-O in our Kubernetes cluster and we can find the default capabilities in the CRI-O configuration file at <code>/etc/crio/crio.conf</code> present in the nodes:</p><pre tabindex=0><code>default_capabilities = [
+	&#34;CHOWN&#34;,
+	&#34;DAC_OVERRIDE&#34;,
+	&#34;FSETID&#34;,
+	&#34;FOWNER&#34;,
+	&#34;SETGID&#34;,
+	&#34;SETUID&#34;,
+	&#34;SETPCAP&#34;,
+	&#34;NET_BIND_SERVICE&#34;,
+	&#34;KILL&#34;,
+]
+</code></pre><p>The capabilities in the list above will be the ones added to containers by default.</p><p><strong>Pod running with root UID</strong></p><ol><li><p>Create a namespace:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl><span class=nv>NAMESPACE</span><span class=o>=</span>test-capabilities
+</span></span><span class=line><span class=cl>kubectl create ns <span class=si>${</span><span class=nv>NAMESPACE</span><span class=si>}</span>
+</span></span></code></pre></div></li><li><p>Create a pod running our test application with UID 0:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>cat <span class=s>&lt;&lt;EOF | kubectl -n ${NAMESPACE} create -f -
+</span></span></span><span class=line><span class=cl><span class=s>apiVersion: v1
+</span></span></span><span class=line><span class=cl><span class=s>kind: Pod
+</span></span></span><span class=line><span class=cl><span class=s>metadata:
+</span></span></span><span class=line><span class=cl><span class=s>  name: reversewords-app-captest-root
+</span></span></span><span class=line><span class=cl><span class=s>spec:
+</span></span></span><span class=line><span class=cl><span class=s>  containers:
+</span></span></span><span class=line><span class=cl><span class=s>  - image: quay.io/mavazque/reversewords:ubi8
+</span></span></span><span class=line><span class=cl><span class=s>    name: reversewords
+</span></span></span><span class=line><span class=cl><span class=s>    securityContext:
+</span></span></span><span class=line><span class=cl><span class=s>      runAsUser: 0
+</span></span></span><span class=line><span class=cl><span class=s>  dnsPolicy: ClusterFirst
+</span></span></span><span class=line><span class=cl><span class=s>  restartPolicy: Never
+</span></span></span><span class=line><span class=cl><span class=s>status: {}
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></div></li><li><p>Review the capability sets for the application process:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>kubectl -n <span class=si>${</span><span class=nv>NAMESPACE</span><span class=si>}</span> <span class=nb>exec</span> -ti reversewords-app-captest-root -- grep Cap /proc/1/status
+</span></span></code></pre></div><pre tabindex=0><code>CapInh:	00000000000005fb
+CapPrm:	00000000000005fb
+CapEff:	00000000000005fb
+CapBnd:	00000000000005fb
+CapAmb:	0000000000000000
+</code></pre></li><li><p>If we decode the <code>effective</code> set this is what we get:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>capsh --decode<span class=o>=</span>00000000000005fb
+</span></span></code></pre></div><blockquote><p><strong>NOTE</strong>: You can see how the pod got assigned the runtime&rsquo;s default caps.</p></blockquote><pre tabindex=0><code>0x00000000000005fb=cap_chown,cap_dac_override,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_net_bind_service
+</code></pre></li></ol><p><strong>Pod running with non-root UID</strong></p><ol><li><p>Create a pod running our test application with a <code>non-root</code> UID:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl><span class=nv>NAMESPACE</span><span class=o>=</span>test-capabilities
+</span></span><span class=line><span class=cl>cat <span class=s>&lt;&lt;EOF | kubectl -n ${NAMESPACE} create -f -
+</span></span></span><span class=line><span class=cl><span class=s>apiVersion: v1
+</span></span></span><span class=line><span class=cl><span class=s>kind: Pod
+</span></span></span><span class=line><span class=cl><span class=s>metadata:
+</span></span></span><span class=line><span class=cl><span class=s>  name: reversewords-app-captest-nonroot
+</span></span></span><span class=line><span class=cl><span class=s>spec:
+</span></span></span><span class=line><span class=cl><span class=s>  containers:
+</span></span></span><span class=line><span class=cl><span class=s>  - image: quay.io/mavazque/reversewords:ubi8
+</span></span></span><span class=line><span class=cl><span class=s>    name: reversewords
+</span></span></span><span class=line><span class=cl><span class=s>    securityContext:
+</span></span></span><span class=line><span class=cl><span class=s>      runAsUser: 1024
+</span></span></span><span class=line><span class=cl><span class=s>  dnsPolicy: ClusterFirst
+</span></span></span><span class=line><span class=cl><span class=s>  restartPolicy: Never
+</span></span></span><span class=line><span class=cl><span class=s>status: {}
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></div></li><li><p>Review the capability sets for the application process:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>kubectl -n <span class=si>${</span><span class=nv>NAMESPACE</span><span class=si>}</span> <span class=nb>exec</span> -ti reversewords-app-captest-nonroot -- grep Cap /proc/1/status
+</span></span></code></pre></div><pre tabindex=0><code>CapInh:	00000000000005fb
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	00000000000005fb
+CapAmb:	0000000000000000
+</code></pre></li></ol><p>You can see how the <code>effective</code> and <code>permitted</code> sets were cleared. We explained that behaviour in our <a href=https://linuxera.org/container-security-capabilities-seccomp/>previous post</a>. That happens because we&rsquo;re doing <code>execve</code> to an unprivileged process so those capability sets get cleared.</p><p>This has some consequences when running our workloads on Kubernetes, outside Kubernetes we could use <code>Ambient</code> capabilities, but at the time of this writing, Ambient capabilities <a href=https://github.com/kubernetes/kubernetes/issues/56374>are not supported on Kubernetes</a>. This means that we can only use file capabilities or capability aware programs in order to get capabilities on programs running as nonroot on Kubernetes.</p><h3 id=configuring-capabilities-for-our-workloads>Configuring capabilities for our workloads<a hidden class=anchor aria-hidden=true href=#configuring-capabilities-for-our-workloads>#</a></h3><p>At this point we know what are the differences with regards to capabilities when running our workloads with a <code>root</code> or a <code>nonroot</code> UID. In the next scenarios we are going to see how we can configure our workloads so they only get the required capabilities they need in order to run.</p><p><strong>Workload running with root UID</strong></p><ol><li><p>Create a deployment for our workload:</p><blockquote><p><strong>NOTE</strong>: We are dropping all of the runtime&rsquo;s default capabilities, on top of that we add the <code>NET_BIND_SERVICE</code> capability and request the app to run with root UID. In the environment variables we configure our app to listen on port 80.</p></blockquote><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl><span class=nv>NAMESPACE</span><span class=o>=</span>test-capabilities
+</span></span><span class=line><span class=cl>cat <span class=s>&lt;&lt;EOF | kubectl -n ${NAMESPACE} create -f -
+</span></span></span><span class=line><span class=cl><span class=s>apiVersion: apps/v1
+</span></span></span><span class=line><span class=cl><span class=s>kind: Deployment
+</span></span></span><span class=line><span class=cl><span class=s>metadata:
+</span></span></span><span class=line><span class=cl><span class=s>  creationTimestamp: null
+</span></span></span><span class=line><span class=cl><span class=s>  labels:
+</span></span></span><span class=line><span class=cl><span class=s>    app: reversewords-app-rootuid
+</span></span></span><span class=line><span class=cl><span class=s>  name: reversewords-app-rootuid
+</span></span></span><span class=line><span class=cl><span class=s>spec:
+</span></span></span><span class=line><span class=cl><span class=s>  replicas: 1
+</span></span></span><span class=line><span class=cl><span class=s>  selector:
+</span></span></span><span class=line><span class=cl><span class=s>    matchLabels:
+</span></span></span><span class=line><span class=cl><span class=s>      app: reversewords-app-rootuid
+</span></span></span><span class=line><span class=cl><span class=s>  strategy: {}
+</span></span></span><span class=line><span class=cl><span class=s>  template:
+</span></span></span><span class=line><span class=cl><span class=s>    metadata:
+</span></span></span><span class=line><span class=cl><span class=s>      creationTimestamp: null
+</span></span></span><span class=line><span class=cl><span class=s>      labels:
+</span></span></span><span class=line><span class=cl><span class=s>        app: reversewords-app-rootuid
+</span></span></span><span class=line><span class=cl><span class=s>    spec:
+</span></span></span><span class=line><span class=cl><span class=s>      containers:
+</span></span></span><span class=line><span class=cl><span class=s>      - image: quay.io/mavazque/reversewords:ubi8
+</span></span></span><span class=line><span class=cl><span class=s>        name: reversewords
+</span></span></span><span class=line><span class=cl><span class=s>        resources: {}
+</span></span></span><span class=line><span class=cl><span class=s>        env:
+</span></span></span><span class=line><span class=cl><span class=s>        - name: APP_PORT
+</span></span></span><span class=line><span class=cl><span class=s>          value: &#34;80&#34;
+</span></span></span><span class=line><span class=cl><span class=s>        securityContext:
+</span></span></span><span class=line><span class=cl><span class=s>          runAsUser: 0
+</span></span></span><span class=line><span class=cl><span class=s>          capabilities:
+</span></span></span><span class=line><span class=cl><span class=s>            drop:
+</span></span></span><span class=line><span class=cl><span class=s>            - CHOWN
+</span></span></span><span class=line><span class=cl><span class=s>            - DAC_OVERRIDE
+</span></span></span><span class=line><span class=cl><span class=s>            - FSETID
+</span></span></span><span class=line><span class=cl><span class=s>            - FOWNER
+</span></span></span><span class=line><span class=cl><span class=s>            - SETGID
+</span></span></span><span class=line><span class=cl><span class=s>            - SETUID
+</span></span></span><span class=line><span class=cl><span class=s>            - SETPCAP
+</span></span></span><span class=line><span class=cl><span class=s>            - KILL
+</span></span></span><span class=line><span class=cl><span class=s>            add:
+</span></span></span><span class=line><span class=cl><span class=s>            - NET_BIND_SERVICE
+</span></span></span><span class=line><span class=cl><span class=s>status: {}
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></div></li><li><p>We can check the logs for our application and see that it&rsquo;s working fine:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>kubectl -n <span class=si>${</span><span class=nv>NAMESPACE</span><span class=si>}</span> logs deployment/reversewords-app-rootuid
+</span></span></code></pre></div><pre tabindex=0><code>2021/04/01 09:59:39 Starting Reverse Api v0.0.18 Release: NotSet
+2021/04/01 09:59:39 Listening on port 80
+</code></pre></li><li><p>If we look at the capability sets this is what we get:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>kubectl -n <span class=si>${</span><span class=nv>NAMESPACE</span><span class=si>}</span> <span class=nb>exec</span> -ti deployment/reversewords-app-rootuid -- grep Cap /proc/1/status
+</span></span></code></pre></div><pre tabindex=0><code>CapInh:	0000000000000400
+CapPrm:	0000000000000400
+CapEff:	0000000000000400
+CapBnd:	0000000000000400
+CapAmb:	0000000000000000
+</code></pre></li><li><p>As expected, only <code>NET_BIND_SERVICE</code> capability is available:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>capsh --decode<span class=o>=</span><span class=m>0000000000000400</span>
+</span></span></code></pre></div><pre tabindex=0><code>0x0000000000000400=cap_net_bind_service
+</code></pre></li></ol><p>The workload worked as expected when running with <code>root</code> UID, in the next scenario we will try the same app but this time running with a <code>non-root</code> UID.</p><p><strong>Workload running with non-root UID</strong></p><ol><li><p>Create a deployment for our workload:</p><blockquote><p><strong>NOTE</strong>: We are dropping all of the runtime&rsquo;s default capabilities, on top of that we add the <code>NET_BIND_SERVICE</code> capability and request the app to run with non-root UID. In the environment variables we configure our app to listen on port 80.</p></blockquote><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl><span class=nv>NAMESPACE</span><span class=o>=</span>test-capabilities
+</span></span><span class=line><span class=cl>cat <span class=s>&lt;&lt;EOF | kubectl -n ${NAMESPACE} create -f -
+</span></span></span><span class=line><span class=cl><span class=s>apiVersion: apps/v1
+</span></span></span><span class=line><span class=cl><span class=s>kind: Deployment
+</span></span></span><span class=line><span class=cl><span class=s>metadata:
+</span></span></span><span class=line><span class=cl><span class=s>  creationTimestamp: null
+</span></span></span><span class=line><span class=cl><span class=s>  labels:
+</span></span></span><span class=line><span class=cl><span class=s>    app: reversewords-app-nonrootuid
+</span></span></span><span class=line><span class=cl><span class=s>  name: reversewords-app-nonrootuid
+</span></span></span><span class=line><span class=cl><span class=s>spec:
+</span></span></span><span class=line><span class=cl><span class=s>  replicas: 1
+</span></span></span><span class=line><span class=cl><span class=s>  selector:
+</span></span></span><span class=line><span class=cl><span class=s>    matchLabels:
+</span></span></span><span class=line><span class=cl><span class=s>      app: reversewords-app-nonrootuid
+</span></span></span><span class=line><span class=cl><span class=s>  strategy: {}
+</span></span></span><span class=line><span class=cl><span class=s>  template:
+</span></span></span><span class=line><span class=cl><span class=s>    metadata:
+</span></span></span><span class=line><span class=cl><span class=s>      creationTimestamp: null
+</span></span></span><span class=line><span class=cl><span class=s>      labels:
+</span></span></span><span class=line><span class=cl><span class=s>        app: reversewords-app-nonrootuid
+</span></span></span><span class=line><span class=cl><span class=s>    spec:
+</span></span></span><span class=line><span class=cl><span class=s>      containers:
+</span></span></span><span class=line><span class=cl><span class=s>      - image: quay.io/mavazque/reversewords:ubi8
+</span></span></span><span class=line><span class=cl><span class=s>        name: reversewords
+</span></span></span><span class=line><span class=cl><span class=s>        resources: {}
+</span></span></span><span class=line><span class=cl><span class=s>        env:
+</span></span></span><span class=line><span class=cl><span class=s>        - name: APP_PORT
+</span></span></span><span class=line><span class=cl><span class=s>          value: &#34;80&#34;
+</span></span></span><span class=line><span class=cl><span class=s>        securityContext:
+</span></span></span><span class=line><span class=cl><span class=s>          runAsUser: 1024
+</span></span></span><span class=line><span class=cl><span class=s>          capabilities:
+</span></span></span><span class=line><span class=cl><span class=s>            drop:
+</span></span></span><span class=line><span class=cl><span class=s>            - CHOWN
+</span></span></span><span class=line><span class=cl><span class=s>            - DAC_OVERRIDE
+</span></span></span><span class=line><span class=cl><span class=s>            - FSETID
+</span></span></span><span class=line><span class=cl><span class=s>            - FOWNER
+</span></span></span><span class=line><span class=cl><span class=s>            - SETGID
+</span></span></span><span class=line><span class=cl><span class=s>            - SETUID
+</span></span></span><span class=line><span class=cl><span class=s>            - SETPCAP
+</span></span></span><span class=line><span class=cl><span class=s>            - KILL
+</span></span></span><span class=line><span class=cl><span class=s>            add:
+</span></span></span><span class=line><span class=cl><span class=s>            - NET_BIND_SERVICE
+</span></span></span><span class=line><span class=cl><span class=s>status: {}
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></div></li><li><p>We can check the logs for our application and see if it&rsquo;s working:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>kubectl -n <span class=si>${</span><span class=nv>NAMESPACE</span><span class=si>}</span> logs deployment/reversewords-app-nonrootuid
+</span></span></code></pre></div><pre tabindex=0><code>2021/04/01 10:09:10 Starting Reverse Api v0.0.18 Release: NotSet
+2021/04/01 10:09:10 Listening on port 80
+2021/04/01 10:09:10 listen tcp :80: bind: permission denied
+</code></pre></li><li><p>This time the application didn&rsquo;t bind to port 80, let&rsquo;s update the app configuration so it binds to port 8080 and then we will review the capability sets:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl><span class=c1># Patch the app so it binds to port 8080</span>
+</span></span><span class=line><span class=cl>kubectl -n <span class=si>${</span><span class=nv>NAMESPACE</span><span class=si>}</span> patch deployment reversewords-app-nonrootuid -p <span class=s1>&#39;{&#34;spec&#34;:{&#34;template&#34;:{&#34;spec&#34;:{&#34;$setElementOrder/containers&#34;:[{&#34;name&#34;:&#34;reversewords&#34;}],&#34;containers&#34;:[{&#34;$setElementOrder/env&#34;:[{&#34;name&#34;:&#34;APP_PORT&#34;}],&#34;env&#34;:[{&#34;name&#34;:&#34;APP_PORT&#34;,&#34;value&#34;:&#34;8080&#34;}],&#34;name&#34;:&#34;reversewords&#34;}]}}}}&#39;</span>
+</span></span><span class=line><span class=cl><span class=c1># Get capability sets</span>
+</span></span><span class=line><span class=cl>kubectl -n <span class=si>${</span><span class=nv>NAMESPACE</span><span class=si>}</span> <span class=nb>exec</span> -ti deployment/reversewords-app-nonrootuid -- grep Cap /proc/1/status
+</span></span></code></pre></div><pre tabindex=0><code>CapInh:	0000000000000400
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	0000000000000400
+CapAmb:	0000000000000000
+</code></pre></li><li><p>We don&rsquo;t have the <code>NET_BIND_SERVICE</code> in the <code>effective</code> set, if you remember from our <a href=https://linuxera.org/container-security-capabilities-seccomp/>previous post</a> we would need the capability in the <code>ambient</code> set in order for our application to work, but as we said Kubernetes still doesn&rsquo;t support ambient capabilities so our only option is make use of file capabilities.</p></li><li><p>We have created a new image for our application and our application binary now has the <code>NET_BIND_SERVICE</code> capability in the <code>effective</code> and <code>permitted</code> file capability sets. Let&rsquo;s update the deployment configuration.</p><blockquote><p><strong>NOTE</strong>: We configured the app to bind to port 80 and changed the container image with the one that has the required changes.</p></blockquote><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>kubectl -n <span class=si>${</span><span class=nv>NAMESPACE</span><span class=si>}</span> patch deployment reversewords-app-nonrootuid -p <span class=s1>&#39;{&#34;spec&#34;:{&#34;template&#34;:{&#34;spec&#34;:{&#34;$setElementOrder/containers&#34;:[{&#34;name&#34;:&#34;reversewords&#34;}],&#34;containers&#34;:[{&#34;$setElementOrder/env&#34;:[{&#34;name&#34;:&#34;APP_PORT&#34;}],&#34;env&#34;:[{&#34;name&#34;:&#34;APP_PORT&#34;,&#34;value&#34;:&#34;80&#34;}],&#34;image&#34;:&#34;quay.io/mavazque/reversewords-captest:latest&#34;,&#34;name&#34;:&#34;reversewords&#34;}]}}}}&#39;</span>
+</span></span></code></pre></div></li><li><p>We can check the logs for our application and see if it&rsquo;s working:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>kubectl -n <span class=si>${</span><span class=nv>NAMESPACE</span><span class=si>}</span> logs deployment/reversewords-app-nonrootuid
+</span></span></code></pre></div><pre tabindex=0><code>2021/04/01 10:18:42 Starting Reverse Api v0.0.21 Release: NotSet
+2021/04/01 10:18:42 Listening on port 80
+</code></pre></li><li><p>This time the application was able to bind to port 80, let&rsquo;s review the capability sets:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>kubectl -n <span class=si>${</span><span class=nv>NAMESPACE</span><span class=si>}</span> <span class=nb>exec</span> -ti deployment/reversewords-app-nonrootuid -- grep Cap /proc/1/status
+</span></span></code></pre></div><blockquote><p><strong>NOTE</strong>: Since our application binary has the required capability in its file capability sets the process thread was able to gain that capability:</p></blockquote><pre tabindex=0><code>CapInh:	0000000000000400
+CapPrm:	0000000000000400
+CapEff:	0000000000000400
+CapBnd:	0000000000000400
+CapAmb:	0000000000000000
+</code></pre></li><li><p>We can check the file capability configured in our application binary:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>kubectl -n <span class=si>${</span><span class=nv>NAMESPACE</span><span class=si>}</span> <span class=nb>exec</span> -ti deployment/reversewords-app-nonrootuid -- getcap /usr/bin/reverse-words
+</span></span></code></pre></div><pre tabindex=0><code>/usr/bin/reverse-words = cap_net_bind_service+eip
+</code></pre></li></ol><h2 id=seccomp-profiles-on-kubernetes>Seccomp Profiles on Kubernetes<a hidden class=anchor aria-hidden=true href=#seccomp-profiles-on-kubernetes>#</a></h2><p>In this scenario we&rsquo;re going to reuse the Secure Compute profile we created in the <a href=https://linuxera.org/container-security-capabilities-seccomp#secure-compute-profiles-in-action>previous post</a>.</p><h3 id=configuring-seccomp-profiles-on-the-cluster-nodes>Configuring Seccomp Profiles on the cluster nodes<a hidden class=anchor aria-hidden=true href=#configuring-seccomp-profiles-on-the-cluster-nodes>#</a></h3><p>By default <code>Kubelet</code> will try to find the <code>seccomp</code> profiles in the <code>/var/lib/kubelet/seccomp/</code> path. This path can be configured in the kubelet config.</p><p>We are going to create the two seccomp profiles that we will be using in the nodes.</p><p>Create below file on every node that can run workloads as <code>/var/lib/kubelet/seccomp/centos8-ls.json</code>:</p><blockquote><p><strong>NOTE</strong>: This is the seccomp profile that allows us to run a <code>centos8</code> image that runs <code>ls /</code> as we saw in the previous post.</p></blockquote><div class=highlight><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;defaultAction&#34;</span><span class=p>:</span> <span class=s2>&#34;SCMP_ACT_ERRNO&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;architectures&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;SCMP_ARCH_X86_64&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=p>],</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;syscalls&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nt>&#34;names&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;access&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;arch_prctl&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;brk&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;capget&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;capset&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;chdir&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;close&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;epoll_ctl&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;epoll_pwait&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;execve&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;exit_group&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;fchown&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;fcntl&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;fstat&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;fstatfs&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;futex&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;getdents64&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;getpid&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;getppid&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;ioctl&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;mmap&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;mprotect&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;munmap&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;nanosleep&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;newfstatat&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;openat&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;prctl&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;pread64&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;prlimit64&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;read&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;rt_sigaction&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;rt_sigprocmask&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;rt_sigreturn&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;sched_yield&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;seccomp&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;set_robust_list&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;set_tid_address&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;setgid&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;setgroups&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;setuid&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;stat&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;statfs&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;tgkill&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;write&#34;</span>
+</span></span><span class=line><span class=cl>      <span class=p>],</span>
+</span></span><span class=line><span class=cl>      <span class=nt>&#34;action&#34;</span><span class=p>:</span> <span class=s2>&#34;SCMP_ACT_ALLOW&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>      <span class=nt>&#34;args&#34;</span><span class=p>:</span> <span class=p>[],</span>
+</span></span><span class=line><span class=cl>      <span class=nt>&#34;comment&#34;</span><span class=p>:</span> <span class=s2>&#34;&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>      <span class=nt>&#34;includes&#34;</span><span class=p>:</span> <span class=p>{},</span>
+</span></span><span class=line><span class=cl>      <span class=nt>&#34;excludes&#34;</span><span class=p>:</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><h3 id=configuring-seccomp-profiles-for-our-workloads>Configuring seccomp profiles for our workloads<a hidden class=anchor aria-hidden=true href=#configuring-seccomp-profiles-for-our-workloads>#</a></h3><ol><li><p>Create a namespace:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl><span class=nv>NAMESPACE</span><span class=o>=</span>test-seccomp
+</span></span><span class=line><span class=cl>kubectl create ns <span class=si>${</span><span class=nv>NAMESPACE</span><span class=si>}</span>
+</span></span></code></pre></div></li><li><p>Seccomp profiles can be configured at pod or container level, this time we&rsquo;re going to configure it at pod level:</p><blockquote><p><strong>NOTE</strong>: We configured the seccompProfile <code>centos8-ls.json</code>.</p></blockquote><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>cat <span class=s>&lt;&lt;EOF | kubectl -n ${NAMESPACE} create -f -
+</span></span></span><span class=line><span class=cl><span class=s>apiVersion: v1
+</span></span></span><span class=line><span class=cl><span class=s>kind: Pod
+</span></span></span><span class=line><span class=cl><span class=s>metadata:
+</span></span></span><span class=line><span class=cl><span class=s>  name: seccomp-ls-test
+</span></span></span><span class=line><span class=cl><span class=s>spec:
+</span></span></span><span class=line><span class=cl><span class=s>  securityContext:
+</span></span></span><span class=line><span class=cl><span class=s>    seccompProfile:
+</span></span></span><span class=line><span class=cl><span class=s>      type: Localhost
+</span></span></span><span class=line><span class=cl><span class=s>      localhostProfile: centos8-ls.json
+</span></span></span><span class=line><span class=cl><span class=s>  containers:
+</span></span></span><span class=line><span class=cl><span class=s>  - image: registry.centos.org/centos:8
+</span></span></span><span class=line><span class=cl><span class=s>    name: seccomp-ls-test
+</span></span></span><span class=line><span class=cl><span class=s>    command: [&#34;ls&#34;, &#34;/&#34;]
+</span></span></span><span class=line><span class=cl><span class=s>  dnsPolicy: ClusterFirst
+</span></span></span><span class=line><span class=cl><span class=s>  restartPolicy: Never
+</span></span></span><span class=line><span class=cl><span class=s>status: {}
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></div></li><li><p>The pod was executed with no issues:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>kubectl -n <span class=si>${</span><span class=nv>NAMESPACE</span><span class=si>}</span> logs seccomp-ls-test
+</span></span></code></pre></div><pre tabindex=0><code>bin
+dev
+...
+</code></pre></li><li><p>Let&rsquo;s try to create a new pod that runs <code>ls -l</code> instead. On top of that we will configure the seccomp profile at the container level.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>cat <span class=s>&lt;&lt;EOF | kubectl -n ${NAMESPACE} create -f -
+</span></span></span><span class=line><span class=cl><span class=s>apiVersion: v1
+</span></span></span><span class=line><span class=cl><span class=s>kind: Pod
+</span></span></span><span class=line><span class=cl><span class=s>metadata:
+</span></span></span><span class=line><span class=cl><span class=s>  name: seccomp-lsl-test
+</span></span></span><span class=line><span class=cl><span class=s>spec:
+</span></span></span><span class=line><span class=cl><span class=s>  containers:
+</span></span></span><span class=line><span class=cl><span class=s>  - image: registry.centos.org/centos:8
+</span></span></span><span class=line><span class=cl><span class=s>    name: seccomp-lsl-test
+</span></span></span><span class=line><span class=cl><span class=s>    command: [&#34;ls&#34;, &#34;-l&#34;, &#34;/&#34;]
+</span></span></span><span class=line><span class=cl><span class=s>    securityContext:
+</span></span></span><span class=line><span class=cl><span class=s>      seccompProfile:
+</span></span></span><span class=line><span class=cl><span class=s>        type: Localhost
+</span></span></span><span class=line><span class=cl><span class=s>        localhostProfile: centos8-ls.json
+</span></span></span><span class=line><span class=cl><span class=s>  dnsPolicy: ClusterFirst
+</span></span></span><span class=line><span class=cl><span class=s>  restartPolicy: Never
+</span></span></span><span class=line><span class=cl><span class=s>status: {}
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></div></li><li><p>As expected, the pod failed since the seccomp profile doesn&rsquo;t have all the required syscalls required for the command to run permitted:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>kubectl -n <span class=si>${</span><span class=nv>NAMESPACE</span><span class=si>}</span> logs seccomp-lsl-test
+</span></span></code></pre></div><pre tabindex=0><code>ls: cannot access &#39;/&#39;: Operation not permitted
+</code></pre></li></ol><h1 id=closing-thoughts>Closing Thoughts<a hidden class=anchor aria-hidden=true href=#closing-thoughts>#</a></h1><p>At this point you should&rsquo;ve a clear understanding of when your workloads will benefit from using capabilities or seccomp profiles.</p><p>We&rsquo;ve not been through how we can control which capabilities / seccomp a specific user can use, <code>PodSecurityPolicies</code> can be used to control such things on Kubernetes. In <a href=openshift.com>OpenShift</a> you can use <code>SecurityContextConstraints</code>.</p><p>If you want to learn more around these topics feel free to take a look at the following SCCs lab: <a href=https://github.com/mvazquezc/scc-fun/blob/main/README.md>https://github.com/mvazquezc/scc-fun/blob/main/README.md</a></p></div><footer class=post-footer><ul class=post-tags><li><a href=https://linuxera.org/tags/okd/>okd</a></li><li><a href=https://linuxera.org/tags/origin/>origin</a></li><li><a href=https://linuxera.org/tags/containers/>containers</a></li><li><a href=https://linuxera.org/tags/kubernetes/>kubernetes</a></li><li><a href=https://linuxera.org/tags/capabilities/>capabilities</a></li><li><a href=https://linuxera.org/tags/securitycontext/>securitycontext</a></li><li><a href=https://linuxera.org/tags/seccomp/>seccomp</a></li><li><a href=https://linuxera.org/tags/syscalls/>syscalls</a></li></ul><nav class=paginav><a class=next href=https://linuxera.org/container-security-capabilities-seccomp/><span class=title>Next »</span><br><span>Container Security - Linux Capabilities and Secure Compute Profiles</span></a></nav><div class=share-buttons><a target=_blank rel="noopener noreferrer" aria-label="share Capabilities and Seccomp Profiles on Kubernetes on twitter" href="https://twitter.com/intent/tweet/?text=Capabilities%20and%20Seccomp%20Profiles%20on%20Kubernetes&url=https%3a%2f%2flinuxera.org%2fcapabilities-seccomp-kubernetes%2f&hashtags=okd%2corigin%2ccontainers%2ckubernetes%2ccapabilities%2csecuritycontext%2cseccomp%2csyscalls"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM195.519 424.544c135.939.0 210.268-112.643 210.268-210.268.0-3.218.0-6.437-.153-9.502 14.406-10.421 26.973-23.448 36.935-38.314-13.18 5.824-27.433 9.809-42.452 11.648 15.326-9.196 26.973-23.602 32.49-40.92-14.252 8.429-30.038 14.56-46.896 17.931-13.487-14.406-32.644-23.295-53.946-23.295-40.767.0-73.87 33.104-73.87 73.87.0 5.824.613 11.494 1.992 16.858-61.456-3.065-115.862-32.49-152.337-77.241-6.284 10.881-9.962 23.601-9.962 37.088.0 25.594 13.027 48.276 32.95 61.456-12.107-.307-23.448-3.678-33.41-9.196v.92c0 35.862 25.441 65.594 59.311 72.49-6.13 1.686-12.72 2.606-19.464 2.606-4.751.0-9.348-.46-13.946-1.38 9.349 29.426 36.628 50.728 68.965 51.341-25.287 19.771-57.164 31.571-91.8 31.571-5.977.0-11.801-.306-17.625-1.073 32.337 21.15 71.264 33.41 112.95 33.41z"/></svg></a><a target=_blank rel="noopener noreferrer" aria-label="share Capabilities and Seccomp Profiles on Kubernetes on linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2flinuxera.org%2fcapabilities-seccomp-kubernetes%2f&title=Capabilities%20and%20Seccomp%20Profiles%20on%20Kubernetes&summary=Capabilities%20and%20Seccomp%20Profiles%20on%20Kubernetes&source=https%3a%2f%2flinuxera.org%2fcapabilities-seccomp-kubernetes%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM160.461 423.278V197.561h-75.04v225.717h75.04zm270.539.0V293.839c0-69.333-37.018-101.586-86.381-101.586-39.804.0-57.634 21.891-67.617 37.266v-31.958h-75.021c.995 21.181.0 225.717.0 225.717h75.02V297.222c0-6.748.486-13.492 2.474-18.315 5.414-13.475 17.767-27.434 38.494-27.434 27.135.0 38.007 20.707 38.007 51.037v120.768H431zM123.448 88.722C97.774 88.722 81 105.601 81 127.724c0 21.658 16.264 39.002 41.455 39.002h.484c26.165.0 42.452-17.344 42.452-39.002-.485-22.092-16.241-38.954-41.943-39.002z"/></svg></a></div></footer></article></main><footer class=footer><span>&copy; 2022 <a href=https://linuxera.org/>Linuxera</a></span>
+<span>Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+        <a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg></a><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="copy";function s(){t.innerHTML="copied!",setTimeout(()=>{t.innerHTML="copy"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>
