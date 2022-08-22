@@ -65,7 +65,7 @@ params:
   ShowRssButtonInSectionTermList: true
   ShowToc: true
 
-  comments: false # https://github.com/adityatelange/hugo-PaperMod/wiki/Features#comments / https://utteranc.es/
+  comments: true # https://github.com/adityatelange/hugo-PaperMod/wiki/Features#comments / https://utteranc.es/
 
   homeInfoParams:
     Title: "Linux, Containers and Open Source"
