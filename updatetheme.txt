@@ -1,0 +1,9 @@
+mv PaperMod{,.orig}
+cd themes/
+wget https://github.com/adityatelange/hugo-PaperMod/archive/master.zip
+unzip master.zip 
+rm master.zip
+mv hugo-PaperMod-master PaperMod
+diff PaperMod.orig/layouts/partials/post_meta.html PaperMod/layouts/partials/post_meta.html
+cp PaperMod.orig/layouts/partials/post_meta.html PaperMod/layouts/partials/post_meta.html
+rm -rf PaperMod.orig

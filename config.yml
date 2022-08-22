@@ -1,0 +1,98 @@
+baseURL: "https://linuxera.org/"
+paginate: 5
+languageCode: "en-us"
+title: "Linuxera"
+keywords: ["containers", "linux", "kubernetes", "k8s", "openshift", "ocp", "red hat", "okd", "origin"]
+theme: "PaperMod"
+enableRobotsTXT: true
+googleAnalytics: "UA-52346410-3"
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+pygmentsUseClasses: true
+enableInlineShortcodes: true
+
+permalinks:
+  posts: /:filename/
+
+minify:
+  disableXML: true
+
+languages:
+  en:
+    languageName: "English"
+    weight: 1
+    taxonomies:
+      category: "categories"
+      tag: "tags"
+      series: "series"
+    menu:
+      main:
+        - name: "Archive"
+          url: "archives"
+          weight: 5
+        - name: "Search"
+          url: "search"
+          weight: 10
+        - name: "Tags"
+          url: "tags"
+          weight: 15
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    noClasses: false
+
+params:
+  env: production
+  description: "Linux, Containers and Open Source"
+  author: "Mario"
+  ShowShareButtons: true
+  ShareButtons: ["linkedin", "twitter"]
+  ShowReadingTime: true
+  displayFullLangName: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowRssButtonInSectionTermList: true
+  ShowToc: true
+
+  comments: false # https://github.com/adityatelange/hugo-PaperMod/wiki/Features#comments / https://utteranc.es/
+
+  homeInfoParams:
+    Title: "Linux, Containers and Open Source"
+
+  assets:
+    disableHLJS: true
+    favicon: "favicon.ico"
+    favicon16x16:  "favicon-16x16.png"
+    favicon32x32:  "favicon-32x32.png"
+    apple_touch_icon:  "apple-touch-icon.png"
+
+  fuseOpts:
+    isCaseSensitive: false
+    shouldShort: true
+    keys: ["title", "permalink", "summary", "content"]
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 0
+
+  cover:
+    linkFullImages: false
+
+  socialIcons:
+    - name: github
+      url: "https://github.com/mvazquezc"
+    - name: linkedin
+      url: "https://www.linkedin.com/in/mariovazquezcebrian/"
+    - name: twitter
+      url: "https://twitter.com/mvazce"
