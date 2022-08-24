@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>securitycontext on Linuxera</title>
-    <link>https://linuxera.org/tags/securitycontext/</link>
-    <description>Recent content in securitycontext on Linuxera</description>
+    <title>admission on Linuxera</title>
+    <link>https://linuxera.org/tags/admission/</link>
+    <description>Recent content in admission on Linuxera</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/securitycontext/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 24 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/admission/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Working with Pod Security Standards</title>
       <link>https://linuxera.org/working-with-pod-security-standards/</link>
@@ -16,17 +16,6 @@
       <description>Working with Pod Security Standards In Kubernetes v1.25 Pod Security admission has moved to stable, replacing Pod Security Policy admission. This feature has been in beta and enabled by default since Kubernetes v1.23 in this post we are going to cover what&amp;rsquo;s new with Pod Security Admission (PSA) and how it affects the workloads being deployed in our clusters.
 Note
 For this post I&amp;rsquo;ll be running a Kubernetes v1.25 cluster. If you want to try this in your own environment you can use your favorite tool to get a K8s cluster up and running, I&amp;rsquo;ll be using kcli.</description>
-    </item>
-    
-    <item>
-      <title>Capabilities and Seccomp Profiles on Kubernetes</title>
-      <link>https://linuxera.org/capabilities-seccomp-kubernetes/</link>
-      <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://linuxera.org/capabilities-seccomp-kubernetes/</guid>
-      <description>Capabilities and Seccomp Profiles on Kubernetes In a previous post we talked about Linux Capabilities and Secure Compute Profiles, in this post we are going to see how we can leverage them on Kubernetes.
-We will need a Kubernetes cluster, I&amp;rsquo;m going to use kcli in order to get one. Below command will deploy a Kubernetes cluster on VMs:
-NOTE: You can create a parameters file with the cluster configuration as well.</description>
     </item>
     
   </channel>
