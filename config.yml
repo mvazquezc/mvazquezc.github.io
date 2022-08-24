@@ -28,15 +28,18 @@ languages:
       series: "series"
     menu:
       main:
-        - name: "Archive"
-          url: "archives"
+        - name: "🏠 Home"
+          url: "/"
           weight: 5
-        - name: "Search"
-          url: "search"
+        - name: "🗄️ Archive"
+          url: "/archives/"
           weight: 10
-        - name: "Tags"
-          url: "tags"
+        - name: "🔎 Search"
+          url: "/search/"
           weight: 15
+        - name: "🏷️ Tags"
+          url: "/tags/"
+          weight: 20
 
 outputs:
   home:
