@@ -24,8 +24,8 @@ For this post I'll be running a Kubernetes v1.25 cluster. If you want to try thi
 {{</tip>}}
 
 ~~~sh
-# Create a Kubernetes 1.25 cluster with 1 master and 1 worker using calico as SDN, nginx as ingress controller, metallb for loadbalancer services and CRI-O as container runtime
-kcli create kube generic -P masters=1 -P workers=1  -P master_memory=4096 -P numcpus=2 -P worker_memory=4096 -P sdn=calico -P version=1.25 -P ingress=true -P ingress_method=nginx -P metallb=true -P engine=crio -P domain=linuxera.org psa-cluster
+# Create a Kubernetes 1.25 cluster with 1 master and 1 worker using calico as SDN, nginx as ingress controller, metallb for loadbalancer services and CRI-O (v1.24 since 1.25 is not released at the time of this post) as container runtime
+kcli create kube generic -P masters=1 -P workers=1  -P master_memory=4096 -P numcpus=2 -P worker_memory=4096 -P sdn=calico -P version=1.25 -P ingress=true -P ingress_method=nginx -P metallb=true -P engine=crio -P engine_version=1.24 -P domain=linuxera.org psa-cluster
 ~~~
 
 This is how our cluster looks like:
@@ -34,8 +34,8 @@ This is how our cluster looks like:
 kubectl get nodes
 
 NAME                                STATUS   ROLES                  AGE     VERSION
-psa-cluster-master-0.linuxera.org   Ready    control-plane,master   4m19s   v1.24.4
-psa-cluster-worker-0.linuxera.org   Ready    worker                 1m20s   v1.24.4
+psa-cluster-master-0.linuxera.org   Ready    control-plane,master   4m19s   v1.25.0
+psa-cluster-worker-0.linuxera.org   Ready    worker                 1m20s   v1.25.0
 ~~~
 
 ## Pod Security Admission
@@ -62,7 +62,7 @@ The cluster admin/namespace admin can configure an admission mode that will be u
 
 * `enforce`: Policy violations will cause the pod to be rejected.
 * `audit`: Policy violations will be logged in the audit log, pod will be allowed.
-* `warn`: Policy violations will case a user-facing warning, pod will be allowed.
+* `warn`: Policy violations will cause a user-facing warning, pod will be allowed.
 
 Each mode can be configured with a different Pod Security Standard. For example, a namespace could enforce using the `privileged` standard and audit/warn via the`restricted` standard.
 
@@ -100,7 +100,7 @@ If you checked the link above, you have seen that exemptions can be configured f
 
 ## Pod Security Standards in Action
 
-Now that we know the basics around PSA, we can go ahead and run some tests to understand how it works. We will be using a [simple go app](https://github.com/mvazquezc/reverse-words) that exposes a service on a port of our choice.
+Now that we know the basics around PSA, we can go ahead and run some tests to understand how it works. We will be using a [simple go app](https://github.com/mvazquezc/reverse-words).
 
 ### Non-restrictive namespace
 
