@@ -64,16 +64,16 @@ The cluster admin/namespace admin can configure an admission mode that will be u
 * `audit`: Policy violations will be logged in the audit log, pod will be allowed.
 * `warn`: Policy violations will case a user-facing warning, pod will be allowed.
 
-Each mode can be configured with a different Pod Security Standard. For example, one could enforce using the `privileged` standard and audit/warn via the`restricted` standard.
+Each mode can be configured with a different Pod Security Standard. For example, a namespace could enforce using the `privileged` standard and audit/warn via the`restricted` standard.
 
 The admission modes and the standards to be used are configured at the namespace level via the use of the `pod-security.kubernetes.io/<MODE>: <LEVEL>` label.
 
-As earlier mentioned, these Pod Security Standards will evolve over time, and since these are versioned we can specify which version of a specific mode we want to enforce via the use of the `pod-security.kubernetes.io/<MODE>-version: <VERSION>` label, where <VERSION> refers to a Kubernetes minor version like `v1.25`.
+As earlier mentioned, these Pod Security Standards will evolve over time, and since these are versioned we can specify which version of a specific mode we want to enforce via the use of the `pod-security.kubernetes.io/<MODE>-version: <VERSION>` label, where \<VERSION\> refers to a Kubernetes minor version like `v1.25`.
 
 If we put all this information together, we can get to a namespace definition like the one below:
 
 {{<tip>}}
-In the example below we use the version `v1.25`, one could also point to the latest available by using `latest` instead.
+In the example below we use the version `v1.25`, a namespace could also point to the latest available by using `latest` instead.
 {{</tip>}}
 
 ~~~yaml
