@@ -5,7 +5,7 @@ tags: [ "okd", "origin", "containers", "kubernetes", "openshift", "oauth", "prox
 url: "/oauth-proxy-secure-applications-openshift/"
 draft: false
 date: 2019-07-30
-# lastmod: 2019-07-30
+lastmod: 2022-08-31
 ShowToc: true
 ShowBreadCrumbs: true
 ShowReadingTime: true
@@ -22,7 +22,6 @@ authorization endpoints to validate access to content. It is intended for use wi
 services that do not provider their own authentication.
 
 [[Source]](https://github.com/openshift/oauth-proxy)
-
 
 ## Securing an Application with OAuth Proxy
 
@@ -43,7 +42,8 @@ Not a big deal, just a regular deployment.
 ### Required files
 
 **deployment.yaml**
-```yaml
+
+~~~yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -68,10 +68,11 @@ spec:
             - name: reverse-words
               containerPort: 8080
               protocol: TCP
-```
+~~~
 
 **service.yaml**
-```yaml
+
+~~~yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -88,24 +89,24 @@ spec:
     name: reverse-words
   sessionAffinity: None
   type: ClusterIP
-```
+~~~
 
 ### Deploy
 
-```sh
+~~~sh
 oc create namespace reverse-words
 oc -n reverse-words create -f deployment.yaml
 oc -n reverse-words create -f service.yaml
 oc -n reverse-words create route edge reverse-words --service=reverse-words --port=app --insecure-policy=Redirect
-```
+~~~
 
 Now we should be able to reach our application without providing any authentication details.
 
-```sh
-curl https://$(oc -n reverse-words get route reverse-words -o jsonpath='{.status.ingress[*].host}') -X POST -d '{"word": "PALC"}'
+~~~sh
+curl -k https://$(oc -n reverse-words get route reverse-words -o jsonpath='{.status.ingress[*].host}') -X POST -d '{"word": "PALC"}'
 
 {"reverse_word":"CLAP"}
-```
+~~~
 
 Let's go ahead and secure our application to be accessible only to authenticated users.
 
@@ -123,19 +124,24 @@ In order to use OAuth Proxy we need a couple of things:
 
 1. Create the Secret
 
-    ```sh
+    ~~~sh
     oc -n reverse-words create secret generic reversewords-proxy --from-literal=session_secret=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c43)
-    ```
+    ~~~
+
 2. Create and annotate the ServiceAccount
 
-    ```sh
+    ~~~sh
     oc -n reverse-words create serviceaccount reversewords
     oc -n reverse-words annotate serviceaccount reversewords serviceaccounts.openshift.io/oauth-redirectreference.reversewords='{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"reverse-words-authenticated"}}'
-    ```
+    ~~~
+
 3. Modify the deployment
 
+    > **NOTE**: Below deployment points to the `quay.io/openshift/origin-oauth-proxy:4.10` image, make sure to use the one matching your cluster version. You can find the available tags [here](https://quay.io/repository/openshift/origin-oauth-proxy?tab=tags).
+
     **deployment.yaml**
-    ```yaml
+
+    ~~~yaml
     apiVersion: apps/v1
     kind: Deployment
     metadata:
@@ -174,7 +180,7 @@ In order to use OAuth Proxy we need a couple of things:
                 - -openshift-service-account=reversewords
                 - -openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
                 - -skip-auth-regex=^/metrics
-              image: quay.io/openshift/origin-oauth-proxy:4.1
+              image: quay.io/openshift/origin-oauth-proxy:4.10
               imagePullPolicy: IfNotPresent
               ports:
                 - name: oauth-proxy
@@ -195,11 +201,13 @@ In order to use OAuth Proxy we need a couple of things:
               secret:
                 defaultMode: 420
                 secretName: reversewords-proxy
-    ```
+    ~~~
+
 4. Modify the service
 
     **service.yaml**
-    ```yaml
+
+    ~~~yaml
     apiVersion: v1
     kind: Service
     metadata:
@@ -222,27 +230,27 @@ In order to use OAuth Proxy we need a couple of things:
         name: reverse-words
       sessionAffinity: None
       type: ClusterIP
-    ```
+    ~~~
 
 ### Deploy
 
-```sh
+~~~sh
 oc -n reverse-words apply -f service.yaml
 oc -n reverse-words apply -f deployment.yaml
 oc -n reverse-words create route reencrypt reverse-words-authenticated --service=reverse-words --port=proxy --insecure-policy=Redirect
-```
+~~~
 
 Now we should be able to reach our application, let's see what happens when we try to access without providing any authentication details.
 
-```sh
-curl -I https://$(oc -n reverse-words get route reverse-words-authenticated -o jsonpath='{.status.ingress[*].host}')
+~~~sh
+curl -k -I https://$(oc -n reverse-words get route reverse-words-authenticated -o jsonpath='{.status.ingress[*].host}')
 
 HTTP/1.1 403 Forbidden
 Set-Cookie: _oauth_proxy=; Path=/; Domain=reverse-words-authenticated-reverse-words.apps.okd.linuxlabs.org; Expires=Tue, 30 Jul 2019 15:08:22 GMT; HttpOnly; Secure
 Date: Tue, 30 Jul 2019 16:08:22 GMT
 Content-Type: text/html; charset=utf-8
 Set-Cookie: 24c429aac95893475d1e8c1316adf60f=255a07dc5b1af1d2d01721678f463c09; path=/; HttpOnly; Secure
-```
+~~~
 
 Now we are going to access to our application using our browser and authenticating with a valid user:
 
@@ -256,15 +264,16 @@ In this scenario we are going to modify the OAuth Proxy configuration so only us
 
 1. Modify the deployment. Add the line below to the oauth-proxy container arguments
 
-    ```sh
+    ~~~sh
     oc -n reverse-words edit deployment reverse-words
-    ```
-    ```yaml
+    ~~~
+
+    ~~~yaml
     <OMITTED OUTPUT>
     - -openshift-service-account=reversewords
     - -openshift-sar={"resource":"namespaces","resourceName":"reverse-words","namespace":"reverse-words","verb":"get"}
     <OMITTED OUTPUT>
-    ```
+    ~~~
 
 ### Deploy
 
@@ -276,17 +285,16 @@ As we did before, let's try to access with `user1` to our application:
 
 It failed! That is because `user1` does not have access to the _reverse-words_ namespace, let's grant access to `user2` and try to login again.
 
-```sh
+~~~sh
 oc -n reverse-words adm policy add-role-to-user view user2
-```
+~~~
 
 Back on the browser:
 
 ![Scenario 3 Correct Login](https://linuxera.org/oauth-proxy-secure-applications-openshift/scenario3-login-correct.gif)
 
+## Final Thoughts
 
-# Final Thoughts
-
-This is just an sneak peek of what OAuth Proxy can do, if you want to know more you can check the project's repository [here](https://github.com/openshift/oauth-proxy).
+This is just a sneak peek of what OAuth Proxy can do, if you want to know more you can check the project's repository [here](https://github.com/openshift/oauth-proxy).
 
 Keep in mind that OAuth Proxy is not intended to replace your application authentication and authorization mechanisms, it is just another security layer on top of your applications.
