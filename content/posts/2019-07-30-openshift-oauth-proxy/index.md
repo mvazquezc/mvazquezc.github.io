@@ -175,7 +175,6 @@ In order to use OAuth Proxy we need a couple of things:
                 - -upstream=http://localhost:8080
                 - -tls-cert=/etc/tls/private/tls.crt
                 - -tls-key=/etc/tls/private/tls.key
-                - -client-secret-file=/var/run/secrets/kubernetes.io/serviceaccount/token
                 - -cookie-secret-file=/etc/proxy/secrets/session_secret
                 - -openshift-service-account=reversewords
                 - -openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
