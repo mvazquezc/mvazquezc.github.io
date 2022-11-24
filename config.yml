@@ -99,3 +99,7 @@ params:
       url: "https://www.linkedin.com/in/mariovazquezcebrian/"
     - name: twitter
       url: "https://twitter.com/mvazce"
+    - name: KoFi
+      url: "https://ko-fi.com/mvazce"
+    - name: Rss
+      url: "index.xml"
