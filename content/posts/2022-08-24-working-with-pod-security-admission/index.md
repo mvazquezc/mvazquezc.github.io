@@ -24,8 +24,8 @@ For this post I'll be running a Kubernetes v1.25 cluster. If you want to try thi
 {{</tip>}}
 
 ~~~sh
-# Create a Kubernetes 1.25 cluster with 1 master and 1 worker using calico as SDN, nginx as ingress controller, metallb for loadbalancer services and CRI-O (v1.24 since 1.25 is not released at the time of this post) as container runtime
-kcli create kube generic -P masters=1 -P workers=1  -P master_memory=4096 -P numcpus=2 -P worker_memory=4096 -P sdn=calico -P version=1.25 -P ingress=true -P ingress_method=nginx -P metallb=true -P engine=crio -P engine_version=1.24 -P domain=linuxera.org psa-cluster
+# Create a Kubernetes 1.25 cluster with 1 master and 1 worker using calico as SDN, nginx as ingress controller, metallb for loadbalancer services and CRI-O as container runtime
+kcli create kube generic -P masters=1 -P workers=1  -P master_memory=4096 -P numcpus=2 -P worker_memory=4096 -P sdn=calico -P version=1.25 -P ingress=true -P ingress_method=nginx -P metallb=true -P engine=crio -P domain=linuxera.org psa-cluster
 ~~~
 
 This is how our cluster looks like:
