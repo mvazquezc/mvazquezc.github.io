@@ -32,8 +32,11 @@ import (
 	"k8s.io/apimachinery/pkg/util/intstr"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+	"sigs.k8s.io/controller-runtime/pkg/controller"
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
+	"sigs.k8s.io/controller-runtime/pkg/event"
 	ctrllog "sigs.k8s.io/controller-runtime/pkg/log"
+	"sigs.k8s.io/controller-runtime/pkg/predicate"
 )
 
 // ReverseWordsAppReconciler reconciles a ReverseWordsApp object
@@ -42,19 +45,19 @@ type ReverseWordsAppReconciler struct {
 	Scheme *runtime.Scheme
 }
 
-// Finalizer for our objects
-const reverseWordsAppFinalizer = "finalizer.reversewordsapp.apps.linuxera.org"
+const (
+	// Finalizer for our objects
+	reverseWordsAppFinalizer = "finalizer.reversewordsapp.apps.linuxera.org"
+	concurrentReconciles     = 10
+)
 
-
-// +kubebuilder:rbac:groups=apps.rha.lab,resources=pacmangames,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=apps.rha.lab,resources=pacmangames/status,verbs=get;update;patch
-// +kubebuilder:rbac:groups=apps.rha.lab,resources=pacmangames/finalizers,verbs=get;update;patch
+// +kubebuilder:rbac:groups=apps.linuxera.org,resources=reversewordsapps,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=apps.linuxera.org,resources=reversewordsapps/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=apps.linuxera.org,resources=reversewordsapps/finalizers,verbs=get;update;patch
 // +kubebuilder:rbac:groups=apps,resources=deployments,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=core,resources=services,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=core,resources=pods,verbs=get;list;watch
-// +kubebuilder:rbac:groups=core,resources=serviceaccounts,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=rbac.authorization.k8s.io,resources=clusterroles,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=rbac.authorization.k8s.io,resources=clusterrolebindings,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=core,resources=events,verbs=create;patch
 
 func (r *ReverseWordsAppReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	log := ctrllog.FromContext(ctx)
@@ -127,6 +130,8 @@ func (r *ReverseWordsAppReconciler) SetupWithManager(mgr ctrl.Manager) error {
 		For(&appsv1alpha1.ReverseWordsApp{}).
 		Owns(&appsv1.Deployment{}).
 		Owns(&corev1.Service{}).
+		WithEventFilter(ignoreDeletionPredicate()).                                     // Filter events that do not increase generation id, like status updates
+		WithOptions(controller.Options{MaxConcurrentReconciles: concurrentReconciles}). // run multiple reconcile loops in parallel
 		Complete(r)
 }
 
@@ -314,7 +319,7 @@ func newDeploymentForCR(cr *appsv1alpha1.ReverseWordsApp) *appsv1.Deployment {
 	// TODO:Check if application version exists
 	containerImage := "quay.io/mavazque/reversewords:" + appVersion
 	probe := &corev1.Probe{
-		Handler: corev1.Handler{
+		ProbeHandler: corev1.ProbeHandler{
 			HTTPGet: &corev1.HTTPGetAction{
 				Path: "/health",
 				Port: intstr.FromInt(8080),
@@ -441,4 +446,18 @@ func contains(list []string, s string) bool {
 		}
 	}
 	return false
+}
+
+// Ignore changes that do not increase the resource generation
+func ignoreDeletionPredicate() predicate.Predicate {
+	return predicate.Funcs{
+		UpdateFunc: func(e event.UpdateEvent) bool {
+			// Ignore updates to CR status in which case metadata.Generation does not change
+			return e.ObjectOld.GetGeneration() != e.ObjectNew.GetGeneration()
+		},
+		DeleteFunc: func(e event.DeleteEvent) bool {
+			// Evaluates to false if the object has been confirmed deleted.
+			return !e.DeleteStateUnknown
+		},
+	}
 }

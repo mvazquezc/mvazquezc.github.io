@@ -9,7 +9,7 @@ robotsNoIndex: false
 searchHidden: false
 ShowWordCount: false
 date: 2019-05-18
-lastmod: 2021-12-01
+lastmod: 2022-12-14
 draft: false
 author: "Mario"
 tags: [ "okd", "origin", "containers", "kubernetes", "operators", "controllers", "operator framework", "operator sdk", "openshift", "ocp" ]
@@ -20,7 +20,7 @@ url: "/writing-operators-using-operator-framework/"
 
 As you may have noticed, **Kubernetes operators** are becoming more an more popular those days. In this post we are going to explain the basics around Operators and we will develop a simple Operator using the **Operator Framework SDK**.
 
-# What is an Operator
+## What is an Operator
 
 An operator aims to automate actions usually performed manually while lessening the likelihood of error and simplifying complexity.
 
@@ -37,7 +37,6 @@ Operators use the **Controller pattern**, but not all Controllers are Operators.
 * Single-App Focus
 
 Feel free to read more about operators on the [Operator FAQ by CoreOS](https://coreos.com/operators/)
-
 
 # Kubernetes Controllers
 
@@ -154,14 +153,14 @@ The Operator will be in charge of deploying a simple [GoLang application](https:
 
 At the moment of this writing the following versions were used:
 
-* golang-1.16.8
-* Operator Framework SDK v1.0.0
-* Kubernetes 1.21
+* golang-1.18.7
+* Operator Framework SDK v1.24.1
+* Kubernetes 1.24
 
 ## Installing the Operator Framework SDK
 
 ~~~sh
-RELEASE_VERSION=v1.15.0
+RELEASE_VERSION=v1.24.1
 # Linux
 sudo curl -L https://github.com/operator-framework/operator-sdk/releases/download/${RELEASE_VERSION}/operator-sdk_linux_amd64 -o /usr/local/bin/operator-sdk
 sudo chmod +x /usr/local/bin/operator-sdk
@@ -334,8 +333,11 @@ import (
 	"k8s.io/apimachinery/pkg/util/intstr"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+	"sigs.k8s.io/controller-runtime/pkg/controller"
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
+	"sigs.k8s.io/controller-runtime/pkg/event"
 	ctrllog "sigs.k8s.io/controller-runtime/pkg/log"
+	"sigs.k8s.io/controller-runtime/pkg/predicate"
 )
 
 // ReverseWordsAppReconciler reconciles a ReverseWordsApp object
@@ -344,18 +346,19 @@ type ReverseWordsAppReconciler struct {
 	Scheme *runtime.Scheme
 }
 
-// Finalizer for our objects
-const reverseWordsAppFinalizer = "finalizer.reversewordsapp.apps.linuxera.org"
+const (
+	// Finalizer for our objects
+	reverseWordsAppFinalizer = "finalizer.reversewordsapp.apps.linuxera.org"
+	concurrentReconciles     = 10
+)
 
-// +kubebuilder:rbac:groups=apps.rha.lab,resources=pacmangames,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=apps.rha.lab,resources=pacmangames/status,verbs=get;update;patch
-// +kubebuilder:rbac:groups=apps.rha.lab,resources=pacmangames/finalizers,verbs=get;update;patch
+// +kubebuilder:rbac:groups=apps.linuxera.org,resources=reversewordsapps,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=apps.linuxera.org,resources=reversewordsapps/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=apps.linuxera.org,resources=reversewordsapps/finalizers,verbs=get;update;patch
 // +kubebuilder:rbac:groups=apps,resources=deployments,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=core,resources=services,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=core,resources=pods,verbs=get;list;watch
-// +kubebuilder:rbac:groups=core,resources=serviceaccounts,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=rbac.authorization.k8s.io,resources=clusterroles,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=rbac.authorization.k8s.io,resources=clusterrolebindings,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=core,resources=events,verbs=create;patch
 
 func (r *ReverseWordsAppReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	log := ctrllog.FromContext(ctx)
@@ -428,6 +431,8 @@ func (r *ReverseWordsAppReconciler) SetupWithManager(mgr ctrl.Manager) error {
 		For(&appsv1alpha1.ReverseWordsApp{}).
 		Owns(&appsv1.Deployment{}).
 		Owns(&corev1.Service{}).
+		WithEventFilter(ignoreDeletionPredicate()).                                     // Filter events that do not increase generation id, like status updates
+		WithOptions(controller.Options{MaxConcurrentReconciles: concurrentReconciles}). // run multiple reconcile loops in parallel
 		Complete(r)
 }
 
@@ -615,7 +620,7 @@ func newDeploymentForCR(cr *appsv1alpha1.ReverseWordsApp) *appsv1.Deployment {
 	// TODO:Check if application version exists
 	containerImage := "quay.io/mavazque/reversewords:" + appVersion
 	probe := &corev1.Probe{
-		Handler: corev1.Handler{
+		ProbeHandler: corev1.ProbeHandler{
 			HTTPGet: &corev1.HTTPGetAction{
 				Path: "/health",
 				Port: intstr.FromInt(8080),
@@ -743,6 +748,20 @@ func contains(list []string, s string) bool {
 	}
 	return false
 }
+
+// Ignore changes that do not increase the resource generation
+func ignoreDeletionPredicate() predicate.Predicate {
+	return predicate.Funcs{
+		UpdateFunc: func(e event.UpdateEvent) bool {
+			// Ignore updates to CR status in which case metadata.Generation does not change
+			return e.ObjectOld.GetGeneration() != e.ObjectNew.GetGeneration()
+		},
+		DeleteFunc: func(e event.DeleteEvent) bool {
+			// Evaluates to false if the object has been confirmed deleted.
+			return !e.DeleteStateUnknown
+		},
+	}
+}
 ~~~
 
 You can download the controller code, remember to change the GitHub ID before bulding the operator:
@@ -755,7 +774,7 @@ curl -Ls https://linuxera.org/writing-operators-using-operator-framework/reverse
 
 ## Setup Watch namespaces
 
-By default, the controller will watch all namespaces, in this case we want it to watch only the namespace where it runs, in order to do so we need to update the Controler options in the `main.go` file.
+By default, the controller will watch all namespaces, in this case we want it to watch only the namespace where it runs, in order to do so we need to update the controller options in the `main.go` file.
 
 ~~~go
 /*
@@ -895,9 +914,11 @@ Our controller needs some RBAC permissions to interact with the resources it man
 ~~~go
 // +kubebuilder:rbac:groups=apps.linuxera.org,resources=reversewordsapps,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=apps.linuxera.org,resources=reversewordsapps/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=apps.linuxera.org,resources=reversewordsapps/finalizers,verbs=get;update;patch
 // +kubebuilder:rbac:groups=apps,resources=deployments,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=core,resources=services,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=core,resources=pods,verbs=get;list;
+// +kubebuilder:rbac:groups=core,resources=pods,verbs=get;list;watch
+// +kubebuilder:rbac:groups=core,resources=events,verbs=create;patch
 
 func (r *ReverseWordsAppReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 ~~~
@@ -965,18 +986,18 @@ make docker-build docker-push IMG=quay.io/$USERNAME/reversewords-operator:v0.0.1
 6. We should see our operator pod up and running
 
     ~~~
-	2021-12-20T19:19:06.102Z	INFO	controller-runtime.metrics	metrics server is starting to listen	{"addr": "127.0.0.1:8080"}
-	2021-12-20T19:19:06.104Z	INFO	setup	starting manager
-	I1220 19:19:06.109145       1 leaderelection.go:248] attempting to acquire leader lease operators-test/1ef59d40.linuxera.org...
-	2021-12-20T19:19:06.110Z	INFO	starting metrics server	{"path": "/metrics"}
-	I1220 19:19:37.027525       1 leaderelection.go:258] successfully acquired lease operators-test/1ef59d40.linuxera.org
-	2021-12-20T19:19:37.027Z	DEBUG	events	Normal	{"object": {"kind":"ConfigMap","namespace":"operators-test","name":"1ef59d40.linuxera.org","uid":"04a51285-5f4f-4aef-a4f9-fc0794fbe32d","apiVersion":"v1","resourceVersion":"1687"}, "reason": "LeaderElection", "message": "reverse-words-operator-controller-manager-84f854f9-5w8wh_5bdcb9e5-8cf7-4129-8908-32734f3b56f6 became leader"}
-	2021-12-20T19:19:37.028Z	DEBUG	events	Normal	{"object": {"kind":"Lease","namespace":"operators-test","name":"1ef59d40.linuxera.org","uid":"90ced595-977a-4208-9506-e219c7bfd31a","apiVersion":"coordination.k8s.io/v1","resourceVersion":"1688"}, "reason": "LeaderElection", "message": "reverse-words-operator-controller-manager-84f854f9-5w8wh_5bdcb9e5-8cf7-4129-8908-32734f3b56f6 became leader"}
-	2021-12-20T19:19:37.028Z	INFO	controller.reversewordsapp	Starting EventSource	{"reconciler group": "apps.linuxera.org", "reconciler kind": "ReverseWordsApp", "source": "kind source: /, Kind="}
-	2021-12-20T19:19:37.028Z	INFO	controller.reversewordsapp	Starting EventSource	{"reconciler group": "apps.linuxera.org", "reconciler kind": "ReverseWordsApp", "source": "kind source: /, Kind="}
-	2021-12-20T19:19:37.028Z	INFO	controller.reversewordsapp	Starting EventSource	{"reconciler group": "apps.linuxera.org", "reconciler kind": "ReverseWordsApp", "source": "kind source: /, Kind="}
-	2021-12-20T19:19:37.028Z	INFO	controller.reversewordsapp	Starting Controller	{"reconciler group": "apps.linuxera.org", "reconciler kind": "ReverseWordsApp"}
-	2021-12-20T19:19:37.130Z	INFO	controller.reversewordsapp	Starting workers	{"reconciler group": "apps.linuxera.org", "reconciler kind": "ReverseWordsApp", "worker count": 1}
+	1.6710255038089378e+09	INFO	controller-runtime.metrics	Metrics server is starting to listen	{"addr": "127.0.0.1:8080"}
+	1.671025503809387e+09	INFO	setup	starting manager
+	1.6710255038099382e+09	INFO	Starting server	{"kind": "health probe", "addr": "[::]:8081"}
+	I1214 13:45:03.809973       1 leaderelection.go:248] attempting to acquire leader lease operators-test/1ef59d40.linuxera.org...
+	1.6710255038100107e+09	INFO	Starting server	{"path": "/metrics", "kind": "metrics", "addr": "127.0.0.1:8080"}
+	I1214 13:45:21.937458       1 leaderelection.go:258] successfully acquired lease operators-test/1ef59d40.linuxera.org
+	1.6710255219376462e+09	DEBUG	events	Normal	{"object": {"kind":"Lease","namespace":"operators-test","name":"1ef59d40.linuxera.org","uid":"33044f96-0031-4b1d-a77f-cac5a22a2368","apiVersion":"coordination.k8s.io/v1","resourceVersion":"172072640"}, "reason": "LeaderElection", "message": "reverse-words-operator-controller-manager-6846c949f8-2mtm4_687c8c2a-921e-4d2b-a5c5-de2c4ae1709f became leader"}
+	1.6710255219378495e+09	INFO	Starting EventSource	{"controller": "reversewordsapp", "controllerGroup": "apps.linuxera.org", "controllerKind": "ReverseWordsApp", "source": "kind source: *v1alpha1.ReverseWordsApp"}
+	1.6710255219378843e+09	INFO	Starting EventSource	{"controller": "reversewordsapp", "controllerGroup": "apps.linuxera.org", "controllerKind": "ReverseWordsApp", "source": "kind source: *v1.Deployment"}
+	1.6710255219378898e+09	INFO	Starting EventSource	{"controller": "reversewordsapp", "controllerGroup": "apps.linuxera.org", "controllerKind": "ReverseWordsApp", "source": "kind source: *v1.Service"}
+	1.6710255219378932e+09	INFO	Starting Controller	{"controller": "reversewordsapp", "controllerGroup": "apps.linuxera.org", "controllerKind": "ReverseWordsApp"}
+	1.6710255220399954e+09	INFO	Starting workers	{"controller": "reversewordsapp", "controllerGroup": "apps.linuxera.org", "controllerKind": "ReverseWordsApp", "worker count": 10}
     ~~~
 7. Now it's time to create ReverseWordsApp instances
 
@@ -1007,30 +1028,29 @@ make docker-build docker-push IMG=quay.io/$USERNAME/reversewords-operator:v0.0.1
 	apiVersion: apps.linuxera.org/v1alpha1
 	kind: ReverseWordsApp
 	metadata:
-	  creationTimestamp: "2021-12-20T19:20:21Z"
+	  creationTimestamp: "2022-12-14T13:47:10Z"
 	  finalizers:
 	  - finalizer.reversewordsapp.apps.linuxera.org
 	  generation: 1
 	  name: example-reversewordsapp
 	  namespace: operators-test
-	  resourceVersion: "2020"
-	  selfLink: /apis/apps.linuxera.org/v1alpha1/namespaces/operators-test/reversewordsapps/example-reversewordsapp
-	  uid: 8f4c696a-b6b4-41f7-b4b2-647d1f8a55b6
+	  resourceVersion: "172075873"
+	  uid: 1244e3fd-984d-4132-bdd7-bcfb70e502ff
 	spec:
 	  replicas: 1
 	status:
 	  appPods:
-	  - dp-example-reversewordsapp-5786d986c5-rvgf7
+	  - dp-example-reversewordsapp-75cff95fd8-d2tl2
 	  conditions:
-	  - lastTransitionTime: "2021-12-20T19:20:46Z"
+	  - lastTransitionTime: "2022-12-14T13:47:10Z"
 	    message: ""
 	    reason: ReverseWordsDeploymentNotReady
-	    status: "False"
+	    status: "True"
 	    type: ReverseWordsDeploymentNotReady
-	  - lastTransitionTime: "2021-12-20T19:20:46Z"
+	  - lastTransitionTime: "2022-12-14T13:47:10Z"
 	    message: ""
 	    reason: Ready
-	    status: "True"
+	    status: "False"
 	    type: Ready
     ~~~
 
