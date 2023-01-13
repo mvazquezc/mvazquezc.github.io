@@ -2,16 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://linuxera.org/tags/k8s/</loc>
-    <lastmod>2023-01-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://linuxera.org/tags/kubernetes/</loc>
+    <loc>https://linuxera.org/tags/client-certificates/</loc>
     <lastmod>2023-01-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/</loc>
     <lastmod>2023-01-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://linuxera.org/user-namespaces-in-kubernetes/</loc>
+    <loc>https://linuxera.org/tags/opc/</loc>
+    <lastmod>2023-01-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/openshift/</loc>
+    <lastmod>2023-01-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/user-certificates-in-openshift4/</loc>
     <lastmod>2023-01-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/posts/</loc>
@@ -20,19 +23,25 @@
     <loc>https://linuxera.org/tags/security/</loc>
     <lastmod>2023-01-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://linuxera.org/tags/securitycontext/</loc>
-    <lastmod>2023-01-13T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://linuxera.org/tags/</loc>
     <lastmod>2023-01-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://linuxera.org/tags/userns/</loc>
+    <loc>https://linuxera.org/tags/users/</loc>
     <lastmod>2023-01-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/admission/</loc>
     <lastmod>2022-08-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/capabilities/</loc>
+    <lastmod>2022-08-24T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/k8s/</loc>
+    <lastmod>2022-08-24T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/kubernetes/</loc>
+    <lastmod>2022-12-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/securitycontext/</loc>
     <lastmod>2022-08-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/working-with-pod-security-standards/</loc>
@@ -124,9 +133,6 @@
   </url><url>
     <loc>https://linuxera.org/tags/oauth/</loc>
     <lastmod>2022-08-31T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://linuxera.org/tags/openshift/</loc>
-    <lastmod>2022-12-14T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/proxy/</loc>
     <lastmod>2022-08-31T00:00:00+00:00</lastmod>

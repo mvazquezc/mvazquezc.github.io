@@ -6,18 +6,7 @@
     <description>Recent content in securitycontext on Linuxera</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/securitycontext/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>OpenShift 4 User Certificates</title>
-      <link>https://linuxera.org/user-namespaces-in-kubernetes/</link>
-      <pubDate>Fri, 13 Jan 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://linuxera.org/user-namespaces-in-kubernetes/</guid>
-      <description>User Certificates in OpenShift 4 Attention
-The information described in this blog post may not be a supported configuration for OpenShift 4. Please, refer to the official docs for supported documentation.
-In this blog we will see how we can create OpenShift Users using client certificates and how to configure the API Server, so we can create client certificates using custom CAs. The information described in this blog was last tested with OpenShift 4.</description>
-    </item>
-    
+    <lastBuildDate>Wed, 24 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/securitycontext/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Working with Pod Security Standards</title>
       <link>https://linuxera.org/working-with-pod-security-standards/</link>
