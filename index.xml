@@ -6,16 +6,16 @@
     <description>Recent content on Linuxera</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 13 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>User Namespaces in Kubernetes</title>
+      <title>OpenShift 4 User Certificates</title>
       <link>https://linuxera.org/user-namespaces-in-kubernetes/</link>
-      <pubDate>Thu, 25 Aug 2022 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 13 Jan 2023 00:00:00 +0000</pubDate>
       
       <guid>https://linuxera.org/user-namespaces-in-kubernetes/</guid>
-      <description>User Namespaces in Kubernetes In Kubernetes v1.25 we got a new alpha feature, user namespaces. For those who are not familiar with user namespaces we can briefly describe them as a security mechanism that isolates security-related identifiers and attributes, in particular user IDs and group IDs.
-You can read more about user namespaces here.
-In the containers space we can leverage user namespaces to run processes as root in the container and with a non-privileged user in the host.</description>
+      <description>User Certificates in OpenShift 4 Attention
+The information described in this blog post may not be a supported configuration for OpenShift 4. Please, refer to the official docs for supported documentation.
+In this blog we will see how we can create OpenShift Users using client certificates and how to configure the API Server, so we can create client certificates using custom CAs. The information described in this blog was last tested with OpenShift 4.</description>
     </item>
     
     <item>
