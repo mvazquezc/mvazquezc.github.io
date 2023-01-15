@@ -151,7 +151,7 @@ oc --kubeconfig /tmp/zoro config set-context openshift-dev --cluster=openshift-c
 oc --kubeconfig /tmp/zoro config use-context openshift-dev
 ~~~
 
-And finally `luffy's`:
+And finally `Luffy's`:
 
 ~~~sh
 oc --kubeconfig /tmp/luffy config set-credentials luffy --client-certificate=/tmp/luffy.crt --client-key=/tmp/luffy.key --embed-certs=true
