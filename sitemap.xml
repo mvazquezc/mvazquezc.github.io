@@ -2,10 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://linuxera.org/tags/client-certificates/</loc>
-    <lastmod>2023-01-13T00:00:00+00:00</lastmod>
+    <loc>https://linuxera.org/tags/clis/</loc>
+    <lastmod>2023-01-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/cobra/</loc>
+    <lastmod>2023-01-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/development/</loc>
+    <lastmod>2023-01-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/go/</loc>
+    <lastmod>2023-01-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/golang/</loc>
+    <lastmod>2023-01-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/</loc>
+    <lastmod>2023-01-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/posts/</loc>
+    <lastmod>2023-01-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/</loc>
+    <lastmod>2023-01-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/writing-clis-go-cobra/</loc>
+    <lastmod>2023-01-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/client-certificates/</loc>
     <lastmod>2023-01-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/opc/</loc>
@@ -17,13 +41,7 @@
     <loc>https://linuxera.org/user-certificates-in-openshift4/</loc>
     <lastmod>2023-01-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://linuxera.org/posts/</loc>
-    <lastmod>2023-01-13T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://linuxera.org/tags/security/</loc>
-    <lastmod>2023-01-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://linuxera.org/tags/</loc>
     <lastmod>2023-01-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/users/</loc>
@@ -116,13 +134,7 @@
     <loc>https://linuxera.org/tags/operators/</loc>
     <lastmod>2022-12-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://linuxera.org/tags/development/</loc>
-    <lastmod>2019-08-11T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://linuxera.org/prometheus-metrics-on-your-applications/</loc>
-    <lastmod>2019-08-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://linuxera.org/tags/golang/</loc>
     <lastmod>2019-08-11T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/metrics/</loc>

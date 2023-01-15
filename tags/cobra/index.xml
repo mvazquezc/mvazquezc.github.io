@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>cobra on Linuxera</title>
+    <link>https://linuxera.org/tags/cobra/</link>
+    <description>Recent content in cobra on Linuxera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 15 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/cobra/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Writing CLIs in Go with Cobra</title>
+      <link>https://linuxera.org/writing-clis-go-cobra/</link>
+      <pubDate>Sun, 15 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://linuxera.org/writing-clis-go-cobra/</guid>
+      <description>Writing CLIs in Go using Cobra A few months ago, I was working with my colleague Alberto in a CLI. The language of choice was Go and I manage to learn a thing or two. In today&amp;rsquo;s post we will see a very basic skeleton for a CLI written in Go. This will certainly help me in the future as a template for the next CLI, and maybe it helps you too!</description>
+    </item>
+    
+  </channel>
+</rss>
