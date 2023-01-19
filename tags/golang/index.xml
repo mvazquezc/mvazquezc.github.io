@@ -6,7 +6,17 @@
     <description>Recent content in golang on Linuxera</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 19 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Enhanced Version and Build Information for your Go programs with ldflags</title>
+      <link>https://linuxera.org/enhanced-version-and-build-information-for-your-go-programs/</link>
+      <pubDate>Thu, 19 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://linuxera.org/enhanced-version-and-build-information-for-your-go-programs/</guid>
+      <description>Enhanced Version and Build Information for your Go programs with ldflags In the previous post we show how to create a simple CLI in Go with Cobra. I received a suggestion from one of my colleagues, Andrew Block. He suggested complementing that post with the use of ldflags at build time in order to define specific information to a specific build like build time, git commit, etc.
+Andy is also running a blog, go check it out!</description>
+    </item>
+    
     <item>
       <title>Writing CLIs in Go with Cobra</title>
       <link>https://linuxera.org/writing-clis-go-cobra/</link>

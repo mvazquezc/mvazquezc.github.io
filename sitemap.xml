@@ -3,28 +3,31 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://linuxera.org/tags/clis/</loc>
-    <lastmod>2023-01-15T00:00:00+00:00</lastmod>
+    <lastmod>2023-01-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/cobra/</loc>
-    <lastmod>2023-01-15T00:00:00+00:00</lastmod>
+    <lastmod>2023-01-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/development/</loc>
-    <lastmod>2023-01-15T00:00:00+00:00</lastmod>
+    <lastmod>2023-01-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/enhanced-version-and-build-information-for-your-go-programs/</loc>
+    <lastmod>2023-01-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/go/</loc>
-    <lastmod>2023-01-15T00:00:00+00:00</lastmod>
+    <lastmod>2023-01-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/golang/</loc>
-    <lastmod>2023-01-15T00:00:00+00:00</lastmod>
+    <lastmod>2023-01-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/</loc>
-    <lastmod>2023-01-15T00:00:00+00:00</lastmod>
+    <lastmod>2023-01-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/posts/</loc>
-    <lastmod>2023-01-15T00:00:00+00:00</lastmod>
+    <lastmod>2023-01-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/</loc>
-    <lastmod>2023-01-15T00:00:00+00:00</lastmod>
+    <lastmod>2023-01-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/writing-clis-go-cobra/</loc>
     <lastmod>2023-01-15T00:00:00+00:00</lastmod>
