@@ -360,3 +360,5 @@ Once we have the CLI implemented, this is what we will get.
 ## Closing Thoughts
 
 As you have seen, writing CLIs in Go is pretty easy with the help of libraries like Cobra. If you want to see a more advanced implementation of a CLI you can check the CLI Alberto and I built [here](https://github.com/RHsyseng/ddosify-tooling/tree/main/tooling/cmd).
+
+You can improve the version information for this CLI by using `ldflags` at build time, read [this post](https://linuxera.org/enhanced-version-and-build-information-for-your-go-programs/) to know more.
