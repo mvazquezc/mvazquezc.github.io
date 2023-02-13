@@ -5,7 +5,7 @@ tags: [ "okd", "origin", "containers", "kubernetes", "operators", "controllers",
 url: "/integrating-operators-olm/"
 draft: false
 date: 2020-09-16
-#lastmod: 2020-09-16
+lastmod: 2023-02-13
 ShowToc: true
 ShowBreadCrumbs: true
 ShowReadingTime: true
@@ -52,6 +52,15 @@ Once we know OLM is present in our cluster we can continue and start the creatio
 An Operator Bundle consists of different manifests (CSVs and CRDs) and some metadata that defines the Operator at a specific version.
 
 You can read more about Bundles [here](https://github.com/operator-framework/operator-registry/blob/v1.12.6/docs/design/operator-bundle.md).
+
+## Requirements
+
+At the moment of this writing the following versions were used:
+
+* golang-1.19.5
+* Operator Framework SDK v1.26.1
+* Kubernetes 1.24
+* opm v1.26.3
 
 ### Creating the Operator Bundle
 
@@ -120,26 +129,25 @@ sed -i "s/QUAY_USER/$QUAY_USERNAME/g" ~/operators-projects/reverse-words-operato
 
 Now that we have the Operator Bundle ready we can build it and push it to [Quay](https://quay.io). After that we will build the index image and once the index image is ready, we will use it to deploy our operator.
 
-> **NOTE**: I'll be using podman, you can use docker as well
+> **NOTE**: If you use podman instead of docker you can edit the Makefile and change docker commands by podman commands
 
-1. Build the bundle
+1. Build and Push the bundle
 
     ~~~sh
-    podman build -f bundle.Dockerfile -t quay.io/$QUAY_USERNAME/reversewords-operator-bundle:v0.0.1
+    make bundle-build bundle-push BUNDLE_IMG=quay.io/$QUAY_USERNAME/reversewords-operator-bundle:v0.0.1
     ~~~
-2. Push and validate the bundle
+2. Validate the bundle
 
     ~~~sh
-    podman push quay.io/$QUAY_USERNAME/reversewords-operator-bundle:v0.0.1
     operator-sdk bundle validate quay.io/$QUAY_USERNAME/reversewords-operator-bundle:v0.0.1 -b podman
     ~~~
 3. Create the [Index Image](https://github.com/operator-framework/operator-registry#building-an-index-of-operators-using-opm)
 
     ~~~sh
     # Download opm tool
-    sudo curl -sL https://github.com/operator-framework/operator-registry/releases/download/v1.13.8/linux-amd64-opm -o /usr/local/bin/opm && chmod +x /usr/local/bin/opm
+    sudo curl -sL https://github.com/operator-framework/operator-registry/releases/download/v1.26.3/linux-amd64-opm -o /usr/local/bin/opm && sudo chmod +x /usr/local/bin/opm
     # Create the index image
-    opm index add -c podman --bundles quay.io/$QUAY_USERNAME/reversewords-operator-bundle:v0.0.1 --tag quay.io/$QUAY_USERNAME/reversewords-index:v0.0.1
+    opm index add -c podman --mode semver --bundles quay.io/$QUAY_USERNAME/reversewords-operator-bundle:v0.0.1 --tag quay.io/$QUAY_USERNAME/reversewords-index:v0.0.1
     # Push the index image
     podman push quay.io/$QUAY_USERNAME/reversewords-index:v0.0.1
     ~~~
@@ -158,6 +166,7 @@ metadata:
   namespace: $OLM_NAMESPACE
 spec:
   sourceType: grpc
+  displayName: "ReverseWords Catalog"
   image: quay.io/$QUAY_USERNAME/reversewords-index:v0.0.1
 EOF
 ~~~
@@ -168,15 +177,15 @@ A pod will be created on the OLM namespace:
 kubectl -n $OLM_NAMESPACE get pod -l olm.catalogSource=reversewords-catalog
 
 NAME                         READY   STATUS    RESTARTS   AGE
-reversewords-catalog-jdn78   1/1     Running   0          3m11s
+reversewords-catalog-d8qbw   1/1     Running   0          12s
 ~~~
 
 OLM will read the CSVs from our Operator Bundle and will load the Package Manifest into the cluster:
 
 ~~~sh
 kubectl get packagemanifest -l catalog=reversewords-catalog
-NAME                     CATALOG   AGE
-reverse-words-operator             4m9s
+NAME                     CATALOG                AGE
+reverse-words-operator   ReverseWords Catalog   30s
 ~~~
 
 At this point we can create a `Subscription` to our operator:
@@ -217,7 +226,7 @@ At this point we can create a `Subscription` to our operator:
     kubectl -n $NAMESPACE get pods
 
     NAME                                                         READY   STATUS             RESTARTS   AGE
-    reverse-words-operator-controller-manager-7c57649d7f-x88w5   2/2     Running            0          5m5s
+    reverse-words-operator-controller-manager-844d897db4-hsnmw   2/2     Running   0          12s
     ~~~
 
 ## Publish an upgrade for our Operator
@@ -247,22 +256,21 @@ sed -i "s/QUAY_USER/$QUAY_USERNAME/g" ~/operators-projects/reverse-words-operato
 
 Now that we have the new Operator Bundle ready we can build it and push it to [Quay](https://quay.io). After that we will update and build the index image.
 
-1. Build the new bundle
+1. Build and push the new bundle
 
     ~~~sh
-    podman build -f bundle.Dockerfile -t quay.io/$QUAY_USERNAME/reversewords-operator-bundle:v0.0.2
+    make bundle-build bundle-push BUNDLE_IMG=quay.io/$QUAY_USERNAME/reversewords-operator-bundle:v0.0.2
     ~~~
-2. Push and validate the new bundle
+2. Validate the new bundle
 
     ~~~sh
-    podman push quay.io/$QUAY_USERNAME/reversewords-operator-bundle:v0.0.2
     operator-sdk bundle validate quay.io/$QUAY_USERNAME/reversewords-operator-bundle:v0.0.2 -b podman
     ~~~
 3. Update the Index Image
 
     ~~~sh
     # Create the index image
-    opm index add -c podman --bundles quay.io/$QUAY_USERNAME/reversewords-operator-bundle:v0.0.2 --from-index quay.io/$QUAY_USERNAME/reversewords-index:v0.0.1 --tag quay.io/$QUAY_USERNAME/reversewords-index:v0.0.2
+    opm index add -c podman --mode semver --bundles quay.io/$QUAY_USERNAME/reversewords-operator-bundle:v0.0.2 --from-index quay.io/$QUAY_USERNAME/reversewords-index:v0.0.1 --tag quay.io/$QUAY_USERNAME/reversewords-index:v0.0.2
     # Push the index image
     podman push quay.io/$QUAY_USERNAME/reversewords-index:v0.0.2
     ~~~

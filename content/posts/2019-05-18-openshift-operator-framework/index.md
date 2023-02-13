@@ -9,7 +9,7 @@ robotsNoIndex: false
 searchHidden: false
 ShowWordCount: false
 date: 2019-05-18
-lastmod: 2023-01-13
+lastmod: 2023-02-13
 draft: false
 author: "Mario"
 tags: [ "okd", "origin", "containers", "kubernetes", "operators", "controllers", "operator framework", "operator sdk", "openshift", "ocp" ]

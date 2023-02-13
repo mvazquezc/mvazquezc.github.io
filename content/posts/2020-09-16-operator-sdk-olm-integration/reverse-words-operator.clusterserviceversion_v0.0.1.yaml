@@ -8,19 +8,37 @@ metadata:
           "apiVersion": "apps.linuxera.org/v1alpha1",
           "kind": "ReverseWordsApp",
           "metadata": {
+            "labels": {
+              "app.kubernetes.io/created-by": "reverse-words-operator",
+              "app.kubernetes.io/instance": "reversewordsapp-sample",
+              "app.kubernetes.io/managed-by": "kustomize",
+              "app.kubernetes.io/name": "reversewordsapp",
+              "app.kubernetes.io/part-of": "reverse-words-operator"
+            },
             "name": "reversewordsapp-sample"
           },
           "spec": {
-            "foo": "bar"
+            "replicas": "1"
           }
         }
       ]
     capabilities: Basic Install
-    operators.operatorframework.io/builder: operator-sdk-v1.0.0
-    operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
+    createdAt: "2023-02-13T18:31:15Z"
+    operators.operatorframework.io/builder: operator-sdk-v1.26.1
+    operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
   name: reverse-words-operator.v0.0.1
   namespace: placeholder
 spec:
+  nativeAPIs:
+  - group: ""
+    version: v1
+    kind: Pod
+  - group: ""
+    version: v1
+    kind: Service
+  - group: "apps"
+    version: v1
+    kind: Deployment
   apiservicedefinitions: {}
   customresourcedefinitions:
     owned:
@@ -65,11 +83,26 @@ spec:
         - apiGroups:
           - apps.linuxera.org
           resources:
+          - reversewordsapps/finalizers
+          verbs:
+          - get
+          - patch
+          - update
+        - apiGroups:
+          - apps.linuxera.org
+          resources:
           - reversewordsapps/status
           verbs:
           - get
           - patch
           - update
+        - apiGroups:
+          - ""
+          resources:
+          - events
+          verbs:
+          - create
+          - patch
         - apiGroups:
           - ""
           resources:
@@ -102,9 +135,17 @@ spec:
           - subjectaccessreviews
           verbs:
           - create
-        serviceAccountName: default
+        serviceAccountName: reverse-words-operator-controller-manager
       deployments:
-      - name: reverse-words-operator-controller-manager
+      - label:
+          app.kubernetes.io/component: manager
+          app.kubernetes.io/created-by: reverse-words-operator
+          app.kubernetes.io/instance: controller-manager
+          app.kubernetes.io/managed-by: kustomize
+          app.kubernetes.io/name: deployment
+          app.kubernetes.io/part-of: reverse-words-operator
+          control-plane: controller-manager
+        name: reverse-words-operator-controller-manager
         spec:
           replicas: 1
           selector:
@@ -113,40 +154,86 @@ spec:
           strategy: {}
           template:
             metadata:
+              annotations:
+                kubectl.kubernetes.io/default-container: manager
               labels:
                 control-plane: controller-manager
             spec:
+              affinity:
+                nodeAffinity:
+                  requiredDuringSchedulingIgnoredDuringExecution:
+                    nodeSelectorTerms:
+                    - matchExpressions:
+                      - key: kubernetes.io/arch
+                        operator: In
+                        values:
+                        - amd64
+                        - arm64
+                        - ppc64le
+                        - s390x
+                      - key: kubernetes.io/os
+                        operator: In
+                        values:
+                        - linux
               containers:
               - args:
                 - --secure-listen-address=0.0.0.0:8443
                 - --upstream=http://127.0.0.1:8080/
                 - --logtostderr=true
-                - --v=10
-                image: gcr.io/kubebuilder/kube-rbac-proxy:v0.5.0
+                - --v=0
+                image: gcr.io/kubebuilder/kube-rbac-proxy:v0.13.0
                 name: kube-rbac-proxy
                 ports:
                 - containerPort: 8443
                   name: https
-                resources: {}
+                  protocol: TCP
+                resources:
+                  limits:
+                    cpu: 500m
+                    memory: 128Mi
+                  requests:
+                    cpu: 5m
+                    memory: 64Mi
+                securityContext:
+                  allowPrivilegeEscalation: false
+                  capabilities:
+                    drop:
+                    - ALL
               - args:
-                - --metrics-addr=127.0.0.1:8080
-                - --enable-leader-election
+                - --health-probe-bind-address=:8081
+                - --metrics-bind-address=127.0.0.1:8080
+                - --leader-elect
                 command:
                 - /manager
                 image: quay.io/QUAY_USER/reversewords-operator:v0.0.1
+                livenessProbe:
+                  httpGet:
+                    path: /healthz
+                    port: 8081
+                  initialDelaySeconds: 15
+                  periodSeconds: 20
                 name: manager
+                readinessProbe:
+                  httpGet:
+                    path: /readyz
+                    port: 8081
+                  initialDelaySeconds: 5
+                  periodSeconds: 10
                 resources:
                   limits:
-                    cpu: 100m
-                    memory: 30Mi
+                    cpu: 500m
+                    memory: 128Mi
                   requests:
-                    cpu: 100m
-                    memory: 20Mi
-                env:
-                - name: WATCH_NAMESPACE
-                  valueFrom:
-                    fieldRef:
-                      fieldPath: metadata.annotations['olm.targetNamespaces']
+                    cpu: 10m
+                    memory: 64Mi
+                securityContext:
+                  allowPrivilegeEscalation: false
+                  capabilities:
+                    drop:
+                    - ALL
+              securityContext:
+                runAsNonRoot: true
+              serviceAccountName: reverse-words-operator-controller-manager
               terminationGracePeriodSeconds: 10
       permissions:
       - rules:
@@ -163,13 +250,17 @@ spec:
           - patch
           - delete
         - apiGroups:
-          - ""
+          - coordination.k8s.io
           resources:
-          - configmaps/status
+          - leases
           verbs:
           - get
+          - list
+          - watch
+          - create
           - update
           - patch
+          - delete
         - apiGroups:
           - ""
           resources:
@@ -177,7 +268,7 @@ spec:
           verbs:
           - create
           - patch
-        serviceAccountName: default
+        serviceAccountName: reverse-words-operator-controller-manager
     strategy: deployment
   installModes:
   - supported: true
@@ -186,7 +277,7 @@ spec:
     type: SingleNamespace
   - supported: false
     type: MultiNamespace
-  - supported: false
+  - supported: true
     type: AllNamespaces
   keywords:
   - reverse
@@ -194,7 +285,7 @@ spec:
   - linuxera
   links:
   - name: Reverse Words Operator
-    url: https://reverse-words-operator.domain
+    url: https://linuxera.org
   maturity: alpha
   provider:
     name: Linuxera
