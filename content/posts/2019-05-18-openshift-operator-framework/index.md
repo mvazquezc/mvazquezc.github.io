@@ -9,7 +9,7 @@ robotsNoIndex: false
 searchHidden: false
 ShowWordCount: false
 date: 2019-05-18
-lastmod: 2022-12-14
+lastmod: 2023-01-13
 draft: false
 author: "Mario"
 tags: [ "okd", "origin", "containers", "kubernetes", "operators", "controllers", "operator framework", "operator sdk", "openshift", "ocp" ]
@@ -153,14 +153,14 @@ The Operator will be in charge of deploying a simple [GoLang application](https:
 
 At the moment of this writing the following versions were used:
 
-* golang-1.18.7
-* Operator Framework SDK v1.24.1
+* golang-1.19.5
+* Operator Framework SDK v1.26.1
 * Kubernetes 1.24
 
 ## Installing the Operator Framework SDK
 
 ~~~sh
-RELEASE_VERSION=v1.24.1
+RELEASE_VERSION=v1.26.1
 # Linux
 sudo curl -L https://github.com/operator-framework/operator-sdk/releases/download/${RELEASE_VERSION}/operator-sdk_linux_amd64 -o /usr/local/bin/operator-sdk
 sudo chmod +x /usr/local/bin/operator-sdk
@@ -939,7 +939,7 @@ Before we start building the operator, we need access to a Kubernetes cluster. I
 In order to get a local cluster with KCli, just run this command:
 
 ~~~sh
-kcli create kube generic -P masters=1 -P workers=1 -P master_memory=4096 -P numcpus=2 -P worker_memory=4096 -P sdn=calico -P version=1.18 -P ingress=true -P ingress_method=nginx -P metallb=true -P domain=linuxera.org operatorscluster
+kcli create kube generic -P masters=1 -P workers=1 -P master_memory=4096 -P numcpus=2 -P worker_memory=4096 -P sdn=calico -P version=1.24 -P ingress=true -P ingress_method=nginx -P metallb=true -P domain=linuxera.org operatorscluster
 ~~~
 
 Now that we have the cluster up and running we will build and push the operator.
@@ -986,18 +986,18 @@ make docker-build docker-push IMG=quay.io/$USERNAME/reversewords-operator:v0.0.1
 6. We should see our operator pod up and running
 
     ~~~
-	1.6710255038089378e+09	INFO	controller-runtime.metrics	Metrics server is starting to listen	{"addr": "127.0.0.1:8080"}
-	1.671025503809387e+09	INFO	setup	starting manager
-	1.6710255038099382e+09	INFO	Starting server	{"kind": "health probe", "addr": "[::]:8081"}
-	I1214 13:45:03.809973       1 leaderelection.go:248] attempting to acquire leader lease operators-test/1ef59d40.linuxera.org...
-	1.6710255038100107e+09	INFO	Starting server	{"path": "/metrics", "kind": "metrics", "addr": "127.0.0.1:8080"}
-	I1214 13:45:21.937458       1 leaderelection.go:258] successfully acquired lease operators-test/1ef59d40.linuxera.org
-	1.6710255219376462e+09	DEBUG	events	Normal	{"object": {"kind":"Lease","namespace":"operators-test","name":"1ef59d40.linuxera.org","uid":"33044f96-0031-4b1d-a77f-cac5a22a2368","apiVersion":"coordination.k8s.io/v1","resourceVersion":"172072640"}, "reason": "LeaderElection", "message": "reverse-words-operator-controller-manager-6846c949f8-2mtm4_687c8c2a-921e-4d2b-a5c5-de2c4ae1709f became leader"}
-	1.6710255219378495e+09	INFO	Starting EventSource	{"controller": "reversewordsapp", "controllerGroup": "apps.linuxera.org", "controllerKind": "ReverseWordsApp", "source": "kind source: *v1alpha1.ReverseWordsApp"}
-	1.6710255219378843e+09	INFO	Starting EventSource	{"controller": "reversewordsapp", "controllerGroup": "apps.linuxera.org", "controllerKind": "ReverseWordsApp", "source": "kind source: *v1.Deployment"}
-	1.6710255219378898e+09	INFO	Starting EventSource	{"controller": "reversewordsapp", "controllerGroup": "apps.linuxera.org", "controllerKind": "ReverseWordsApp", "source": "kind source: *v1.Service"}
-	1.6710255219378932e+09	INFO	Starting Controller	{"controller": "reversewordsapp", "controllerGroup": "apps.linuxera.org", "controllerKind": "ReverseWordsApp"}
-	1.6710255220399954e+09	INFO	Starting workers	{"controller": "reversewordsapp", "controllerGroup": "apps.linuxera.org", "controllerKind": "ReverseWordsApp", "worker count": 10}
+	1.676311934753094e+09	INFO	controller-runtime.metrics	Metrics server is starting to listen	{"addr": "127.0.0.	1:8080"}
+	1.6763119347534144e+09	INFO	setup	starting manager
+	I0213 18:12:14.753860       1 leaderelection.go:248] attempting to acquire leader lease operators-test/1ef59d40.	linuxera.org...
+	1.6763119347538702e+09	INFO	Starting server	{"kind": "health probe", "addr": "[::]:8081"}
+	1.6763119347539454e+09	INFO	Starting server	{"path": "/metrics", "kind": "metrics", "addr": "127.0.0.1:8080"}
+	I0213 18:12:37.253145       1 leaderelection.go:258] successfully acquired lease operators-test/1ef59d40.linuxera.org
+	1.6763119572531986e+09	DEBUG	events		reverse-words-operator-controller-manager-755f55cffc-9wprb_028ea174-80b7-4294-abfb-1d1aae892cd7 became leader		{"type": "Normal", "object": {"kind":"Lease","namespace":"operators-test","name":"1ef59d40.linuxera.org",	"uid":"ae3f7dff-1624-47b2-9010-c666d559473d","apiVersion":"coordination.k8s.io/v1","resourceVersion":"11102046"}, 	"reason": "LeaderElection"}
+	1.6763119572534668e+09	INFO	Starting EventSource	{"controller": "reversewordsapp", "controllerGroup": "apps.	linuxera.org", "controllerKind": "ReverseWordsApp", "source": "kind source: *v1alpha1.ReverseWordsApp"}
+	1.6763119572535148e+09	INFO	Starting EventSource	{"controller": "reversewordsapp", "controllerGroup": "apps.	linuxera.org", "controllerKind": "ReverseWordsApp", "source": "kind source: *v1.Deployment"}
+	1.6763119572535224e+09	INFO	Starting EventSource	{"controller": "reversewordsapp", "controllerGroup": "apps.	linuxera.org", "controllerKind": "ReverseWordsApp", "source": "kind source: *v1.Service"}
+	1.6763119572535274e+09	INFO	Starting Controller	{"controller": "reversewordsapp", "controllerGroup": "apps.	linuxera.org", "controllerKind": "ReverseWordsApp"}
+	1.6763119573569405e+09	INFO	Starting workers	{"controller": "reversewordsapp", "controllerGroup": "apps.	linuxera.org", "controllerKind": "ReverseWordsApp", "worker count": 10}
     ~~~
 7. Now it's time to create ReverseWordsApp instances
 
@@ -1028,26 +1028,26 @@ make docker-build docker-push IMG=quay.io/$USERNAME/reversewords-operator:v0.0.1
 	apiVersion: apps.linuxera.org/v1alpha1
 	kind: ReverseWordsApp
 	metadata:
-	  creationTimestamp: "2022-12-14T13:47:10Z"
+	  creationTimestamp: "2023-02-13T18:13:48Z"
 	  finalizers:
 	  - finalizer.reversewordsapp.apps.linuxera.org
 	  generation: 1
 	  name: example-reversewordsapp
 	  namespace: operators-test
-	  resourceVersion: "172075873"
-	  uid: 1244e3fd-984d-4132-bdd7-bcfb70e502ff
+	  resourceVersion: "11103763"
+	  uid: ef9351b2-cd44-47b0-ba66-8143f06267dc
 	spec:
 	  replicas: 1
 	status:
 	  appPods:
-	  - dp-example-reversewordsapp-75cff95fd8-d2tl2
+	  - dp-example-reversewordsapp-75cff95fd8-5qvm9
 	  conditions:
-	  - lastTransitionTime: "2022-12-14T13:47:10Z"
+	  - lastTransitionTime: "2023-02-13T18:13:48Z"
 	    message: ""
 	    reason: ReverseWordsDeploymentNotReady
 	    status: "True"
 	    type: ReverseWordsDeploymentNotReady
-	  - lastTransitionTime: "2022-12-14T13:47:10Z"
+	  - lastTransitionTime: "2023-02-13T18:13:48Z"
 	    message: ""
 	    reason: Ready
 	    status: "False"
