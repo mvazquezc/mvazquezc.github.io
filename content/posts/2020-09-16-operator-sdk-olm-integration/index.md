@@ -127,7 +127,7 @@ curl -Ls https://linuxera.org/integrating-operators-olm/reverse-words-operator.c
 sed -i "s/QUAY_USER/$QUAY_USERNAME/g" ~/operators-projects/reverse-words-operator/bundle/manifests/reverse-words-operator.clusterserviceversion.yaml
 ~~~
 
-Now that we have the Operator Bundle ready we can build it and push it to [Quay](https://quay.io). After that we will build the index image and once the index image is ready, we will use it to deploy our operator.
+Now that we have the Operator Bundle ready we can build it and push it to [Quay](https://quay.io). After that we will build the catalog image and once the catalog image is ready, we will use it to deploy our operator.
 
 > **NOTE**: If you use podman instead of docker you can edit the Makefile and change docker commands by podman commands
 
@@ -141,20 +141,43 @@ Now that we have the Operator Bundle ready we can build it and push it to [Quay]
     ~~~sh
     operator-sdk bundle validate quay.io/$QUAY_USERNAME/reversewords-operator-bundle:v0.0.1 -b podman
     ~~~
-3. Create the [Index Image](https://github.com/operator-framework/operator-registry#building-an-index-of-operators-using-opm)
+3. Create the Catalog Image
+
+    {{<tip>}}
+     With this new file-based approach, it's highly recommended to keep control of your catalog in Git. The operator framework team created an example repo you can fork [here](https://github.com/operator-framework/cool-catalog).
+    {{</tip>}}
 
     ~~~sh
     # Download opm tool
     sudo curl -sL https://github.com/operator-framework/operator-registry/releases/download/v1.26.3/linux-amd64-opm -o /usr/local/bin/opm && sudo chmod +x /usr/local/bin/opm
-    # Create the index image
-    opm index add -c podman --mode semver --bundles quay.io/$QUAY_USERNAME/reversewords-operator-bundle:v0.0.1 --tag quay.io/$QUAY_USERNAME/reversewords-index:v0.0.1
-    # Push the index image
-    podman push quay.io/$QUAY_USERNAME/reversewords-index:v0.0.1
+    # Create the catalog image
+    mkdir reversewords-catalog
+    opm generate dockerfile reversewords-catalog
+    opm init reverse-words-operator --default-channel=alpha --output yaml > reversewords-catalog/operator.yaml
+    # Add bundle
+    opm render quay.io/$QUAY_USERNAME/reversewords-operator-bundle:v0.0.1 --output yaml >> reversewords-catalog/operator.yaml
+    # Initialize the alpha channel
+    cat << EOF >> reversewords-catalog/operator.yaml
+    ---
+    schema: olm.channel
+    package: reverse-words-operator
+    name: alpha
+    entries:
+      - name: reverse-words-operator.v0.0.1
+    EOF
+    # Validate the catalog
+    opm validate reversewords-catalog && echo "OK"
+    ~~~
+4. Building and pushing the catalog image
+
+    ~~~sh
+    podman build . -f reversewords-catalog.Dockerfile -t quay.io/$QUAY_USERNAME/reversewords-catalog:latest
+    podman push quay.io/$QUAY_USERNAME/reversewords-catalog:latest
     ~~~
 
 ## Deploy the Operator using OLM
 
-At this point we have our bundle and index image ready, we just need to create the required `CatalogSource` into the cluster so we get access to our Operator bundle.
+At this point we have our bundle and catalog images ready, we just need to create the required `CatalogSource` into the cluster so we get access to our Operator bundle.
 
 ~~~sh
 OLM_NAMESPACE=$(kubectl get pods -A | grep catalog-operator | awk '{print $1}')
@@ -167,7 +190,11 @@ metadata:
 spec:
   sourceType: grpc
   displayName: "ReverseWords Catalog"
-  image: quay.io/$QUAY_USERNAME/reversewords-index:v0.0.1
+  publisher: Linuxera
+  image: quay.io/$QUAY_USERNAME/reversewords-catalog:latest
+  updateStrategy:
+    registryPoll:
+      interval: 1m0s
 EOF
 ~~~
 
@@ -254,7 +281,7 @@ curl -Ls https://linuxera.org/integrating-operators-olm/reverse-words-operator.c
 sed -i "s/QUAY_USER/$QUAY_USERNAME/g" ~/operators-projects/reverse-words-operator/bundle/manifests/reverse-words-operator.clusterserviceversion.yaml
 ~~~
 
-Now that we have the new Operator Bundle ready we can build it and push it to [Quay](https://quay.io). After that we will update and build the index image.
+Now that we have the new Operator Bundle ready we can build it and push it to [Quay](https://quay.io). After that we will update and build the catalog image.
 
 1. Build and push the new bundle
 
@@ -266,23 +293,28 @@ Now that we have the new Operator Bundle ready we can build it and push it to [Q
     ~~~sh
     operator-sdk bundle validate quay.io/$QUAY_USERNAME/reversewords-operator-bundle:v0.0.2 -b podman
     ~~~
-3. Update the Index Image
+3. Update the Catalog Image
 
     ~~~sh
-    # Create the index image
-    opm index add -c podman --mode semver --bundles quay.io/$QUAY_USERNAME/reversewords-operator-bundle:v0.0.2 --from-index quay.io/$QUAY_USERNAME/reversewords-index:v0.0.1 --tag quay.io/$QUAY_USERNAME/reversewords-index:v0.0.2
-    # Push the index image
-    podman push quay.io/$QUAY_USERNAME/reversewords-index:v0.0.2
+    # Add bundle
+    opm render quay.io/$QUAY_USERNAME/reversewords-operator-bundle:v0.0.2 --output yaml >> reversewords-catalog/operator.yaml
+    # Update the alpha channel: Edit file reversewords-catalog/operator.yaml and change
+    entries:
+      - name: reverse-words-operator.v0.0.1
+      - name: reverse-words-operator.v0.0.2
+        replaces: reverse-words-operator.v0.0.1
+    # Validate the catalog
+    opm validate reversewords-catalog && echo "OK"
     ~~~
 
-With the index image updated, we can now update the `CatalogSource` pointing to the new index image:
+4. Build and push the catalog image
 
-~~~sh
-PATCH="{\"spec\":{\"image\":\"quay.io/$QUAY_USERNAME/reversewords-index:v0.0.2\"}}"
-kubectl -n $OLM_NAMESPACE patch catalogsource reversewords-catalog -p $PATCH --type merge
-~~~
+    ~~~sh
+    podman build . -f reversewords-catalog.Dockerfile -t quay.io/$QUAY_USERNAME/reversewords-catalog:latest
+    podman push quay.io/$QUAY_USERNAME/reversewords-catalog:latest
+    ~~~
 
-The catalog pod will be recreated with the new index image and the package manifest will be updated to include the CSV `v0.0.2`.
+OLM is continuously checking for new bundles in the Catalog Images based on the `updateStrategy` we configured in our `CatalogSource`. After a few moments, the new CSV `v0.0.2` should be available.
 
 ## Updating to a new Operator version
 
