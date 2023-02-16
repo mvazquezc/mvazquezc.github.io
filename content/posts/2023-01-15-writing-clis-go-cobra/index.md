@@ -132,6 +132,7 @@ func NewRunCommand() *cobra.Command {
   cmd := &cobra.Command{
 		Use:   "run",
 		Short: "Exec the run command",
+		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// Validate command Args with the validateRunCommandArgs function we created
 			err := validateRunCommandArgs()
