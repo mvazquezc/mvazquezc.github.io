@@ -6,7 +6,17 @@
     <description>Recent content on Linuxera</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 21 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Exposing multiple Kubernetes clusters with a single load balancer and a single public IP</title>
+      <link>https://linuxera.org/exposing-multiple-kubernetes-clusters-single-lb-and-ip/</link>
+      <pubDate>Tue, 21 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://linuxera.org/exposing-multiple-kubernetes-clusters-single-lb-and-ip/</guid>
+      <description>Exposing multiple Kubernetes clusters with a single load balancer and a single public IP My colleague Alberto Losada and I have been working on a lab lately. The lab is composed of three OpenShift clusters on VMs, these VMs are deployed on an isolated libvirt network, which means that we cannot access them from outside the hypervisor.
+In order to solve this issue, we wanted to expose the three clusters using the public IP available in the hypervisor.</description>
+    </item>
+    
     <item>
       <title>Enhanced Version and Build Information for your Go programs with ldflags</title>
       <link>https://linuxera.org/enhanced-version-and-build-information-for-your-go-programs/</link>
