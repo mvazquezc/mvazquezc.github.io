@@ -144,7 +144,7 @@ Now that we have the Operator Bundle ready we can build it and push it to [Quay]
 3. Create the Catalog Image
 
     {{<tip>}}
-     With this new file-based approach, it's highly recommended to keep control of your catalog in Git. The operator framework team created an example repo you can fork [here](https://github.com/operator-framework/cool-catalog).
+With this new file-based approach, it's highly recommended to keep control of your catalog in Git. The operator framework team created an example repo you can fork [here](https://github.com/operator-framework/cool-catalog).
     {{</tip>}}
 
     ~~~sh
