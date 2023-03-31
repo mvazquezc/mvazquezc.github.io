@@ -939,7 +939,7 @@ Before we start building the operator, we need access to a Kubernetes cluster. I
 In order to get a local cluster with KCli, just run this command:
 
 ~~~sh
-kcli create kube generic -P masters=1 -P workers=1 -P master_memory=4096 -P numcpus=2 -P worker_memory=4096 -P sdn=calico -P version=1.24 -P ingress=true -P ingress_method=nginx -P metallb=true -P domain=linuxera.org operatorscluster
+kcli create kube generic -P ctlplanes=1 -P workers=1 -P ctlplane_memory=4096 -P numcpus=2 -P worker_memory=4096 -P sdn=calico -P version=1.24 -P ingress=true -P ingress_method=nginx -P metallb=true -P domain=linuxera.org operatorscluster
 ~~~
 
 Now that we have the cluster up and running we will build and push the operator.

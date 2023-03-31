@@ -25,7 +25,7 @@ We will need a Kubernetes cluster, I'm going to use [kcli](https://github.com/ka
 
 ~~~sh
 # Create a Kubernetes 1.20 cluster with 1 master and 1 worker using calico as SDN, nginx as ingress controller, metallb for loadbalancer services and CRI-O as container runtime
-kcli create kube generic -P masters=1 -P workers=1  -P master_memory=4096 -P numcpus=2 -P worker_memory=4096 -P sdn=calico -P version=1.20 -P ingress=true -P ingress_method=nginx -P metallb=true -P engine=crio -P domain=linuxera.org caps-cluster
+kcli create kube generic -P ctlplanes=1 -P workers=1  -P ctlplane_memory=4096 -P numcpus=2 -P worker_memory=4096 -P sdn=calico -P version=1.20 -P ingress=true -P ingress_method=nginx -P metallb=true -P engine=crio -P domain=linuxera.org caps-cluster
 ~~~
 
 After a few moments we will get the `kubeconfig` for accessing our cluster:
