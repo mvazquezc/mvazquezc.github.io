@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>cgroupsv2 on Linuxera</title>
+    <link>https://linuxera.org/tags/cgroupsv2/</link>
+    <description>Recent content in cgroupsv2 on Linuxera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 06 Apr 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/cgroupsv2/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CPU and Memory Management on Kubernetes with Cgroupsv2</title>
+      <link>https://linuxera.org/cpu-memory-management-kubernetes-cgroupsv2/</link>
+      <pubDate>Thu, 06 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://linuxera.org/cpu-memory-management-kubernetes-cgroupsv2/</guid>
+      <description>CPU and Memory Management on Kubernetes with Cgroupsv2 In this post I&amp;rsquo;ll try to explain how CPU and Memory management works under the hood on Kubernetes. If you ever wondered what happens when you set requests and limits for your pods, keep reading!
+Attention
+This is the result of my exploratory work around cgroupsv2 and their application to Kubernetes. Even though I tried really hard to make sure the information in this post is accurate, I&amp;rsquo;m far from being an expert on the topic and some information may not be 100% accurate.</description>
+    </item>
+    
+  </channel>
+</rss>
