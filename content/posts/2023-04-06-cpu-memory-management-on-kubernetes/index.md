@@ -20,7 +20,7 @@ ShowWordCount: false
 In this post I'll try to explain how CPU and Memory management works under the hood on Kubernetes. If you ever wondered what happens when you set `requests` and `limits` for your pods, keep reading!
 
 {{<attention>}}
-This is the result of my exploratory work around cgroupsv2 and their application to Kubernetes. Even though I tried really hard to make sure the information in this post is accurate, I'm far from being an expert on the topic and some information may not be 100% accurate. If you detect something that is missing / wrong, please comment the post and I'll fix it!
+This is the result of my exploratory work around cgroupsv2 and their application to Kubernetes. Even though I tried really hard to make sure the information in this post is accurate, I'm far from being an expert on the topic and some information may not be 100% accurate. If you detect something that is missing / wrong, please comment on the post!
 {{</attention>}}
 
 I'll be using a Kubernetes v1.26 (latest at the time of this writing) with an operating system with support for cgroupsv2 like Fedora 37. The tool used to create the cluster is [kcli](https://kcli.readthedocs.io/) and the command used was:
@@ -268,6 +268,10 @@ We're requesting 1 core and 100% of the CPU, this should fit within the `cpu.max
     ~~~
 
 6. If we check for throttling we will see that no throttling is happening.
+
+    {{<tip>}}
+CPU throttling is a resource control mechanism that limits the amount of CPU time a process can use, preventing it from consuming excessive CPU resources and affecting the performance of other processes.
+    {{</tip>}}
 
     ~~~sh
     grep throttled /sys/fs/cgroup/system.slice/compitingcputest/cpu.stat
