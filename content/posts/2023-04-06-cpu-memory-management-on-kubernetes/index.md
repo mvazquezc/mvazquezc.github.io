@@ -454,21 +454,51 @@ In a regular Kubernetes node we will have at least three main parent cgroups:
 * `system.slice`: Parent cgroup used by the O.S to place system processes. Kubelet, sshd, etc. run here.
 * `user.slice`: Parent cgroup used by the O.S to place user processes. When you run a regular command, it runs here.
 
-{{<attention>}}
-The output below omits certain directories. It's meant to help visualize the description above.
-{{</attention>}}
+{{<tip>}}
+In SystemD a `Slice` is a concept for hierarchically managing resources of a group of processes. This management is done by creating a cgroup. `Scopes` manage a set of externally created processes, the main purpose of a `scope` is grouping worker processes for managing resources.
+{{</tip>}}
 
 ~~~console
 /sys/fs/cgroup/
 ├── kubepods.slice
 │   ├── kubepods-besteffort.slice
-│   └── kubepods-burstable.slice
+│   │   └── kubepods-besteffort-pod7589d90f_83af_4a05_a4ee_8bb078db72b8.slice
+│   │       ├── cri-containerd-2be6af51555a1d9ebb8678f3254e81b5f3547dfc230b07a2c1067f5d430b7221.scope
+│   │       └── cri-containerd-cbce8911226299472976f069f20afe0ba20c80037f9fd8394c0a8f8aaac60bee.scope
+│   ├── kubepods-burstable.slice
+│   │   └── kubepods-burstable-pode00fb079_24be_4039_b2cb_f68876881d70.slice
+│   │       ├── cri-containerd-a0c611e1b04856e9d565dfef25746d7bdcaaf12bb92fff6221aa6b89a12fbb31.scope
+│   │       └── cri-containerd-ea6361278865134bd9d52e718baa556e7693d766ab38d28d64941a1935fae004.scope
+│   └── kubepods-podbe70a1c9_81c5_4764_b28f_0965edee08d0.slice
+│       ├── cri-containerd-208bf4e7ddeef45a3bd3acff96ff0747b35e9204cea418082b586df6adf022ad.scope
+│       └── cri-containerd-71305184cec893cd21cfef2cbe699453ad89a51e4f60586670f194574f287a53.scope
 ├── system.slice
 │   ├── kubelet.service
 │   └── sshd.service
 └── user.slice
     └── user-1000.slice
 ~~~
+
+In order to get these cgroups created, Kubelet uses one of the two available drivers: `systemd` or `cgroupsfs`. Cgroupsv2 are only supported by `systemd` driver.
+
+The root cgroup `kubepods.slice` and the QoS cgroups `kubepods-besteffort.slice` and `kubepods-burstable.slice` are created by Kubelet when it starts, on top of that Kubelet will create a cgroup (using the driver) as soon as a new Pod gets created. The pod will have from 1 to N containers, the cgroups for these containers will be created by the container runtime by using the driver as well.
+
+On the output above you can see different cgroups for pods like `kubepods-besteffort-pod7589d90f_83af_4a05_a4ee_8bb078db72b8.slice` and one for a container like `cri-containerd-2be6af51555a1d9ebb8678f3254e81b5f3547dfc230b07a2c1067f5d430b7221.scope`.
+
+So far, we have been looking at the configuration of cgroups via the fileystem. Systemd tooling can be used for that as well:
+
+~~~sh
+systemctl show --no-pager cri-containerd-2be6af51555a1d9ebb8678f3254e81b5f3547dfc230b07a2c1067f5d430b7221.scope
+~~~
+
+~~~console
+<OMITTED_OUTPUT>
+CPUWeight=1
+MemoryMax=infinity
+<OMITTED_OUTPUT>
+~~~
+
+#### CPU Bandwidth configuration on the node
 
 In the previous sections we have talked about how _`cpu.weight`_ works for distributing CPU bandwidth to processes. The parent cgroups in a Kubernetes node will be configured as follows:
 
@@ -705,10 +735,13 @@ Finally, in the next section I'll put interesting resources around the topic, so
 ## Useful Resources
 
 * KubeCon NA 2022 - Cgroupv2 is coming soon to a cluster near you talk. [Slides](https://static.sched.com/hosted_files/kccncna2022/69/cgroupv2-is-coming-soon-to-a-cluster-near-you-kubecon-na-2022.pdf) and [Recording](https://www.youtube.com/watch?v=sgyFCp1CRhA).
-* Lisa 2021 - 5 years of cgroup v2 talk. [Slides](https://www.usenix.org/system/files/lisa21_slides_down.pdf)
+* Lisa 2021 - 5 years of cgroup v2 talk. [Slides](https://www.usenix.org/system/files/lisa21_slides_down.pdf).
+* KubeCon EU 2020 - Kubernetes On Cgroup v2. [Slides](https://static.sched.com/hosted_files/kccnceu20/b8/kubernetes_on_cgroup_v2.pdf) and [Recording](https://www.youtube.com/watch?v=u8h0e84HxcE).
 * cgroups [man page](https://man7.org/linux/man-pages/man7/cgroups.7.html) and kernel [docs](https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html).
 * [RHEL8 cgroupv2 docs](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/managing_monitoring_and_updating_the_kernel/using-cgroups-v2-to-control-distribution-of-cpu-time-for-applications_managing-monitoring-and-updating-the-kernel).
 * Martin Heinz [blog on kubernetes cgroups](https://martinheinz.dev/blog/91).
 * Kubernetes cgroups [docs](https://kubernetes.io/docs/concepts/architecture/cgroups/).
 * Kubernetes manage resources for containers [docs](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/).
 * Kubernetes reserve compute resources [docs](https://kubernetes.io/docs/tasks/administer-cluster/reserve-compute-resources/).
+* [Runc systemd driver docs](https://github.com/opencontainers/runc/blob/main/docs/systemd.md).
+* SystemD [scope](https://www.freedesktop.org/software/systemd/man/systemd.scope.html) and [slice](https://www.freedesktop.org/software/systemd/man/systemd.slice.html) docs.
