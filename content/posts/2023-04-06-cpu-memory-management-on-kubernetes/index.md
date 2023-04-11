@@ -634,13 +634,13 @@ In Systemd a `Slice` is a concept for hierarchically managing resources of a gro
     └── user-1000.slice
 ~~~
 
-In order to get these cgroups created, Kubelet uses one of the two available drivers: `systemd` or `cgroupsfs`. Cgroupsv2 are only supported by `systemd` driver.
+In order to get these cgroups created, Kubelet uses one of the two [available drivers](https://kubernetes.io/docs/setup/production-environment/container-runtimes/#cgroup-drivers): `systemd` or `cgroupsfs`. Cgroupsv2 are only supported by `systemd` driver.
 
 The root cgroup `kubepods.slice` and the QoS cgroups `kubepods-besteffort.slice` and `kubepods-burstable.slice` are created by Kubelet when it starts, on top of that Kubelet will create a cgroup (using the driver) as soon as a new Pod gets created. The pod will have from 1 to N containers, the cgroups for these containers will be created by the container runtime by using the driver as well.
 
 On the output above you can see different cgroups for pods like `kubepods-besteffort-pod7589d90f_83af_4a05_a4ee_8bb078db72b8.slice` and one for a container like `cri-containerd-2be6af51555a1d9ebb8678f3254e81b5f3547dfc230b07a2c1067f5d430b7221.scope`.
 
-So far, we have been looking at the configuration of cgroups via the fileystem. Systemd tooling can be used for that as well:
+So far, we have been looking at the configuration of cgroups via the filesystem. Systemd tooling can be used for that as well:
 
 ~~~sh
 systemctl show --no-pager cri-containerd-2be6af51555a1d9ebb8678f3254e81b5f3547dfc230b07a2c1067f5d430b7221.scope
