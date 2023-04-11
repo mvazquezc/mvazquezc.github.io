@@ -39,7 +39,11 @@ In the next sections we will see how we can limit memory and cpu for processes.
 
 ### Limiting memory using Cgroupsv2
 
-Limiting memory is pretty straightforward, we just set a memory.max and since the memory is a resource that cannot be compressed, once the process reaches the limit it will be killed.
+An evolved memory controller is available in Cgroupsv2, it allows for better management of memory resources for the processes inside the cgroup. In this section we will cover how to hard limit a process to a given amount of memory, and how to use new controls to make our programs work on memory-restricted environments.
+
+#### Hard limiting memory
+
+Hard limiting memory is pretty straightforward, we just set a memory.max and since the memory is a resource that cannot be compressed, once the process reaches the limit it will be killed.
 
 We will be using this python script:
 
@@ -64,7 +68,7 @@ EOF
 2. Set a limit of 200MiB of RAM for this cgroup and disable swap:
 
     ~~~sh
-    echo 200Mi > /sys/fs/cgroup/system.slice/memorytest/memory.max
+    echo "200M" > /sys/fs/cgroup/system.slice/memorytest/memory.max
     echo "0" > /sys/fs/cgroup/system.slice/memorytest/memory.swap.max
     ~~~
 
@@ -104,6 +108,157 @@ Make sure you closed the shell attached to the cgroup before running the command
 
     ~~~sh
     sudo rmdir /sys/fs/cgroup/system.slice/memorytest/
+    ~~~
+
+#### Better memory management
+
+In the previous section we have seen how to hard-limit our processes to a given amount of memory, in this section we will be making use of new configurations to better allow our program to run under memory-restricted scenarios.
+
+As we said, memory cannot be compressed, and as such, when a process reaches the limit set it will be OOMKilled. While this remains true, some memory in use by our program can be reclaimed by the kernel. This will free some memory that is no longer in use.
+
+In Cgroupsv2 we can work with the following memory configurations:
+
+* `memory.high`: Memory usage throttle limit. If the cgroup goes over this limit, the cgroup processes will be throttled and put under heavy reclaim pressure.
+* `memory.max`: As we saw earlier, this is the memory usage hard limit. Anything going beyond this number gets OOMKilled.
+* `memory.low`: Best-effort memory protection. While processes in this cgroup or child cgroups are below this threshold, the cgroup memory won't be reclaimed unless it cannot be reclaimed from other unprotected cgroups.
+* `memory.min`: Specifies a minimum amount of memory that the cgroup must always retain and that won't be reclaimed by the system under any conditions as long as the memory usage is below the threshold defined.
+* `memory.swap.high`: Same as `memory.high` but for swap.
+* `memory.swap.max`: Same as `memory.max` but for swap.
+
+{{<tip>}}
+Memory throttling is a resource control mechanism that limits the amount of memory a process can use, when throttled the kernel will try to reclaim memory. Keep in mind that memory reclaiming is an I/O expensive process.
+{{</tip>}}
+
+In order to demonstrate how this works, we will be using the same python script we used previously.
+
+1. Let's create a new cgroup under the system.slice:
+
+    ~~~sh
+    sudo mkdir -p /sys/fs/cgroup/system.slice/memorytest2
+    ~~~
+
+2. Set a limit of 200MiB of RAM for this cgroup and disable swap:
+
+    ~~~sh
+    echo "200M" > /sys/fs/cgroup/system.slice/memorytest2/memory.max
+    echo "0" > /sys/fs/cgroup/system.slice/memorytest2/memory.swap.max
+    ~~~
+
+3. Set a throttle limit of 150MiB:
+
+    ~~~sh
+    echo "150M" > /sys/fs/cgroup/system.slice/memorytest2/memory.high
+    ~~~
+
+4. Add the current shell process to the cgroup:
+
+    ~~~sh
+    echo $$ > /sys/fs/cgroup/system.slice/memorytest2/cgroup.procs
+    ~~~
+
+5. Run the python script:
+
+    ~~~sh
+    python3 /opt/dumb.py
+    ~~~
+
+    ~~~console
+    Used 10 MiB
+    Used 20 MiB
+    Used 30 MiB
+    Used 40 MiB
+    Used 50 MiB
+    Used 60 MiB
+    Used 70 MiB
+    <Hangs here>
+    ~~~
+
+6. Delete the cgroup:
+
+    {{<warning>}}
+Make sure you closed the shell attached to the cgroup before running the command below, otherwise it will fail.
+    {{</warning>}}
+
+    ~~~sh
+    sudo rmdir /sys/fs/cgroup/system.slice/memorytest2/
+    ~~~
+
+
+We tried to limit the memory consumption for our process, and we failed. Determining the exact amount of memory required by an application is a difficult and error-prone task. Luckily for us, Facebook folks created [senpain](https://github.com/facebookincubator/senpai). Let's see how we can use it to better determine the configuration for our process.
+
+1. Download senpai:
+
+    ~~~sh
+    curl -L https://raw.githubusercontent.com/facebookincubator/senpai/main/senpai.py -o /tmp/senpai.py
+    ~~~
+
+2. Create a new cgroup under the system.slice:
+
+    ~~~sh
+    sudo mkdir -p /sys/fs/cgroup/system.slice/memorytest3
+    ~~~
+
+3. Add the current shell process to the cgroup:
+
+    ~~~sh
+    echo $$ > /sys/fs/cgroup/system.slice/memorytest3/cgroup.procs
+    ~~~
+
+4. Run senpai in a different shell with the following command:
+
+    ~~~sh
+    python3 /tmp/senpay.py 
+    ~~~
+
+5. Run the python script:
+
+    ~~~sh
+    python3 /opt/dumb.py
+    ~~~
+
+6. At this point `senpai` should've set the `memory.high` restrictions for our cgroups based on the usage of our python script:
+
+    ~~~sh
+    cat /sys/fs/cgroup/system.slice/memorytest3/memory.high
+    ~~~
+
+    ~~~console
+    437448704
+    ~~~
+
+7. We can stop `senpai`. We need around 420MiB memory to run our python script, so a better configuration for it would be:
+
+    {{<attention>}}
+We are adding a max swap usage of 50M to ease memory reclaim.
+    {{</attention>}}
+
+    ~~~sh
+    echo "450M" > /sys/fs/cgroup/system.slice/memorytest3/memory.max
+    echo "50M" > /sys/fs/cgroup/system.slice/memorytest3/memory.swap.max
+    ~~~
+
+8. At this point we should be able to run the program with no issues:
+
+    ~~~sh
+    python3 /opt/dumb.py
+    ~~~
+
+    ~~~console
+    Used 10 MiB
+    Used 20 MiB
+    ...
+    Used 190 MiB
+    Used 200 MiB
+    ~~~
+
+9. Delete the cgroup:
+
+    {{<warning>}}
+Make sure you closed the shell attached to the cgroup before running the command below, otherwise it will fail.
+    {{</warning>}}
+
+    ~~~sh
+    sudo rmdir /sys/fs/cgroup/system.slice/memorytest3/
     ~~~
 
 Now that we have seen how to limit memory, let's see how to limit CPU.
@@ -181,6 +336,10 @@ We're requesting 1 core and 50% of the CPU, this should fit within the `cpu.max`
     ~~~
 
 8. Since we're within the budget, we shouldn't see any throttling happening:
+
+    {{<tip>}}
+CPU throttling is a resource control mechanism that limits the amount of CPU time a process can use, preventing it from consuming excessive CPU resources and affecting the performance of other processes.
+    {{</tip>}}
 
     ~~~sh
     grep throttled /sys/fs/cgroup/system.slice/cputest/cpu.stat
@@ -268,10 +427,6 @@ We're requesting 1 core and 100% of the CPU, this should fit within the `cpu.max
     ~~~
 
 6. If we check for throttling we will see that no throttling is happening.
-
-    {{<tip>}}
-CPU throttling is a resource control mechanism that limits the amount of CPU time a process can use, preventing it from consuming excessive CPU resources and affecting the performance of other processes.
-    {{</tip>}}
 
     ~~~sh
     grep throttled /sys/fs/cgroup/system.slice/compitingcputest/cpu.stat
@@ -455,7 +610,7 @@ In a regular Kubernetes node we will have at least three main parent cgroups:
 * `user.slice`: Parent cgroup used by the O.S to place user processes. When you run a regular command, it runs here.
 
 {{<tip>}}
-In SystemD a `Slice` is a concept for hierarchically managing resources of a group of processes. This management is done by creating a cgroup. `Scopes` manage a set of externally created processes, the main purpose of a `scope` is grouping worker processes for managing resources.
+In Systemd a `Slice` is a concept for hierarchically managing resources of a group of processes. This management is done by creating a cgroup. `Scopes` manage a set of externally created processes, the main purpose of a `scope` is grouping worker processes for managing resources.
 {{</tip>}}
 
 ~~~console
@@ -735,7 +890,8 @@ Finally, in the next section I'll put interesting resources around the topic, so
 ## Useful Resources
 
 * KubeCon NA 2022 - Cgroupv2 is coming soon to a cluster near you talk. [Slides](https://static.sched.com/hosted_files/kccncna2022/69/cgroupv2-is-coming-soon-to-a-cluster-near-you-kubecon-na-2022.pdf) and [Recording](https://www.youtube.com/watch?v=sgyFCp1CRhA).
-* Lisa 2021 - 5 years of cgroup v2 talk. [Slides](https://www.usenix.org/system/files/lisa21_slides_down.pdf).
+* FOSDEM 2023 - 7 years of cgroup v2 talk. [Slides](https://chrisdown.name/talks/cg2023/cg2023-fosdem.pdf) and [Recording](https://www.youtube.com/watch?v=LX6fMlIYZcg).
+* Lisa 2021 - 5 years of cgroup v2 talk. [Slides](https://www.usenix.org/system/files/lisa21_slides_down.pdf) and [Recording](https://www.youtube.com/watch?v=kPMZYoRxtmg).
 * KubeCon EU 2020 - Kubernetes On Cgroup v2. [Slides](https://static.sched.com/hosted_files/kccnceu20/b8/kubernetes_on_cgroup_v2.pdf) and [Recording](https://www.youtube.com/watch?v=u8h0e84HxcE).
 * cgroups [man page](https://man7.org/linux/man-pages/man7/cgroups.7.html) and kernel [docs](https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html).
 * [RHEL8 cgroupv2 docs](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/managing_monitoring_and_updating_the_kernel/using-cgroups-v2-to-control-distribution-of-cpu-time-for-applications_managing-monitoring-and-updating-the-kernel).
@@ -743,5 +899,5 @@ Finally, in the next section I'll put interesting resources around the topic, so
 * Kubernetes cgroups [docs](https://kubernetes.io/docs/concepts/architecture/cgroups/).
 * Kubernetes manage resources for containers [docs](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/).
 * Kubernetes reserve compute resources [docs](https://kubernetes.io/docs/tasks/administer-cluster/reserve-compute-resources/).
-* [Runc systemd driver docs](https://github.com/opencontainers/runc/blob/main/docs/systemd.md).
-* SystemD [scope](https://www.freedesktop.org/software/systemd/man/systemd.scope.html) and [slice](https://www.freedesktop.org/software/systemd/man/systemd.slice.html) docs.
+* [Runc Systemd driver docs](https://github.com/opencontainers/runc/blob/main/docs/systemd.md).
+* Systemd [scope](https://www.freedesktop.org/software/systemd/man/systemd.scope.html) and [slice](https://www.freedesktop.org/software/systemd/man/systemd.slice.html) docs.
