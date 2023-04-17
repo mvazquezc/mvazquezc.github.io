@@ -31,7 +31,7 @@ kcli create kube generic -P ctlplanes=1 -P workers=1 -P ctlplane_memory=4096 -P 
 
 ## Introduction to Cgroups
 
-As we explained in a [previous post](https://linuxera.org/containers-under-the-hood/), Cgroups are used to limit what resources are available to containers on the system. In Kubernetes it's not different.
+As we explained in a [previous post](https://linuxera.org/containers-under-the-hood/), Cgroups can be used to limit what resources are available to processes on the system, since containers are processes this applies to them as well. In Kubernetes it's not different.
 
 Cgroups version 2 introduces improvements and new features on top of Cgroups version 1, you can read more about what changed in [this link](https://man7.org/linux/man-pages/man7/cgroups.7.html#CGROUPS_VERSION_2).
 
