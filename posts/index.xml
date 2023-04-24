@@ -6,7 +6,18 @@
     <description>Recent content in Posts on Linuxera</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 06 Apr 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 24 Apr 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Gateway API for Kubernetes</title>
+      <link>https://linuxera.org/gateway-api-kubernetes/</link>
+      <pubDate>Mon, 24 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://linuxera.org/gateway-api-kubernetes/</guid>
+      <description>Gateway API for Kubernetes In this post we will go over a new project by the SIG-NETWORK that aims to evolve Kubernetes service networking.
+I&amp;rsquo;ll be using a Kubernetes v1.26 (latest at the time of this writing). The tool used to create the cluster is kcli and the command used was:
+kcli create kube generic -P ctlplanes=1 -P workers=1 -P ctlplane_memory=4096 -P numcpus=8 -P worker_memory=8192 -P image=fedora37 -P sdn=calico -P version=1.</description>
+    </item>
+    
     <item>
       <title>CPU and Memory Management on Kubernetes with Cgroupsv2</title>
       <link>https://linuxera.org/cpu-memory-management-kubernetes-cgroupsv2/</link>

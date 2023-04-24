@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>gateway-api on Linuxera</title>
+    <link>https://linuxera.org/tags/gateway-api/</link>
+    <description>Recent content in gateway-api on Linuxera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 24 Apr 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/gateway-api/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Gateway API for Kubernetes</title>
+      <link>https://linuxera.org/gateway-api-kubernetes/</link>
+      <pubDate>Mon, 24 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://linuxera.org/gateway-api-kubernetes/</guid>
+      <description>Gateway API for Kubernetes In this post we will go over a new project by the SIG-NETWORK that aims to evolve Kubernetes service networking.
+I&amp;rsquo;ll be using a Kubernetes v1.26 (latest at the time of this writing). The tool used to create the cluster is kcli and the command used was:
+kcli create kube generic -P ctlplanes=1 -P workers=1 -P ctlplane_memory=4096 -P numcpus=8 -P worker_memory=8192 -P image=fedora37 -P sdn=calico -P version=1.</description>
+    </item>
+    
+  </channel>
+</rss>
