@@ -5,7 +5,7 @@ tags: [ "okd", "origin", "containers", "kubernetes", "openshift", "oauth", "prox
 url: "/oauth-proxy-secure-applications-openshift/"
 draft: false
 date: 2019-07-30
-lastmod: 2022-08-31
+lastmod: 2023-05-30
 ShowToc: true
 ShowBreadCrumbs: true
 ShowReadingTime: true
@@ -137,7 +137,7 @@ In order to use OAuth Proxy we need a couple of things:
 
 3. Modify the deployment
 
-    > **NOTE**: Below deployment points to the `quay.io/openshift/origin-oauth-proxy:4.10` image, make sure to use the one matching your cluster version. You can find the available tags [here](https://quay.io/repository/openshift/origin-oauth-proxy?tab=tags).
+    > **NOTE**: Below deployment points to the `quay.io/openshift/origin-oauth-proxy:4.13` image, make sure to use the one matching your cluster version. You can find the available tags [here](https://quay.io/repository/openshift/origin-oauth-proxy?tab=tags).
 
     **deployment.yaml**
 
@@ -179,7 +179,7 @@ In order to use OAuth Proxy we need a couple of things:
                 - -openshift-service-account=reversewords
                 - -openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
                 - -skip-auth-regex=^/metrics
-              image: quay.io/openshift/origin-oauth-proxy:4.10
+              image: quay.io/openshift/origin-oauth-proxy:4.13
               imagePullPolicy: IfNotPresent
               ports:
                 - name: oauth-proxy
@@ -291,6 +291,77 @@ oc -n reverse-words adm policy add-role-to-user view user2
 Back on the browser:
 
 ![Scenario 3 Correct Login](https://linuxera.org/oauth-proxy-secure-applications-openshift/scenario3-login-correct.gif)
+
+## Scenario 4 - Limiting Access to Service Accounts
+
+Authenticate using `ServiceAccount` tokens requires some extra work. In this scenario we will grant access to a `ServiceAccount` named `test-user` to the application deployed in [scenario 3](#scenario-3---limiting-access-to-specific-authenticated-users). This scenario assumes you have completed [scenario 3](#scenario-3---limiting-access-to-specific-authenticated-users).
+
+1. In order to authenticate `ServiceAccounts` we need to allow auth delegation to the `oauth-proxy` container, we use a `ClusterRoleBinding` for that targeting the `ServiceAccount` used to run the oauth-proxy container, `reversewords` in our case. Make sure you create below `ClusterRoleBinding` before continuing:
+
+    **clusterrolebinding.yaml**
+
+    ~~~yaml
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRoleBinding
+    metadata:
+      # Without this role your oauth-proxy will output
+      # Failed to make webhook authenticator request: tokenreviews.authentication.k8s.io is forbidden: 
+      # User "system:serviceaccount:reverse-words:reversewords" cannot create resource "tokenreviews" in API 
+      # group "authentication.k8s.io" at the cluster scope
+      name: oauth-create-tokenreviews
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: system:auth-delegator
+    subjects:
+    - kind: ServiceAccount
+      name: reversewords
+      namespace: reverse-words
+    ~~~
+
+2. Next, we will create the `ServiceAccount` we will be using for authenticating in our app, we will name it `robot-user`:
+
+    ~~~sh
+    oc -n reverse-words create serviceaccount robot-user
+    ~~~
+
+3. Same as we did in scenario 3, we need to restrict the access to `ServiceAccounts` with access to specific resources (this is a must for authenticating `ServiceAccounts` via oauth-proxy). In this case we will restrict access to `ServiceAccounts` that can get `Pods` in the _reverse-words_ `Namespace`. Modify the deployment. Add the line below to the oauth-proxy container arguments:
+
+    {{<tip>}}
+In the parameters used for the URL delegation you will see I'm using `"/"`. You can have multiple rules and ask for different access rights depending on the destination URL.
+    {{</tip>}}
+
+    ~~~sh
+    oc -n reverse-words edit deployment reverse-words
+    ~~~
+
+    {{<attention>}}
+We are requesting different access for users `openshift-sar` than for service accounts `openshift-delegate-urls`. We could request the same access if we wanted to.
+    {{</attention>}}
+
+    ~~~yaml
+    <OMITTED OUTPUT>
+    - -openshift-sar={"resource":"namespaces","resourceName":"reverse-words","namespace":"reverse-words","verb":"get"}
+    - -openshift-delegate-urls={"/":{"resource":"pods","namespace":"reverse-words","verb":"get"}}
+    <OMITTED OUTPUT>
+    ~~~
+
+4. Finally, we need to grant access to the `robot-user` to get `Pods` in the _reverse-words_ `Namespace`. The _view_ `Role` will grant this access.
+
+    ~~~sh
+    oc -n reverse-words adm policy add-role-to-user view -z robot-user
+    ~~~
+
+5. At this point, we just need to get a token and authenticate with it:
+
+    ~~~sh
+    TOKEN=$(oc -n reverse-words create token robot-user)
+    curl -k -H "Authorization: Bearer ${TOKEN}" https://$(oc -n reverse-words get route reverse-words-authenticated -o jsonpath='{.status.ingress[*].host}')
+    ~~~
+
+    ~~~console
+    Reverse Words Release: NotSet. App version: v0.0.25
+    ~~~
 
 ## Final Thoughts
 
