@@ -5,7 +5,7 @@
     <link>https://linuxera.org/tags/openshift/</link>
     <description>Recent content in openshift on Linuxera</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>Thu, 06 Apr 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/openshift/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CPU and Memory Management on Kubernetes with Cgroupsv2</title>
