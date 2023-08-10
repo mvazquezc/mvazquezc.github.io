@@ -8,7 +8,7 @@
     <language>en</language>
     <lastBuildDate>Thu, 10 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/tls/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>PKI with CFSSL</title>
+      <title>Integrating cert-manager with CFSSL Multirootca</title>
       <link>https://linuxera.org/integrating-cert-manager-with-cfssl-multirootca/</link>
       <pubDate>Thu, 10 Aug 2023 00:00:00 +0000</pubDate>
       
