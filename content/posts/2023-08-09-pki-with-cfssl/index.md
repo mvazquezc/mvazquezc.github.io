@@ -480,7 +480,7 @@ We need to specify the Intermediate CA certificate via the `-tls-remote-ca` flag
 
 ## Closing Thoughts
 
-We have seen how to run our own PKI with the CFSSL tooling, in the next post we will see how to leverage this PKI from Kubernetes by using [cert-manager](https://cert-manager.io/).
+We have seen how to run our own PKI with the CFSSL tooling, in the [next post](https://linuxera.org/integrating-cert-manager-with-cfssl-multirootca) we will see how to leverage this PKI from Kubernetes by using [cert-manager](https://cert-manager.io/).
 
 ## Useful Resources
 
