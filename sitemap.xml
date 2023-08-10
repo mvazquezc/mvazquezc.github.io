@@ -2,28 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://linuxera.org/tags/cert-manager/</loc>
+    <lastmod>2023-08-10T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://linuxera.org/tags/cfssl/</loc>
-    <lastmod>2023-08-09T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/</loc>
-    <lastmod>2023-08-09T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/multirootca/</loc>
+    <lastmod>2023-08-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/pki/</loc>
-    <lastmod>2023-08-09T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://linuxera.org/pki-with-cfssl/</loc>
-    <lastmod>2023-08-09T00:00:00+00:00</lastmod>
+    <loc>https://linuxera.org/integrating-cert-manager-with-cfssl-multirootca/</loc>
+    <lastmod>2023-08-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/posts/</loc>
-    <lastmod>2023-08-09T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/private-ca/</loc>
-    <lastmod>2023-08-09T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/</loc>
-    <lastmod>2023-08-09T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/tls/</loc>
+    <lastmod>2023-08-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/pki-with-cfssl/</loc>
     <lastmod>2023-08-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/gateway-api-kubernetes/</loc>
