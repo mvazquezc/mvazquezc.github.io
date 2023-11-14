@@ -5,7 +5,7 @@
     <link>https://linuxera.org/tags/prometheus/</link>
     <description>Recent content in prometheus on Linuxera</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>en-us</language>
     <lastBuildDate>Sun, 11 Aug 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/prometheus/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Enabling Prometheus Metrics on your Applications</title>

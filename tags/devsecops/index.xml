@@ -5,7 +5,7 @@
     <link>https://linuxera.org/tags/devsecops/</link>
     <description>Recent content in devsecops on Linuxera</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>en-us</language>
     <lastBuildDate>Sat, 27 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/devsecops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Container Security - Linux Capabilities and Secure Compute Profiles</title>
