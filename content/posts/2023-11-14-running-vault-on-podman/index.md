@@ -48,7 +48,7 @@ Make sure to edit certificate details to match your environment.
     {{</attention>}}
 
     ~~~sh
-    openssl req -new -newkey rsa:2048 -sha256 -days 3650 -nodes -x509 -extensions v3_ca -keyout ${HOME}/vault-server/data/certs/private.key -out ${HOME}/vault-server/data/certs/public.crt -subj "/C=ES/ST=Valencia/L=Valencia/O=Linuxera/OU=Blog/CN=vault.linuxera.org" -addext "subjectAltName = DNS:vault.linuxera.org,DNS:192.168.122.1"
+    openssl req -new -newkey rsa:2048 -sha256 -days 3650 -nodes -x509 -extensions v3_ca -keyout ${HOME}/vault-server/data/certs/private.key -out ${HOME}/vault-server/data/certs/public.crt -subj "/C=ES/ST=Valencia/L=Valencia/O=Linuxera/OU=Blog/CN=vault.linuxera.org" -addext "subjectAltName = DNS:vault.linuxera.org,IP:192.168.122.1"
     ~~~
 
 4. Configure privileges.
