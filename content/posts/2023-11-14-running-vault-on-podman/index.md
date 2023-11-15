@@ -54,8 +54,8 @@ Make sure to edit certificate details to match your environment.
 4. Configure privileges.
 
     ~~~sh
-    sudo chmod 777 data/storage
-    sudo chmod 744 data/certs/{private.key,public.crt}
+    sudo chmod 777 ${HOME}/vault-server/data/storage
+    sudo chmod 744 ${HOME}/vault-server/data/certs/{private.key,public.crt}
     ~~~
 
 5. At this point you can go for [Vault in-memory](#vault-storage-in-memory) or for [Vault in-disk](#vault-storage-in-disk) depending on your data persistency preference.
