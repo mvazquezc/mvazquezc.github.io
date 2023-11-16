@@ -5,7 +5,7 @@ tags: [ "kubernetes", "openshift", "cgroups", "cgroupsv2" ]
 url: "/cpu-memory-management-kubernetes-cgroupsv2"
 draft: false
 date: 2023-04-06
-#lastmod: 2023-04-19
+lastmod: 2023-11-16
 ShowToc: true
 ShowBreadCrumbs: true
 ShowReadingTime: true
@@ -849,7 +849,7 @@ Even if guaranteed QoS will _ensure_ that your application gets the CPU it wants
 
 ### How Kubepods Cgroups compete for resources
 
-In the previous examples we have seen how the different pods get different CPU configurations. But what happens if they compete against them for resources? 
+In the previous examples we have seen how the different pods get different CPU configurations. But what happens if they compete against them for resources?
 
 In order for the `guaranteed` pods to have more priority than `burstable` pods, and these to have more priority than `besteffort` different weights get set for the three slices. In a 4 CPU node these are the settings we get:
 
@@ -857,21 +857,21 @@ In order for the `guaranteed` pods to have more priority than `burstable` pods, 
 * Burstable pods will run under `kubepods.slice/kubepods-burstable.slice` which has a `cpu.weight` of `86`.
 * BestEffort pods will run under `kubepods.slice/kubepods-besteffort.slice` which has a `cpu.weight` of `1`.
 
-As we can see from above configuration, the weights define the CPU priority. Keep in mind that pods running inside the same parent slice can compete for resources. In this situation, when they're competing for resources the `total cpu.weight` will be the one from summing all their parent cgroup cpu weights. For example:
+As we can see from above configuration, the weights define the CPU priority. Keep in mind that pods running inside the same parent slice can compete for resources. In this situation, when they're competing for resources the `total cpu.weight` will be the one from summing cpu weights from all cpu hungry processes inside a specific parent cgroup. For example:
 
 We have two burstable pods, these are the cpu weights that will be configured (based on the formulas we have seen so far):
 
 * `bustable1` requests 2 CPUs and gets a _cpu.weight_ of `79`
 * `burstable2` requests 1 CPU and gets a _cpu.weight_ of `39`
 
-So this is the CPU each one will get (formula: `(cpu.weight of pod / total cpu.weight) * number of CPUs`):
+So this is the CPU each one will get (formula: `(cpu.weight of pod / total cpu.weight) * 100 * number of CPUs`):
 
 {{<danger>}}
-Keep in mind that these calculations are not 100% accurate, since the CFS will try to assign CPU in the fairest way possible and results may vary depending on the system load and other process running on the system. This calculations assume that there are no guaranteed pods demanding CPU. `223` value comes from summing all the parents cpu weights `137` from `kubepods.slice` and `86` from `kubepods-burstable.slice`.
+Keep in mind that these calculations are not 100% accurate, since the CFS will try to assign CPU in the fairest way possible and results may vary depending on the system load and other process running on the system. These calculations assume that there are no guaranteed pods demanding CPU. `118` value comes from summing all the CPU hungry processes from the burstable cgroup (in this case only two pods, `burstable1` - cpu.weight=79 and `burstable2` - cpu.weight=39).
 {{</danger>}}
 
-* `burstable1`: (79/223) * 4 = 1.41 CPU or ~141%
-* `burstable2`: (39/223) * 4 = 0.69 CPU or ~69%~
+* `burstable1`: (79/118) * 100 * 4 = ~ 267% (or 2.67 CPU)
+* `burstable2`: (39/118) * 100 * 4 = ~ 132% (or 1.32 CPU)
 
 ## Closing Thoughts
 
