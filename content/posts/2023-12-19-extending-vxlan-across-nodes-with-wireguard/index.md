@@ -225,7 +225,7 @@ I'm creating the bridge with spanning tree protocol disabled, you may want to en
 2. Create the VXLAN interface:
 
     ~~~sh
-    sudo nmcli con add ifname to-node2 type vxlan con-name to-node2 remote 172.16.0.2 id 1 destination-port 4789
+    sudo nmcli con add ifname to-node2 type vxlan con-name to-node2 remote 172.16.0.2 id 1 destination-port 4789 ipv4.method disabled
     ~~~
 
 3. Add the VXLAN interface to the bridge:
@@ -262,7 +262,7 @@ I'm creating the bridge with spanning tree protocol disabled, you may want to en
 2. Create the VXLAN interface:
 
     ~~~sh
-    sudo nmcli con add ifname to-node1 type vxlan con-name to-node1 remote 172.16.0.1 id 1 destination-port 4789
+    sudo nmcli con add ifname to-node1 type vxlan con-name to-node1 remote 172.16.0.1 id 1 destination-port 4789 ipv4.method disabled
     ~~~
 
 3. Add the VXLAN interface to the bridge:
