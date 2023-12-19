@@ -2,17 +2,32 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://linuxera.org/extending-vxlan-across-nodes-with-wireguard/</loc>
+    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/</loc>
+    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/networking/</loc>
+    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/posts/</loc>
+    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/</loc>
+    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/vxlan/</loc>
+    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/wireguard/</loc>
+    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://linuxera.org/tags/hashicorp/</loc>
     <lastmod>2023-11-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://linuxera.org/</loc>
-    <lastmod>2023-11-16T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://linuxera.org/tags/podman/</loc>
     <lastmod>2023-11-14T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://linuxera.org/posts/</loc>
-    <lastmod>2023-11-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/running-vault-on-podman/</loc>
     <lastmod>2023-11-14T00:00:00+00:00</lastmod>
@@ -22,9 +37,6 @@
   </url><url>
     <loc>https://linuxera.org/tags/security/</loc>
     <lastmod>2023-11-14T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://linuxera.org/tags/</loc>
-    <lastmod>2023-11-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/vault/</loc>
     <lastmod>2023-11-14T00:00:00+00:00</lastmod>
