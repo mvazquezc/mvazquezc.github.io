@@ -267,6 +267,10 @@ In this scenario we are going to modify the OAuth Proxy configuration so only us
     oc -n reverse-words edit deployment reverse-words
     ~~~
 
+    {{<attention>}}
+If you plan to use a resource for `openshift-sar` that is not part of the core API Group, you need to add the group. i.e: `{"group":"my.resource.group","resource":"myresource","namespace":"mynamespace","verb":"get"}}`
+    {{</attention>}}
+
     ~~~yaml
     <OMITTED OUTPUT>
     - -openshift-service-account=reversewords
