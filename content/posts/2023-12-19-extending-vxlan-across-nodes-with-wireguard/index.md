@@ -43,7 +43,7 @@ Both hypervisors will follow this setup. When we create a VM on these hypervisor
 Steps below must be done on every hypervisor node.
 {{</attention>}}
 
-1. Install `epel-release` repository by following the instructions [here](https://docs.fedoraproject).org/en-US/epel/).
+1. Install `epel-release` repository by following the instructions [here](https://docs.fedoraproject.org/en-US/epel/).
 
 2. Install `elrepo` repository by following the instructions [here](https://elrepo.org/tiki/HomePage).
 
@@ -105,6 +105,7 @@ Steps below must be done on every hypervisor node.
     PublicKey = GmG2HkjvV8OebDy9ezHPG/+ODb6CMv51oSEKz4StdHQ=
     Endpoint = 10.19.3.5:51820
     AllowedIPs = 172.16.0.0/16
+    PersistentKeepalive = 25
     EOF
     ~~~
 
@@ -133,6 +134,7 @@ Steps below must be done on every hypervisor node.
     PublicKey = 3TxNmlyWmNeL4EavtHi9dRfsqPHcEeiexKzMDF7n7nU=
     Endpoint = 10.19.3.4:51820
     AllowedIPs = 172.16.0.0/16
+    PersistentKeepalive = 25
     EOF
     ~~~
 
