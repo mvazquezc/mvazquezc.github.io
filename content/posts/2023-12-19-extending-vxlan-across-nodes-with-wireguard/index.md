@@ -5,7 +5,7 @@ tags: [ "wireguard", "networking", "vxlan" ]
 url: "/extending-vxlan-across-nodes-with-wireguard"
 draft: false
 date: 2023-12-19
-#lastmod: 2023-08-10
+lastmod: 2024-02-9
 ShowToc: true
 ShowBreadCrumbs: true
 ShowReadingTime: true
@@ -58,36 +58,37 @@ Steps below must be done on every hypervisor node.
     ~~~sh
     sudo modprobe wireguard
     ~~~
-    
+
     {{<attention>}}
-    If you get an error when trying to load the module as below:
-    ~~~sh
-    sudo modprobe wireguard
-    modprobe: ERROR: could not insert 'wireguard': Required key not available
-    ~~~
+If you get the following error when trying to load the module: `modprobe: ERROR: could not insert 'wireguard': Required key not available`.
+    {{</attention>}}
+
     This means that you are trying to use ELRepo's kernel modules (kmod packages) on a system with Secure Boot enabled, therefore this must import the ELRepo Secure Boot public key into their Machine Owner Key (MOK) list.
+
     ~~~sh
-    wget https://elrepo.org/SECURE-BOOT-KEY-elrepo.org.der
+    sudo curl -L https://elrepo.org/SECURE-BOOT-KEY-elrepo.org.der -o /etc/pki/elrepo/SECURE-BOOT-KEY-elrepo.org.der
     ~~~
+
     Install the downloaded key:
+
     ~~~sh
     sudo mokutil --import /etc/pki/elrepo/SECURE-BOOT-KEY-elrepo.org.der
-    input password:
-    input password again:
     ~~~
+
     When prompted, enter a password of your choice. This password will be used when enrolling the key into the MOK list.
     Reboot the system and follow-up the BMC interface for entrolling the MOK key.
     Once the boot finished:
+
     ~~~sh
     sudo modprobe wireguard
     ~~~
+
     ~~~sh
     sudo lsmod | grep wireguard
     wireguard             212992  0
     ip6_udp_tunnel         16384  1 wireguard
     udp_tunnel             20480  1 wireguard
     ~~~
-    {{</attention>}}
 
 ## Configuring Wireguard Tunnel (wg0)
 
