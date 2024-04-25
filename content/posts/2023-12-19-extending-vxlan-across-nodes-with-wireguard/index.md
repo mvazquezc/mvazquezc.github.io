@@ -122,6 +122,10 @@ If you get the following error when trying to load the module: `modprobe: ERROR:
 
 1. Configure `wg0`:
 
+    {{<attention>}}
+Make sure you change the `PrivateKey` and `PublicKey` to match the specifics for your environment.
+    {{</attention>}}
+
     ~~~sh
     HYPERVISOR_EXT_NIC=eth0
     cat <<EOF | sudo tee /etc/wireguard/wg0.conf
@@ -150,6 +154,10 @@ If you get the following error when trying to load the module: `modprobe: ERROR:
 - Hypervisor 2 Pub Key in this example is: `GmG2HkjvV8OebDy9ezHPG/+ODb6CMv51oSEKz4StdHQ=`
 
 1. Configure `wg0`:
+
+    {{<attention>}}
+Make sure you change the `PrivateKey` and `PublicKey` to match the specifics for your environment.
+    {{</attention>}}
 
     ~~~sh
     HYPERVISOR_EXT_NIC=eth0
