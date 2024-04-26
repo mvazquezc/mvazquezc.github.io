@@ -6,7 +6,18 @@
     <description>Recent content in Posts on Linuxera</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 Dec 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 25 Apr 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Signing and verifying container images with Cosign and your own PKI</title>
+      <link>https://linuxera.org/signing-verifying-container-images-with-cosign-own-pki/</link>
+      <pubDate>Thu, 25 Apr 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://linuxera.org/signing-verifying-container-images-with-cosign-own-pki/</guid>
+      <description>Signing and verifying container images with Cosign and your own PKI In this post we are going to cover how we can sign and verify container images using Cosign and our own PKI. You can learn more on how to build your own PKI with CFSSL in this post.
+Warning
+The way we will see to sign and verify images in this post is not the recommended approach. For production usage, you should use ephemeral keys as described here.</description>
+    </item>
+    
     <item>
       <title>Extending a VXLAN across nodes with Wireguard</title>
       <link>https://linuxera.org/extending-vxlan-across-nodes-with-wireguard/</link>
