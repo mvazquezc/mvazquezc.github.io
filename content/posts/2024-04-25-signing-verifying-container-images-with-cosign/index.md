@@ -5,7 +5,7 @@ tags: [ "cosing", "sigstore", "byok", "pki", "security" ]
 url: "/signing-verifying-container-images-with-cosign-own-pki"
 draft: false
 date: 2024-04-25
-lastmod: 2024-04-25
+lastmod: 2024-04-30
 ShowToc: true
 ShowBreadCrumbs: true
 ShowReadingTime: true
@@ -131,7 +131,7 @@ Then, verification of image signatures will be done by using the Root CA public 
 4. Generate container signing certificates for Team A and Team B:
 
     {{<attention>}}
-For Cosign v2 verification to work, we need our certificates to provide some information in the SAN. We require it to provide a valid email and also to provide a valid oidcIssuer. The oidcIssuer is added via OID, you can find the details [here](https://github.com/sigstore/fulcio/blob/main/docs/oid-info.md). In the certs below you can see two OIDs added as extensions, the value must be base64 encoded.
+For Cosign v2 verification to work, we need our certificates to provide some information in the SAN. We require it to provide a valid email and also to provide a valid oidcIssuer. The oidcIssuer is added via OID, you can find the details [here](https://github.com/sigstore/fulcio/blob/main/docs/oid-info.md). In the certs below you can see two OIDs added as extensions, the value for the one ending in `1,1` is a base64 encoded raw string, while the one ending in `1,8` is the base64 encoded ASN.1 string (you can check the code [here](#generate-asn1-string-for-fulcio-extensions) to generate the string).
     {{</attention>}}
 
     ~~~sh
@@ -185,7 +185,7 @@ For Cosign v2 verification to work, we need our certificates to provide some inf
       "extensions": [
         {
             "id": [1,3,6,1,4,1,57264,1,8],
-            "value": "aHR0cHM6Ly9saW51eGVyYS5vcmc="
+            "value": "ExRodHRwczovL2xpbnV4ZXJhLm9yZw=="
         },
         {
             "id": [1,3,6,1,4,1,57264,1,1],
@@ -216,7 +216,7 @@ For Cosign v2 verification to work, we need our certificates to provide some inf
       "extensions": [
         {
             "id": [1,3,6,1,4,1,57264,1,8],
-            "value": "aHR0cHM6Ly9saW51eGVyYS5vcmc="
+            "value": "ExRodHRwczovL2xpbnV4ZXJhLm9yZw=="
         },
         {
             "id": [1,3,6,1,4,1,57264,1,1],
@@ -458,3 +458,28 @@ We can check the containers signature details by using Skopeo. Let's see an exam
 - [https://github.com/sigstore/cosign/issues/2632](https://github.com/sigstore/cosign/issues/2632)
 - [https://github.com/sigstore/cosign/issues/2858](https://github.com/sigstore/cosign/issues/2858)
 - [https://github.com/sigstore/cosign/issues/3616](https://github.com/sigstore/cosign/issues/3616)
+
+## Generate ASN.1 string for Fulcio Extensions
+
+{{<tip>}}
+Thanks to [Hayden Blauzvern](https://github.com/haydentherapper) for providing the information below and helping with the certificate extensions correctness in the certificate generation section.
+{{</tip>}}
+
+In Fulcio's cert profile, extensions `1,1` through `1,6` are raw strings. In `1,8` and future Fulcio extensions this changes to ASN.1 encoded string. You can encode a string using the code below.
+
+~~~go
+package main
+
+import (
+	"encoding/asn1"
+	"encoding/base64"
+	"fmt"
+)
+
+func main() {
+	s := "https://linuxera.org"
+	a, _ := asn1.Marshal(s)
+	fmt.Println(a)
+	fmt.Println(base64.StdEncoding.EncodeToString(a))
+}
+~~~
