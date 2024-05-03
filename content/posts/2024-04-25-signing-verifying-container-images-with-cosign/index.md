@@ -5,7 +5,7 @@ tags: [ "cosing", "sigstore", "byok", "pki", "security" ]
 url: "/signing-verifying-container-images-with-cosign-own-pki"
 draft: false
 date: 2024-04-25
-lastmod: 2024-04-30
+lastmod: 2024-05-03
 ShowToc: true
 ShowBreadCrumbs: true
 ShowReadingTime: true
@@ -20,7 +20,7 @@ ShowWordCount: false
 In this post we are going to cover how we can sign and verify container images using [Cosign](https://github.com/sigstore/cosign) and our own PKI. You can learn more on how to build your own PKI with CFSSL in [this post](https://linuxera.org/pki-with-cfssl/).
 
 {{<warning>}}
-The way we will see to sign and verify images in this post is not the recommended approach. For production usage, you should use ephemeral keys as described [here](https://docs.sigstore.dev/signing/signing_with_containers/).
+The way we will see to sign and verify images in this post is not the recommended approach. For production usage, you should use ephemeral keys as described [here](https://docs.sigstore.dev/signing/signing_with_containers/). Validity of certificates generated during this post it's not recommended for production usage, make sure in production you have proper validity periods and rotation capabilities in place.
 {{</warning>}}
 
 ## Solution Overview
@@ -31,7 +31,7 @@ Then, verification of image signatures will be done by using the Root CA public 
 
 ![Solution Overview](./overview.png)
 
-## Generating PKI
+## Generating PKI with CFSSL
 
 1. Install required CFSSL binaries:
 
@@ -229,6 +229,54 @@ For Cosign v2 verification to work, we need our certificates to provide some inf
     # Issue certificates via the intermediate CA
     cfssl gencert -ca $WORKDIR/cafiles/intermediate/intermediate-ca.pem -ca-key $WORKDIR/cafiles/intermediate/intermediate-ca-key.pem -config $WORKDIR/cafiles/config/config.json -profile cosign $WORKDIR/cafiles/certificates/team-a-csr.json | cfssljson -bare $WORKDIR/cafiles/certificates/team-a
     cfssl gencert -ca $WORKDIR/cafiles/intermediate/intermediate-ca.pem -ca-key $WORKDIR/cafiles/intermediate/intermediate-ca-key.pem -config $WORKDIR/cafiles/config/config.json -profile cosign $WORKDIR/cafiles/certificates/team-b-csr.json | cfssljson -bare $WORKDIR/cafiles/certificates/team-b
+    ~~~
+
+### Alternative OpenSSL commands
+
+In case you want to rather use OpenSSL, these are the commands you need to run. Thanks to [Frédéric Herrmann](https://www.linkedin.com/in/fredericherrmann/) for sharing the information.
+
+{{<attention>}}
+Commands below use RSA as encryption algorithm.
+{{</attention>}}
+
+1. Generate Root CA
+
+    ~~~sh
+    openssl req -x509 -newkey rsa:4096 -keyout root-ca-key.pem -sha256 -noenc -days 9999 -subj "/C=ES/L=Valencia/O=IT/OU=Security/CN=Linuxera Root Certificate Authority" -out root-ca.pem
+    ~~~
+
+2. Generate Intermediate CA
+
+    ~~~sh
+    # Create request
+    openssl req -noenc -newkey rsa:4096 -keyout intermediate-ca-key.pem -addext "subjectKeyIdentifier = hash" -addext "keyUsage = critical,keyCertSign" -addext "basicConstraints = critical,CA:TRUE,pathlen:2" -subj "/C=ES/L=Valencia/O=IT/OU=Security/CN=Linuxera Intermediate Certificate Authority" -out intermediate-ca.csr
+    
+    # Issue cert with Root CA
+    openssl x509 -req -days 9999 -sha256 -in intermediate-ca.csr -CA root-ca.pem -CAkey root-ca-key.pem -copy_extensions copy -out intermediate-ca.pem
+    ~~~
+
+3. Issue Team A cert
+
+    ~~~sh
+    # OID_1_1 is the hexadecimal representation of the oidcissuer url
+    OID_1_1=$(echo -n "https://linuxera.org" | xxd -p -u)
+    # Create request
+    openssl req -noenc -newkey rsa:4096 -keyout team-a-key.pem -addext "subjectKeyIdentifier = hash" -addext "basicConstraints = critical,CA:FALSE" -addext "keyUsage = critical,digitalSignature" -addext "subjectAltName = email:team-a@linuxera.org" -addext "1.3.6.1.4.1.57264.1.1 = DER:${OID_1_1}" -addext "1.3.6.1.4.1.57264.1.8 = ASN1:UTF8String:https://linuxera.org" -subj "/C=ES/L=Valencia/O=IT/OU=Security/CN=Team A Cosign Certificate" -out team-a.csr
+    
+    # Issue cert with Intermediate CA
+    openssl x509 -req -in team-a.csr -CA intermediate-ca.pem -CAkey intermediate-ca-key.pem -copy_extensions copy -days 9999 -sha256 -out team-a.pem
+    ~~~
+
+4. Issue Team B cert
+
+    ~~~sh
+    # OID_1_1 is the hexadecimal representation of the oidcissuer url
+    OID_1_1=$(echo -n "https://linuxera.org" | xxd -p -u)
+    # Create request
+    openssl req -noenc -newkey rsa:4096 -keyout team-b-key.pem -addext "subjectKeyIdentifier = hash" -addext "basicConstraints = critical,CA:FALSE" -addext "keyUsage = critical,digitalSignature" -addext "subjectAltName = email:team-b@linuxera.org" -addext "1.3.6.1.4.1.57264.1.1 = DER:${OID_1_1}" -addext "1.3.6.1.4.1.57264.1.8 = ASN1:UTF8String:https://linuxera.org" -subj "/C=ES/L=Valencia/O=IT/OU=Security/CN=Team B Cosign Certificate" -out team-b.csr
+    
+    # Issue cert with Intermediate CA
+    openssl x509 -req -in team-b.csr -CA intermediate-ca.pem -CAkey intermediate-ca-key.pem -copy_extensions copy -days 9999 -sha256 -out team-b.pem
     ~~~
 
 ## Generate our container image
