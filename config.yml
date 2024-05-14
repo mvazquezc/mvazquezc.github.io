@@ -40,6 +40,9 @@ languages:
         - name: "🏷️ Tags"
           url: "/tags/"
           weight: 20
+        - name: "🎴 Presentations"
+          url: "/presentations/"
+          weight: 25
 
 outputs:
   home:
