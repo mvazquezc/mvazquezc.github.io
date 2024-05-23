@@ -1548,7 +1548,8 @@ seccomp-pod   1/1     Running   0          56s</code></pre> <!-- .element: class
 
 1. En la demo anterior, hemos utilizado las _Validating Admission Policies_. En esta demo, vamos a ver cómo [Kyverno](https://kyverno.io/) también puede ayudarnos. Lo primero será instalarlo. Para entornos productivos, revisad la [documentación oficial](https://kyverno.io/docs/installation/methods/):
 
-<pre><code>kubectl create -f https://github.com/kyverno/kyverno/releases/download/v1.11.5/install.yaml</code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
+<pre><code>kubectl create -f https://github.com/kyverno/kyverno/releases/download/v1.11.5/install.yaml
+kubectl -n kyverno wait --for condition=ready pod -l app.kubernetes.io/instance=kyverno</code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
 
 2. &shy;<!-- .element: class="fragment" data-fragment-index="2" --> La comunidad de Kyverno tiene [un repositorio](https://kyverno.io/policies/) con muchas políticas listas para ser utilizadas. En este caso vamos a utilizar [una política](https://kyverno.io/policies/psa/add-psa-labels/add-psa-labels/) que añadirá las etiquetas PSA a todos los nuevos _namespaces_ que se creen en el clúster. Antes de crear la política, vamos a crear un _namespace_ para confirmar que no se añaden etiquetas de PSA:
 
