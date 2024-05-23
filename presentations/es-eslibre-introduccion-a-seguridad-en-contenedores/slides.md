@@ -250,11 +250,11 @@ CapAmb:	0000000000000400</code></pre> <!-- .element: class="fragment" data-fragm
 
 1. En este caso, al construir nuestra imagen de contenedor hemos añadido una _file capability_ mediante el comando _setcap_ a nuestro binario:
 
-<pre><code>setcap 'cap_net_bind_service+eip' /usr/bin/reverse-words</code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
+<pre><code>setcap 'cap_net_bind_service+ep' ./main</code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
 
 2. &shy;<!-- .element: class="fragment" data-fragment-index="2" --> Podemos utilizar el comando _getcap_ para ver las _file capabilities_ de un binario:
 
-<pre><code>podman run --rm -it --user 1024 --name rw-test quay.io/mavazque/reversewords:fcaps getcap /usr/bin/reverse-words</code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
+<pre><code>podman run --rm -it --user 1024 --name rw-test quay.io/mavazque/reversewords:fcaps getcap ./main</code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
 
 3. &shy;<!-- .element: class="fragment" data-fragment-index="3" --> Si revisamos las _thread capabilities_ podemos ver que los sets están limpios a excepción del _bounding_ set, el cual sí incluye la _capability_ _NET_BIND_SERVICE_. Veamos cómo cambian las _thread capabilities_ al ejecutar nuestro binario:
 
@@ -266,7 +266,7 @@ CapAmb:	0000000000000400</code></pre> <!-- .element: class="fragment" data-fragm
 
 5. &shy;<!-- .element: class="fragment" data-fragment-index="6" --> Ejecutamos nuestro binario y vemos que hace _bind_ al puerto 80. A continuación, revisamos las thread capabilities y vemos que las _file capabilities_ han sido añadidas en los sets correspondientes:
 
-<pre><code>/usr/bin/reverse-words &
+<pre><code>./main &
 
 grep Cap /proc/$!/status</code></pre> <!-- .element: class="fragment" data-fragment-index="7" -->
 
@@ -295,11 +295,11 @@ CapAmb:	0000000000000000
 
 9. &shy;<!-- .element: class="fragment" data-fragment-index="4" --> Lanzamos el binario de nuestra aplicación con _file capabilities_:
 
-<pre><code>$ /usr/bin/reverse-words</code></pre> <!-- .element: class="fragment" data-fragment-index="5" -->
+<pre><code>./main</code></pre> <!-- .element: class="fragment" data-fragment-index="5" -->
 
 10. &shy;<!-- .element: class="fragment" data-fragment-index="6" --> En este caso, el Kernel ha bloqueado la ejecución; la _capability NET_BIND_SERVICE_ no puede adquirirse ya que no está presente en el _bounding_ set:
 
-<pre><code>bash: /usr/bin/reverse-words: Operation not permitted</code></pre> <!-- .element: class="fragment" data-fragment-index="6" -->
+<pre><code>bash: ./main: Operation not permitted</code></pre> <!-- .element: class="fragment" data-fragment-index="6" -->
 
 11. &shy;<!-- .element: class="fragment" data-fragment-index="7" --> Respondiendo a nuestra pregunta: No, no podemos saltarnos las _thread capabilities_. Para finalizar, salimos del contenedor:
 
