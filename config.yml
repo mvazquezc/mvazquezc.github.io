@@ -5,7 +5,7 @@ title: "Linuxera"
 keywords: ["containers", "linux", "kubernetes", "k8s", "openshift", "ocp", "red hat", "okd", "origin"]
 theme: "PaperMod"
 enableRobotsTXT: true
-googleAnalytics: "G-7598JKCK1E"
+#googleAnalytics: "G-7598JKCK1E"
 buildDrafts: false
 buildFuture: false
 buildExpired: false
