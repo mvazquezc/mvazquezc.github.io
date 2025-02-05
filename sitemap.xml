@@ -9,13 +9,13 @@
     <lastmod>2024-05-03T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/</loc>
-    <lastmod>2024-05-03T00:00:00+00:00</lastmod>
+    <lastmod>2025-02-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/pki/</loc>
     <lastmod>2024-05-03T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/posts/</loc>
-    <lastmod>2024-05-03T00:00:00+00:00</lastmod>
+    <lastmod>2025-02-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/security/</loc>
     <lastmod>2024-05-03T00:00:00+00:00</lastmod>
@@ -27,7 +27,7 @@
     <lastmod>2024-05-03T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/</loc>
-    <lastmod>2024-05-03T00:00:00+00:00</lastmod>
+    <lastmod>2025-02-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/extending-vxlan-across-nodes-with-wireguard/</loc>
     <lastmod>2023-12-19T00:00:00+00:00</lastmod>
@@ -87,7 +87,7 @@
     <lastmod>2023-04-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/kubernetes/</loc>
-    <lastmod>2023-11-16T00:00:00+00:00</lastmod>
+    <lastmod>2025-02-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/cgroups/</loc>
     <lastmod>2023-11-16T00:00:00+00:00</lastmod>
@@ -99,7 +99,7 @@
     <lastmod>2023-11-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/openshift/</loc>
-    <lastmod>2023-11-16T00:00:00+00:00</lastmod>
+    <lastmod>2025-02-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/exposing-multiple-kubernetes-clusters-single-lb-and-ip/</loc>
     <lastmod>2023-03-21T00:00:00+00:00</lastmod>
@@ -162,13 +162,13 @@
     <lastmod>2021-04-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/containers/</loc>
-    <lastmod>2023-05-30T00:00:00+00:00</lastmod>
+    <lastmod>2025-02-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/okd/</loc>
-    <lastmod>2023-05-30T00:00:00+00:00</lastmod>
+    <lastmod>2025-02-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/origin/</loc>
-    <lastmod>2023-05-30T00:00:00+00:00</lastmod>
+    <lastmod>2025-02-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/seccomp/</loc>
     <lastmod>2021-04-01T00:00:00+00:00</lastmod>
@@ -237,13 +237,13 @@
     <lastmod>2019-08-11T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/oauth/</loc>
-    <lastmod>2023-05-30T00:00:00+00:00</lastmod>
+    <lastmod>2025-02-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/proxy/</loc>
-    <lastmod>2023-05-30T00:00:00+00:00</lastmod>
+    <lastmod>2025-02-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/oauth-proxy-secure-applications-openshift/</loc>
-    <lastmod>2023-05-30T00:00:00+00:00</lastmod>
+    <lastmod>2025-02-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/ocp/</loc>
     <lastmod>2023-02-13T00:00:00+00:00</lastmod>
