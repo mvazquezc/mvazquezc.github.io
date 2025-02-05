@@ -5,7 +5,7 @@ tags: [ "okd", "origin", "containers", "kubernetes", "openshift", "oauth", "prox
 url: "/oauth-proxy-secure-applications-openshift/"
 draft: false
 date: 2019-07-30
-lastmod: 2023-05-30
+lastmod: 2025-02-05
 ShowToc: true
 ShowBreadCrumbs: true
 ShowReadingTime: true
@@ -32,6 +32,8 @@ We will go through the following scenarios:
 1. Application deployed without OAuth Proxy
 2. Application + OAuth Proxy limiting access to authenticated users
 3. Application + OAuth Proxy limiting access to specific users
+4. Application + OAuth Proxy limiting access to specific service accounts
+5. TLS application + OAuth Proxy limiting access to authenticated users
 
 After following these three scenarios you will be able to secure applications on **OpenShift** and **Kubernetes** using the _OAuth Proxy_.
 
@@ -137,7 +139,7 @@ In order to use OAuth Proxy we need a couple of things:
 
 3. Modify the deployment
 
-    > **NOTE**: Below deployment points to the `quay.io/openshift/origin-oauth-proxy:4.13` image, make sure to use the one matching your cluster version. You can find the available tags [here](https://quay.io/repository/openshift/origin-oauth-proxy?tab=tags).
+    > **NOTE**: Below deployment points to the `quay.io/openshift/origin-oauth-proxy:4.17` image, make sure to use the one matching your cluster version. You can find the available tags [here](https://quay.io/repository/openshift/origin-oauth-proxy?tab=tags).
 
     **deployment.yaml**
 
@@ -179,7 +181,7 @@ In order to use OAuth Proxy we need a couple of things:
                 - -openshift-service-account=reversewords
                 - -openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
                 - -skip-auth-regex=^/metrics
-              image: quay.io/openshift/origin-oauth-proxy:4.13
+              image: quay.io/openshift/origin-oauth-proxy:4.17
               imagePullPolicy: IfNotPresent
               ports:
                 - name: oauth-proxy
@@ -366,6 +368,150 @@ We are requesting different access for users `openshift-sar` than for service ac
     ~~~console
     Reverse Words Release: NotSet. App version: v0.0.25
     ~~~
+
+## Scenario 5 - Limit Access to Authenticated Users in a TLS-enabled Application
+
+In this scenario the main change we have to do is passing the CA public certificate that issued the certificates for the TLS application to the oauth proxy.
+
+### Required files
+
+**deployment.yaml**
+
+> **NOTE**: `upstream` parameter now points to a `https` endpoint and uses the service name since the cert is only valid for that CommonName. We added the parameter `upstream-ca` pointing to the CA certificate that issued our TLS app certs.
+
+~~~yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reverse-words-tls
+  labels:
+    name: reverse-words-tls
+spec:
+  replicas: 1
+  selector:
+    matchLabels:  
+      name: reverse-words-tls
+  template:
+    metadata:
+      labels:
+        name: reverse-words-tls
+    spec:
+      containers:
+        - name: reverse-words-tls
+          image: quay.io/mavazque/reversewords:latest 
+          imagePullPolicy: Always
+          ports:
+            - name: reverse-words
+              containerPort: 8080
+              protocol: TCP
+          args:
+          - "--cert"
+          - "/etc/tls/private/tls.crt"
+          - "--key"
+          - "/etc/tls/private/tls.key"
+          volumeMounts:
+            - mountPath: /etc/tls/private
+              name: secret-reversewords-tls-tls
+        - name: oauth-proxy 
+          args:
+            - -provider=openshift
+            - -https-address=:8888
+            - -http-address=
+            - -email-domain=*
+            - -upstream=https://reverse-words-tls.reverse-words.svc:8080
+            - -upstream-ca=/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
+            - -tls-cert=/etc/tls/private/tls.crt
+            - -tls-key=/etc/tls/private/tls.key
+            - -cookie-secret-file=/etc/proxy/secrets/session_secret
+            - -openshift-service-account=reversewords-tls
+            - -openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+            - -skip-auth-regex=^/metrics
+          image: quay.io/openshift/origin-oauth-proxy:4.17
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: oauth-proxy
+              containerPort: 8888    
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /etc/tls/private
+              name: secret-reversewords-tls-tls
+            - mountPath: /etc/proxy/secrets
+              name: secret-reversewords-proxy
+      serviceAccountName: reversewords-tls
+      volumes:
+        - name: secret-reversewords-tls-tls
+          secret:
+            defaultMode: 420
+            secretName: reversewords-tls-tls
+        - name: secret-reversewords-proxy
+          secret:
+            defaultMode: 420
+            secretName: reversewords-tls-proxy
+~~~
+
+**service.yaml**
+
+~~~yaml
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.alpha.openshift.io/serving-cert-secret-name: reversewords-tls-tls
+  labels:
+    name: reverse-words-tls
+  name: reverse-words-tls
+spec:
+  ports:
+  - name: proxy
+    port: 8888
+    protocol: TCP
+    targetPort: oauth-proxy
+  - name: app
+    port: 8080
+    protocol: TCP
+    targetPort: reverse-words
+  selector:
+    name: reverse-words-tls
+  sessionAffinity: None
+  type: ClusterIP
+~~~
+
+### Prerequisites
+
+1. Create the Secret
+
+    ~~~sh
+    oc -n reverse-words create secret generic reversewords-tls-proxy --from-literal=session_secret=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c43)
+    ~~~
+
+2. Create and annotate the ServiceAccount
+
+    ~~~sh
+    oc -n reverse-words create serviceaccount reversewords-tls
+    oc -n reverse-words annotate serviceaccount reversewords-tls serviceaccounts.openshift.io/oauth-redirectreference.reversewords-tls='{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"reverse-words-tls-authenticated"}}'
+    ~~~
+
+### Deploy
+
+~~~sh
+oc -n reverse-words apply -f service.yaml
+oc -n reverse-words apply -f deployment.yaml
+oc -n reverse-words create route reencrypt reverse-words-tls-authenticated --service=reverse-words-tls --port=proxy --insecure-policy=Redirect
+~~~
+
+Now we should be able to reach our application, let's see what happens when we try to access without providing any authentication details.
+
+~~~sh
+curl -k -I https://$(oc -n reverse-words get route reverse-words-tls-authenticated -o jsonpath='{.status.ingress[*].host}')
+
+HTTP/1.1 403 Forbidden
+Set-Cookie: _oauth_proxy=; Path=/; Domain=reverse-words-authenticated-reverse-words.apps.okd.linuxlabs.org; Expires=Tue, 30 Jul 2019 15:08:22 GMT; HttpOnly; Secure
+Date: Tue, 30 Jul 2019 16:08:22 GMT
+Content-Type: text/html; charset=utf-8
+Set-Cookie: 24c429aac95893475d1e8c1316adf60f=255a07dc5b1af1d2d01721678f463c09; path=/; HttpOnly; Secure
+~~~
+
+If we try to access like in [Scenario 2](#scenario-2---limiting-access-to-authenticated-users) it will work.
 
 ## Final Thoughts
 

@@ -365,13 +365,13 @@ During the exploratory work I started testing Cosign v1, that's why I will docum
     1. With v1:
 
         ~~~sh
-        cosign-v1 sign --key $WORKDIR/import-team-a.key --no-tlog-upload --cert $WORKDIR/cafiles/certificates/team-a.pem --cert-chain $WORKDIR/ca-bundle.pem $IMAGE_ENDPOINT@$TEAM_A_IMAGE_DIGEST
+        cosign-v1 sign --key $WORKDIR/import-team-a.key --no-tlog-upload --cert $WORKDIR/cafiles/certificates/team-a.pem --cert-chain $WORKDIR/ca-bundle.pem --sign-container-identity $IMAGE_ENDPOINT:team-a $IMAGE_ENDPOINT@$TEAM_A_IMAGE_DIGEST
         ~~~
 
     2. With v2:
 
         ~~~sh
-        cosign-v2 sign --key $WORKDIR/import-team-a.key --tlog-upload=false --cert $WORKDIR/cafiles/certificates/team-a.pem --cert-chain $WORKDIR/ca-bundle.pem $IMAGE_ENDPOINT@$TEAM_A_IMAGE_DIGEST
+        cosign-v2 sign --key $WORKDIR/import-team-a.key --tlog-upload=false --cert $WORKDIR/cafiles/certificates/team-a.pem --cert-chain $WORKDIR/ca-bundle.pem --sign-container-identity $IMAGE_ENDPOINT:team-a $IMAGE_ENDPOINT@$TEAM_A_IMAGE_DIGEST
         ~~~
 
 ### Team-B Image Signing
@@ -403,13 +403,13 @@ During the exploratory work I started testing Cosign v1, that's why I will docum
     1. With v1:
 
         ~~~sh
-        cosign-v1 sign --key $WORKDIR/import-team-b.key --no-tlog-upload --cert $WORKDIR/cafiles/certificates/team-b.pem --cert-chain $WORKDIR/ca-bundle.pem $IMAGE_ENDPOINT@$TEAM_B_IMAGE_DIGEST
+        cosign-v1 sign --key $WORKDIR/import-team-b.key --no-tlog-upload --cert $WORKDIR/cafiles/certificates/team-b.pem --cert-chain $WORKDIR/ca-bundle.pem --sign-container-identity $IMAGE_ENDPOINT:team-b $IMAGE_ENDPOINT@$TEAM_B_IMAGE_DIGEST
         ~~~
 
     2. With v2:
 
         ~~~sh
-        cosign-v2 sign --key $WORKDIR/import-team-b.key --tlog-upload=false --cert $WORKDIR/cafiles/certificates/team-b.pem --cert-chain $WORKDIR/ca-bundle.pem $IMAGE_ENDPOINT@$TEAM_B_IMAGE_DIGEST
+        cosign-v2 sign --key $WORKDIR/import-team-b.key --tlog-upload=false --cert $WORKDIR/cafiles/certificates/team-b.pem --cert-chain $WORKDIR/ca-bundle.pem --sign-container-identity $IMAGE_ENDPOINT:team-b $IMAGE_ENDPOINT@$TEAM_B_IMAGE_DIGEST
         ~~~
 
 ## Verifying container images with Cosign and our Root CA
