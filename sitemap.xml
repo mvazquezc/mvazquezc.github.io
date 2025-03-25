@@ -2,20 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://linuxera.org/tags/ai/</loc>
+    <lastmod>2025-03-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/artificialintelligence/</loc>
+    <lastmod>2025-03-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/introduction-to-llm-concepts/</loc>
+    <lastmod>2025-03-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/</loc>
+    <lastmod>2025-03-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/llm/</loc>
+    <lastmod>2025-03-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/llms/</loc>
+    <lastmod>2025-03-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/openai/</loc>
+    <lastmod>2025-03-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/posts/</loc>
+    <lastmod>2025-03-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/</loc>
+    <lastmod>2025-03-25T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://linuxera.org/tags/byok/</loc>
     <lastmod>2024-05-03T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/cosing/</loc>
     <lastmod>2024-05-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://linuxera.org/</loc>
-    <lastmod>2025-02-05T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://linuxera.org/tags/pki/</loc>
     <lastmod>2024-05-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://linuxera.org/posts/</loc>
-    <lastmod>2025-02-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/security/</loc>
     <lastmod>2024-05-03T00:00:00+00:00</lastmod>
@@ -25,9 +46,6 @@
   </url><url>
     <loc>https://linuxera.org/tags/sigstore/</loc>
     <lastmod>2024-05-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://linuxera.org/tags/</loc>
-    <lastmod>2025-02-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/extending-vxlan-across-nodes-with-wireguard/</loc>
     <lastmod>2023-12-19T00:00:00+00:00</lastmod>
