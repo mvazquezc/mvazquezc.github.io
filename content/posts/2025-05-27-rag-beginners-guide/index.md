@@ -29,6 +29,22 @@ RAG (Retrieval-Augmented Generation) is an AI technique that combines a language
 
 To put it simple, we provide the [LLM (Large Language Model)](https://linuxera.org/introduction-to-llm-concepts/) with a set of documents it has to use when answering. These documents, are processed and stored in a vector database.
 
+## Why RAG?
+
+There are several use cases that benefit from the RAG pattern. Based on my findings, the most common involve leveraging existing documents to answer user questions.
+
+For example:
+
+Let’s say your company has lots of internal documents — onboarding manuals, policy guides, troubleshooting playbooks — scattered across different platforms. You want to let employees ask questions like:
+
+- "How do I request parental leave?"
+- "How do I set up a VPN on a company-issued laptop?"
+- "What’s the on-call escalation policy for SREs?"
+
+Public LLMs don't have access to any of that, they don't know your company’s internal knowledge. But a RAG system can retrieve the relevant documents at inference time and inject them into the model’s context. This grounds the answers in your organization’s actual data.
+
+RAG is especially useful for internal search, support bots, and documentation assistants - particularly when your knowledge base is large and constantly changing.
+
 ## Embeddings
 
 To make documents usable for a Retrieval-Augmented Generation (RAG) system, they must be converted into vector embeddings (numerical representations that capture semantic meaning). These embeddings are generated using a specialized embedding model, and then stored in a vector database, where they can later be searched and retrieved based on similarity to a user’s query.
@@ -192,7 +208,7 @@ You can also combine them, for example:
 
 Once your RAG system retrieves the right documents, the next step is generating accurate and trustworthy answers. Here are some key practices to improve answer quality.
 
-### Always Include Soruce Links
+### Always Include Source Links
 
 Make sure the system outputs links or references to the documents used to generate an answer. This improves transparency and helps users verify the information.
 
@@ -234,7 +250,7 @@ This approach is useful when you're trying to quickly identify which document is
 Chunk-level embeddings break documents into smaller parts — sentences, paragraphs, or sections — and generate vectors for each chunk. These embeddings focus on local details.
 
 - Higher precision: Great for surfacing exact sections relevant to a query.
-- More expensive: You’ll need to store and search many more vectors. While more vectors improve granularity, they increase index size, memory use, and retrieval latency — especially for large corpora.
+- More expensive: You’ll need to store and search many more vectors. While more vectors improve granularity, they increase index size, memory use, and retrieval latency — especially for large bodies of text.
 
 This approach shines when specific answers are scattered throughout large documents — like answering “What ports does this device support?” from a 100-page manual.
 
