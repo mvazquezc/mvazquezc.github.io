@@ -2,6 +2,33 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://linuxera.org/tags/backup/</loc>
+    <lastmod>2025-10-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/encrypted-etcd/</loc>
+    <lastmod>2025-10-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/etcd/</loc>
+    <lastmod>2025-10-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/rag-beginners-guide/</loc>
+    <lastmod>2025-10-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/kubernetes/</loc>
+    <lastmod>2025-10-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/</loc>
+    <lastmod>2025-10-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/posts/</loc>
+    <lastmod>2025-10-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/restore/</loc>
+    <lastmod>2025-10-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/</loc>
+    <lastmod>2025-10-02T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://linuxera.org/rag-beginners-guide/</loc>
     <lastmod>2025-05-27T00:00:00+00:00</lastmod>
   </url><url>
@@ -11,22 +38,13 @@
     <loc>https://linuxera.org/tags/artificialintelligence/</loc>
     <lastmod>2025-05-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://linuxera.org/</loc>
-    <lastmod>2025-05-27T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://linuxera.org/tags/llm/</loc>
     <lastmod>2025-05-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/llms/</loc>
     <lastmod>2025-05-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://linuxera.org/posts/</loc>
-    <lastmod>2025-05-27T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://linuxera.org/tags/rag/</loc>
-    <lastmod>2025-05-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://linuxera.org/tags/</loc>
     <lastmod>2025-05-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/introduction-to-llm-concepts/</loc>
@@ -109,9 +127,6 @@
   </url><url>
     <loc>https://linuxera.org/tags/ingress/</loc>
     <lastmod>2023-04-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://linuxera.org/tags/kubernetes/</loc>
-    <lastmod>2025-02-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/cgroups/</loc>
     <lastmod>2023-11-16T00:00:00+00:00</lastmod>
