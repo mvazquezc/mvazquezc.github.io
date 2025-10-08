@@ -2,7 +2,7 @@
 title:  "Get data from an etcd backup (encrypted or not!)"
 author: "Mario"
 tags: [ "etcd", "kubernetes", "etcd", "encrypted etcd", "backup", "restore" ]
-url: "/rag-beginners-guide"
+url: "/get-data-from-encrypted-etcd-backup"
 draft: false
 date: 2025-10-02
 lastmod: 2025-10-02
