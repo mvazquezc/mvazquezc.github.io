@@ -51,6 +51,8 @@ For non-encrypted etcd snapshots, you can read the data with the etcdctl tool di
 
 ## Non-Encrypted Scenario
 
+> **NOTE**: You can use tools such as [Auger](https://github.com/etcd-io/auger) or [koff](https://github.com/gmeghnag/koff) to access data from the unencrypted backup without having to run the local kubeapiserver. Thanks [@palonsoro](https://github.com/palonsoro) for the pointers.
+
 1. Check etcd snapshot consistency.
 
     ~~~sh
