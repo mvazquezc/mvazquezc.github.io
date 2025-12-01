@@ -4,8 +4,7 @@
     <title>Categories on Linuxera</title>
     <link>https://linuxera.org/categories/</link>
     <description>Recent content in Categories on Linuxera</description>
-    <generator>Hugo -- 0.152.2</generator>
-    <language>en</language>
-    <atom:link href="https://linuxera.org/categories/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://linuxera.org/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

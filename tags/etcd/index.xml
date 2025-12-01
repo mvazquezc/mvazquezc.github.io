@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Etcd on Linuxera</title>
+    <title>etcd on Linuxera</title>
     <link>https://linuxera.org/tags/etcd/</link>
-    <description>Recent content in Etcd on Linuxera</description>
-    <generator>Hugo -- 0.152.2</generator>
-    <language>en</language>
-    <lastBuildDate>Thu, 02 Oct 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://linuxera.org/tags/etcd/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in etcd on Linuxera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 02 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/etcd/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Get data from an etcd backup (encrypted or not!)</title>
       <link>https://linuxera.org/get-data-from-encrypted-etcd-backup/</link>
       <pubDate>Thu, 02 Oct 2025 00:00:00 +0000</pubDate>
+      
       <guid>https://linuxera.org/get-data-from-encrypted-etcd-backup/</guid>
-      <description>&lt;h1 id=&#34;get-data-from-an-etcd-backup-encrypted-or-not&#34;&gt;Get data from an etcd backup (encrypted or not!)&lt;/h1&gt;
-&lt;p&gt;The following post aims to provide a step by step procedure to recover data from an etcd snapshot (even if it’s encrypted) from a Kubernetes cluster.&lt;/p&gt;
-&lt;p&gt;The post targets the following use cases:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;We have a non-encrypted etcd snapshot file, and we want to get some data from it.&lt;/li&gt;
-&lt;li&gt;We have an encrypted etcd snapshot file, and we want to get some data from it.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;For non-encrypted etcd snapshots, you can read the data with the etcdctl tool directly. In this post, since I have to cover encrypted as well, I&amp;rsquo;ll describe how to consume the restored data from a temporary local kube-apiserver.&lt;/p&gt;</description>
+      <description>Get data from an etcd backup (encrypted or not!) The following post aims to provide a step by step procedure to recover data from an etcd snapshot (even if it’s encrypted) from a Kubernetes cluster.
+The post targets the following use cases:
+We have a non-encrypted etcd snapshot file, and we want to get some data from it. We have an encrypted etcd snapshot file, and we want to get some data from it.</description>
     </item>
+    
   </channel>
 </rss>

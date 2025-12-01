@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Rag on Linuxera</title>
+    <title>rag on Linuxera</title>
     <link>https://linuxera.org/tags/rag/</link>
-    <description>Recent content in Rag on Linuxera</description>
-    <generator>Hugo -- 0.152.2</generator>
-    <language>en</language>
-    <lastBuildDate>Tue, 27 May 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://linuxera.org/tags/rag/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in rag on Linuxera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 27 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/rag/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>A Beginner’s Guide to RAG: What I Wish Someone Told Me</title>
       <link>https://linuxera.org/rag-beginners-guide/</link>
       <pubDate>Tue, 27 May 2025 00:00:00 +0000</pubDate>
+      
       <guid>https://linuxera.org/rag-beginners-guide/</guid>
-      <description>&lt;h1 id=&#34;a-beginners-guide-to-rag-what-i-wish-someone-told-me&#34;&gt;A Beginner’s Guide to RAG: What I Wish Someone Told Me&lt;/h1&gt;
-&lt;p&gt;In this post, I&amp;rsquo;ll try to provide a beginners guide to RAG, focusing on what I wish someone told me before trying to build a RAG solution.&lt;/p&gt;
-&lt;div class=&#34;admonition attention&#34;&gt;
-    &lt;p class=&#34;admonition-title&#34;&gt;Attention&lt;/p&gt;
-    &lt;p class=&#34;admonition&#34;&gt;While I’ve made a strong effort to ensure the information is accurate, I’m far from an expert on the topic, and some details may not be entirely correct. If you notice anything missing or inaccurate, please leave a comment!&lt;/p&gt;</description>
+      <description>A Beginner’s Guide to RAG: What I Wish Someone Told Me In this post, I&amp;rsquo;ll try to provide a beginners guide to RAG, focusing on what I wish someone told me before trying to build a RAG solution.
+Attention
+While I’ve made a strong effort to ensure the information is accurate, I’m far from an expert on the topic, and some details may not be entirely correct. If you notice anything missing or inaccurate, please leave a comment!</description>
     </item>
+    
   </channel>
 </rss>

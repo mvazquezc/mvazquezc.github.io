@@ -1,36 +1,23 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Hashicorp on Linuxera</title>
+    <title>hashicorp on Linuxera</title>
     <link>https://linuxera.org/tags/hashicorp/</link>
-    <description>Recent content in Hashicorp on Linuxera</description>
-    <generator>Hugo -- 0.152.2</generator>
-    <language>en</language>
-    <lastBuildDate>Tue, 14 Nov 2023 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://linuxera.org/tags/hashicorp/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in hashicorp on Linuxera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 14 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/hashicorp/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Running Vault on Podman</title>
       <link>https://linuxera.org/running-vault-on-podman/</link>
       <pubDate>Tue, 14 Nov 2023 00:00:00 +0000</pubDate>
+      
       <guid>https://linuxera.org/running-vault-on-podman/</guid>
-      <description>&lt;h1 id=&#34;running-vault-on-podman&#34;&gt;Running Vault on Podman&lt;/h1&gt;
-&lt;p&gt;This post explains how to run a local Vault deployment on Podman for &lt;strong&gt;non-production&lt;/strong&gt; use. I typically use this setup for my lab environments.&lt;/p&gt;
-&lt;p&gt;This setup was tested with:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Podman v4.7.2&lt;/li&gt;
-&lt;li&gt;Podman-compose v1.0.6&lt;/li&gt;
-&lt;li&gt;Vault v1.15.2&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;Install the vault client, you can get the binary for your O.S &lt;a href=&#34;https://developer.hashicorp.com/vault/install&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl -L https://releases.hashicorp.com/vault/1.15.2/vault_1.15.2_linux_amd64.zip -o /tmp/vault.zip
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;unzip /tmp/vault.zip &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; rm -f /tmp/vault.zip
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mv vault /usr/local/bin/
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Generate folder for storing the configs, data, and certs.&lt;/p&gt;</description>
+      <description>Running Vault on Podman This post explains how to run a local Vault deployment on Podman for non-production use. I typically use this setup for my lab environments.
+This setup was tested with:
+Podman v4.7.2 Podman-compose v1.0.6 Vault v1.15.2 Prerequisites Install the vault client, you can get the binary for your O.S here.
+curl -L https://releases.hashicorp.com/vault/1.15.2/vault_1.15.2_linux_amd64.zip -o /tmp/vault.zip unzip /tmp/vault.zip &amp;amp;&amp;amp; rm -f /tmp/vault.zip sudo mv vault /usr/local/bin/ Generate folder for storing the configs, data, and certs.</description>
     </item>
+    
   </channel>
 </rss>

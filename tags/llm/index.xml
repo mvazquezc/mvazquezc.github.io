@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Llm on Linuxera</title>
+    <title>llm on Linuxera</title>
     <link>https://linuxera.org/tags/llm/</link>
-    <description>Recent content in Llm on Linuxera</description>
-    <generator>Hugo -- 0.152.2</generator>
-    <language>en</language>
-    <lastBuildDate>Wed, 26 Nov 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://linuxera.org/tags/llm/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in llm on Linuxera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 26 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/llm/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Turning the Knobs of LLM Text Generation</title>
       <link>https://linuxera.org/turning-the-knobs-of-llm-text-generation/</link>
       <pubDate>Wed, 26 Nov 2025 00:00:00 +0000</pubDate>
+      
       <guid>https://linuxera.org/turning-the-knobs-of-llm-text-generation/</guid>
-      <description>&lt;h1 id=&#34;turning-the-knobs-of-llm-text-generation&#34;&gt;Turning the Knobs of LLM Text Generation&lt;/h1&gt;
-&lt;p&gt;Ever wonder how much control you actually have over the text an LLM produces? In this post, we will look at three simple but powerful knobs you can tweak to push a model toward more deterministic output or toward something more creative.&lt;/p&gt;
-&lt;p&gt;We are talking about &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; and &lt;code&gt;temperature&lt;/code&gt;. But before describing them, we need to understand the two main behaviors we can get from an LLM when it is sampling tokens:&lt;/p&gt;</description>
+      <description>Turning the Knobs of LLM Text Generation Ever wonder how much control you actually have over the text an LLM produces? In this post, we will look at three simple but powerful knobs you can tweak to push a model toward more deterministic output or toward something more creative.
+We are talking about top_k, top_p and temperature. But before describing them, we need to understand the two main behaviors we can get from an LLM when it is sampling tokens:</description>
     </item>
+    
     <item>
       <title>A Beginner’s Guide to RAG: What I Wish Someone Told Me</title>
       <link>https://linuxera.org/rag-beginners-guide/</link>
       <pubDate>Tue, 27 May 2025 00:00:00 +0000</pubDate>
+      
       <guid>https://linuxera.org/rag-beginners-guide/</guid>
-      <description>&lt;h1 id=&#34;a-beginners-guide-to-rag-what-i-wish-someone-told-me&#34;&gt;A Beginner’s Guide to RAG: What I Wish Someone Told Me&lt;/h1&gt;
-&lt;p&gt;In this post, I&amp;rsquo;ll try to provide a beginners guide to RAG, focusing on what I wish someone told me before trying to build a RAG solution.&lt;/p&gt;
-&lt;div class=&#34;admonition attention&#34;&gt;
-    &lt;p class=&#34;admonition-title&#34;&gt;Attention&lt;/p&gt;
-    &lt;p class=&#34;admonition&#34;&gt;While I’ve made a strong effort to ensure the information is accurate, I’m far from an expert on the topic, and some details may not be entirely correct. If you notice anything missing or inaccurate, please leave a comment!&lt;/p&gt;</description>
+      <description>A Beginner’s Guide to RAG: What I Wish Someone Told Me In this post, I&amp;rsquo;ll try to provide a beginners guide to RAG, focusing on what I wish someone told me before trying to build a RAG solution.
+Attention
+While I’ve made a strong effort to ensure the information is accurate, I’m far from an expert on the topic, and some details may not be entirely correct. If you notice anything missing or inaccurate, please leave a comment!</description>
     </item>
+    
     <item>
       <title>Introduction to LLM concepts</title>
       <link>https://linuxera.org/introduction-to-llm-concepts/</link>
       <pubDate>Tue, 25 Mar 2025 00:00:00 +0000</pubDate>
+      
       <guid>https://linuxera.org/introduction-to-llm-concepts/</guid>
-      <description>&lt;h1 id=&#34;introduction-to-llm-concepts&#34;&gt;Introduction to LLM concepts&lt;/h1&gt;
-&lt;p&gt;In this post, I&amp;rsquo;ll cover various LLM concepts and the questions I asked myself while diving deep into the world of LLMs. I expect this post to be updated as I continue to learn more things around LLMs.&lt;/p&gt;
-&lt;div class=&#34;admonition attention&#34;&gt;
-    &lt;p class=&#34;admonition-title&#34;&gt;Attention&lt;/p&gt;
-    &lt;p class=&#34;admonition&#34;&gt;This post is the result of my exploratory work on LLMs. While I’ve made a strong effort to ensure the information is accurate, I’m far from an expert on the topic, and some details may not be entirely correct. If you notice anything missing or inaccurate, please leave a comment!&lt;/p&gt;</description>
+      <description>Introduction to LLM concepts In this post, I&amp;rsquo;ll cover various LLM concepts and the questions I asked myself while diving deep into the world of LLMs. I expect this post to be updated as I continue to learn more things around LLMs.
+Attention
+This post is the result of my exploratory work on LLMs. While I’ve made a strong effort to ensure the information is accurate, I’m far from an expert on the topic, and some details may not be entirely correct.</description>
     </item>
+    
   </channel>
 </rss>

@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Gateway-Api on Linuxera</title>
+    <title>gateway-api on Linuxera</title>
     <link>https://linuxera.org/tags/gateway-api/</link>
-    <description>Recent content in Gateway-Api on Linuxera</description>
-    <generator>Hugo -- 0.152.2</generator>
-    <language>en</language>
-    <lastBuildDate>Mon, 24 Apr 2023 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://linuxera.org/tags/gateway-api/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in gateway-api on Linuxera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 24 Apr 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/gateway-api/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Gateway API for Kubernetes</title>
       <link>https://linuxera.org/gateway-api-kubernetes/</link>
       <pubDate>Mon, 24 Apr 2023 00:00:00 +0000</pubDate>
+      
       <guid>https://linuxera.org/gateway-api-kubernetes/</guid>
-      <description>&lt;h1 id=&#34;gateway-api-for-kubernetes&#34;&gt;Gateway API for Kubernetes&lt;/h1&gt;
-&lt;p&gt;In this post we will go over a new project by the &lt;a href=&#34;https://github.com/kubernetes/community/tree/master/sig-network&#34;&gt;SIG-NETWORK&lt;/a&gt; that aims to evolve Kubernetes service networking.&lt;/p&gt;
-&lt;p&gt;I&amp;rsquo;ll be using a Kubernetes v1.26 (latest at the time of this writing). The tool used to create the cluster is &lt;a href=&#34;https://kcli.readthedocs.io/&#34;&gt;kcli&lt;/a&gt; and the command used was:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kcli create kube generic -P &lt;span class=&#34;nv&#34;&gt;ctlplanes&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;workers&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;ctlplane_memory&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;4096&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;numcpus&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;8&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;worker_memory&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;8192&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;fedora37 -P &lt;span class=&#34;nv&#34;&gt;sdn&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;calico -P &lt;span class=&#34;nv&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;1.26 -P &lt;span class=&#34;nv&#34;&gt;ingress&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;false&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;metallb&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;domain&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;linuxera.org gateway-api-cluster
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;introduction-to-kubernetes-gateway-api&#34;&gt;Introduction to Kubernetes Gateway API&lt;/h2&gt;
-&lt;p&gt;As we said in the previous section, Gateway API is a new project by the SIG-NETWORK. This project aims to become the preferred solution for managing external traffic into a Kubernetes cluster.&lt;/p&gt;</description>
+      <description>Gateway API for Kubernetes In this post we will go over a new project by the SIG-NETWORK that aims to evolve Kubernetes service networking.
+I&amp;rsquo;ll be using a Kubernetes v1.26 (latest at the time of this writing). The tool used to create the cluster is kcli and the command used was:
+kcli create kube generic -P ctlplanes=1 -P workers=1 -P ctlplane_memory=4096 -P numcpus=8 -P worker_memory=8192 -P image=fedora37 -P sdn=calico -P version=1.</description>
     </item>
+    
   </channel>
 </rss>

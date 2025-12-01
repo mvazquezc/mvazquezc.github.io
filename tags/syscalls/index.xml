@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Syscalls on Linuxera</title>
+    <title>syscalls on Linuxera</title>
     <link>https://linuxera.org/tags/syscalls/</link>
-    <description>Recent content in Syscalls on Linuxera</description>
-    <generator>Hugo -- 0.152.2</generator>
-    <language>en</language>
-    <lastBuildDate>Thu, 01 Apr 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://linuxera.org/tags/syscalls/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in syscalls on Linuxera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 01 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/syscalls/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Capabilities and Seccomp Profiles on Kubernetes</title>
       <link>https://linuxera.org/capabilities-seccomp-kubernetes/</link>
       <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
+      
       <guid>https://linuxera.org/capabilities-seccomp-kubernetes/</guid>
-      <description>&lt;h1 id=&#34;capabilities-and-seccomp-profiles-on-kubernetes&#34;&gt;Capabilities and Seccomp Profiles on Kubernetes&lt;/h1&gt;
-&lt;p&gt;In a &lt;a href=&#34;https://linuxera.org/container-security-capabilities-seccomp/&#34;&gt;previous post&lt;/a&gt; we talked about &lt;strong&gt;Linux Capabilities&lt;/strong&gt; and &lt;strong&gt;Secure Compute Profiles&lt;/strong&gt;, in this post we are going to see how we can leverage them on &lt;a href=&#34;https://kubernetes.io/&#34;&gt;Kubernetes&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;We will need a Kubernetes cluster, I&amp;rsquo;m going to use &lt;a href=&#34;https://github.com/karmab/kcli&#34;&gt;kcli&lt;/a&gt; in order to get one. Below command will deploy a Kubernetes cluster on VMs:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: You can create a &lt;a href=&#34;https://kcli.readthedocs.io/en/latest/index.html#create-a-parameters-yml&#34;&gt;parameters file&lt;/a&gt; with the cluster configuration as well.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Create a Kubernetes 1.20 cluster with 1 master and 1 worker using calico as SDN, nginx as ingress controller, metallb for loadbalancer services and CRI-O as container runtime&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kcli create kube generic -P &lt;span class=&#34;nv&#34;&gt;ctlplanes&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;workers&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;  -P &lt;span class=&#34;nv&#34;&gt;ctlplane_memory&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;4096&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;numcpus&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;worker_memory&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;4096&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;sdn&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;calico -P &lt;span class=&#34;nv&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;1.20 -P &lt;span class=&#34;nv&#34;&gt;ingress&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;ingress_method&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;nginx -P &lt;span class=&#34;nv&#34;&gt;metallb&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;engine&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;crio -P &lt;span class=&#34;nv&#34;&gt;domain&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;linuxera.org caps-cluster
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;After a few moments we will get the &lt;code&gt;kubeconfig&lt;/code&gt; for accessing our cluster:&lt;/p&gt;</description>
+      <description>Capabilities and Seccomp Profiles on Kubernetes In a previous post we talked about Linux Capabilities and Secure Compute Profiles, in this post we are going to see how we can leverage them on Kubernetes.
+We will need a Kubernetes cluster, I&amp;rsquo;m going to use kcli in order to get one. Below command will deploy a Kubernetes cluster on VMs:
+NOTE: You can create a parameters file with the cluster configuration as well.</description>
     </item>
+    
   </channel>
 </rss>

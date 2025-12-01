@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Opc on Linuxera</title>
+    <title>opc on Linuxera</title>
     <link>https://linuxera.org/tags/opc/</link>
-    <description>Recent content in Opc on Linuxera</description>
-    <generator>Hugo -- 0.152.2</generator>
-    <language>en</language>
-    <lastBuildDate>Fri, 13 Jan 2023 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://linuxera.org/tags/opc/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in opc on Linuxera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 13 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/opc/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>OpenShift 4 User Certificates</title>
       <link>https://linuxera.org/user-certificates-in-openshift4/</link>
       <pubDate>Fri, 13 Jan 2023 00:00:00 +0000</pubDate>
+      
       <guid>https://linuxera.org/user-certificates-in-openshift4/</guid>
-      <description>&lt;h1 id=&#34;user-certificates-in-openshift-4&#34;&gt;User Certificates in OpenShift 4&lt;/h1&gt;
-&lt;div class=&#34;admonition attention&#34;&gt;
-    &lt;p class=&#34;admonition-title&#34;&gt;Attention&lt;/p&gt;
-    &lt;p class=&#34;admonition&#34;&gt;The information described in this blog post may not be a supported configuration for OpenShift 4. Please, refer to the &lt;a href=&#34;https://docs.openshift.com&#34;&gt;official docs&lt;/a&gt; for supported documentation.&lt;/p&gt;
-&lt;/div&gt;
-
-&lt;p&gt;In this blog we will see how we can create &lt;strong&gt;OpenShift Users&lt;/strong&gt; using client certificates and how to configure the API Server, so we can create client certificates using &lt;strong&gt;custom CAs&lt;/strong&gt;. The information described in this blog was last tested with OpenShift 4.11.&lt;/p&gt;</description>
+      <description>User Certificates in OpenShift 4 Attention
+The information described in this blog post may not be a supported configuration for OpenShift 4. Please, refer to the official docs for supported documentation.
+In this blog we will see how we can create OpenShift Users using client certificates and how to configure the API Server, so we can create client certificates using custom CAs. The information described in this blog was last tested with OpenShift 4.</description>
     </item>
+    
   </channel>
 </rss>

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Loadbalancer on Linuxera</title>
+    <title>loadbalancer on Linuxera</title>
     <link>https://linuxera.org/tags/loadbalancer/</link>
-    <description>Recent content in Loadbalancer on Linuxera</description>
-    <generator>Hugo -- 0.152.2</generator>
-    <language>en</language>
-    <lastBuildDate>Tue, 21 Mar 2023 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://linuxera.org/tags/loadbalancer/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in loadbalancer on Linuxera</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 21 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/loadbalancer/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Exposing multiple Kubernetes clusters with a single load balancer and a single public IP</title>
       <link>https://linuxera.org/exposing-multiple-kubernetes-clusters-single-lb-and-ip/</link>
       <pubDate>Tue, 21 Mar 2023 00:00:00 +0000</pubDate>
+      
       <guid>https://linuxera.org/exposing-multiple-kubernetes-clusters-single-lb-and-ip/</guid>
-      <description>&lt;h1 id=&#34;exposing-multiple-kubernetes-clusters-with-a-single-load-balancer-and-a-single-public-ip&#34;&gt;Exposing multiple Kubernetes clusters with a single load balancer and a single public IP&lt;/h1&gt;
-&lt;p&gt;My colleague &lt;a href=&#34;https://twitter.com/_ZaNN_&#34;&gt;Alberto Losada&lt;/a&gt; and I have been working on a lab lately. The lab is composed of three &lt;a href=&#34;https://www.redhat.com/en/technologies/cloud-computing/openshift&#34;&gt;OpenShift&lt;/a&gt; clusters on VMs, these VMs are deployed on an isolated libvirt network, which means that we cannot access them from outside the hypervisor.&lt;/p&gt;
-&lt;p&gt;In order to solve this issue, we wanted to expose the three clusters using the public IP available in the hypervisor. This setup should be valid for any Kubernetes cluster.&lt;/p&gt;</description>
+      <description>Exposing multiple Kubernetes clusters with a single load balancer and a single public IP My colleague Alberto Losada and I have been working on a lab lately. The lab is composed of three OpenShift clusters on VMs, these VMs are deployed on an isolated libvirt network, which means that we cannot access them from outside the hypervisor.
+In order to solve this issue, we wanted to expose the three clusters using the public IP available in the hypervisor.</description>
     </item>
+    
   </channel>
 </rss>
