@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>wireguard on Linuxera</title>
+    <title>Wireguard on Linuxera</title>
     <link>https://linuxera.org/tags/wireguard/</link>
-    <description>Recent content in wireguard on Linuxera</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Tue, 19 Dec 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/wireguard/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in Wireguard on Linuxera</description>
+    <generator>Hugo -- 0.152.2</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 09 Feb 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://linuxera.org/tags/wireguard/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Extending a VXLAN across nodes with Wireguard</title>
       <link>https://linuxera.org/extending-vxlan-across-nodes-with-wireguard/</link>
       <pubDate>Tue, 19 Dec 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/extending-vxlan-across-nodes-with-wireguard/</guid>
-      <description>Extending a VXLAN across nodes with Wireguard Virtualizing environments is something I do quite often in a day-to-day basis, usually, these environments live in different hypervisors. While I don&amp;rsquo;t always need these environments to talk to each other, from time to time I need some sort of connectivity between them.
-Getting the VMs running on these hypervisors routed through the lab network is one of the solutions I have been using for a long time.</description>
+      <description>&lt;h1 id=&#34;extending-a-vxlan-across-nodes-with-wireguard&#34;&gt;Extending a VXLAN across nodes with Wireguard&lt;/h1&gt;
+&lt;p&gt;Virtualizing environments is something I do quite often in a day-to-day basis, usually, these environments live in different hypervisors. While I don&amp;rsquo;t always need these environments to talk to each other, from time to time I need some sort of connectivity between them.&lt;/p&gt;
+&lt;p&gt;Getting the VMs running on these hypervisors routed through the lab network is one of the solutions I have been using for a long time. For the last few days, I have been thinking of extending a virtual network across two hypervisors. This allows me to run VMs on this virtual network and get VMs to talk to each other without having to run these VMs in a routed lab network.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>clis on Linuxera</title>
+    <title>Clis on Linuxera</title>
     <link>https://linuxera.org/tags/clis/</link>
-    <description>Recent content in clis on Linuxera</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Thu, 19 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/clis/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in Clis on Linuxera</description>
+    <generator>Hugo -- 0.152.2</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 19 Jan 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://linuxera.org/tags/clis/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Enhanced Version and Build Information for your Go programs with ldflags</title>
       <link>https://linuxera.org/enhanced-version-and-build-information-for-your-go-programs/</link>
       <pubDate>Thu, 19 Jan 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/enhanced-version-and-build-information-for-your-go-programs/</guid>
-      <description>Enhanced Version and Build Information for your Go programs with ldflags In the previous post we show how to create a simple CLI in Go with Cobra. I received a suggestion from one of my colleagues, Andrew Block. He suggested complementing that post with the use of ldflags at build time in order to define specific information to a specific build like build time, git commit, etc.
-Andy is also running a blog, go check it out!</description>
+      <description>&lt;h1 id=&#34;enhanced-version-and-build-information-for-your-go-programs-with-ldflags&#34;&gt;Enhanced Version and Build Information for your Go programs with ldflags&lt;/h1&gt;
+&lt;p&gt;In the &lt;a href=&#34;https://linuxera.org/writing-clis-go-cobra/&#34;&gt;previous post&lt;/a&gt; we show how to create a simple CLI in Go with Cobra. I received a suggestion from one of my colleagues, &lt;a href=&#34;https://twitter.com/sabre1041&#34;&gt;Andrew Block&lt;/a&gt;. He suggested complementing that post with the use of ldflags at build time in order to define specific information to a specific build like build time, git commit, etc.&lt;/p&gt;
+&lt;p&gt;Andy is also running a &lt;a href=&#34;https://blog.andyserver.com/&#34;&gt;blog&lt;/a&gt;, go check it out!&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Writing CLIs in Go with Cobra</title>
       <link>https://linuxera.org/writing-clis-go-cobra/</link>
       <pubDate>Sun, 15 Jan 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/writing-clis-go-cobra/</guid>
-      <description>Writing CLIs in Go using Cobra A few months ago, I was working with my colleague Alberto in a CLI. The language of choice was Go and I manage to learn a thing or two. In today&amp;rsquo;s post we will see a very basic skeleton for a CLI written in Go. This will certainly help me in the future as a template for the next CLI, and maybe it helps you too!</description>
+      <description>&lt;h1 id=&#34;writing-clis-in-go-using-cobra&#34;&gt;Writing CLIs in Go using Cobra&lt;/h1&gt;
+&lt;p&gt;A few months ago, I was working with my colleague &lt;a href=&#34;https://github.com/alknopfler&#34;&gt;Alberto&lt;/a&gt; in a CLI. The language of choice was Go and I manage to learn a thing or two. In today&amp;rsquo;s post we will see a very basic skeleton for a CLI written in Go. This will certainly help me in the future as a &lt;code&gt;template&lt;/code&gt; for the next CLI, and maybe it helps you too!&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>namespaces on Linuxera</title>
+    <title>Namespaces on Linuxera</title>
     <link>https://linuxera.org/tags/namespaces/</link>
-    <description>Recent content in namespaces on Linuxera</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Thu, 25 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/namespaces/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in Namespaces on Linuxera</description>
+    <generator>Hugo -- 0.152.2</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 25 Mar 2021 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://linuxera.org/tags/namespaces/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Containers under the Hood</title>
       <link>https://linuxera.org/containers-under-the-hood/</link>
       <pubDate>Thu, 25 Mar 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/containers-under-the-hood/</guid>
-      <description>Containers are Linux You probably already heard this expression, in today&amp;rsquo;s post we are going to desmitify container technologies by decomposing them part by part and describing which Linux technologies make containers possible.
-We can describe a container as an isolated process running on a host. In order to isolate the process the container runtimes leverage Linux kernel technologies such as: namespaces, chroots, cgroups, etc. plus security layers like SELinux.</description>
+      <description>&lt;h1 id=&#34;containers-are-linux&#34;&gt;Containers are Linux&lt;/h1&gt;
+&lt;p&gt;You probably already heard this expression, in today&amp;rsquo;s post we are going to desmitify container technologies by decomposing them part by part and describing which Linux technologies make containers possible.&lt;/p&gt;
+&lt;p&gt;We can describe a container as an isolated process running on a host. In order to isolate the process the container runtimes leverage Linux kernel technologies such as: namespaces, chroots, cgroups, etc. plus security layers like SELinux.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

@@ -4,692 +4,541 @@
     <title>Tags on Linuxera</title>
     <link>https://linuxera.org/tags/</link>
     <description>Recent content in Tags on Linuxera</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Wed, 26 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- 0.152.2</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 26 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://linuxera.org/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>ai</title>
+      <title>AI</title>
       <link>https://linuxera.org/tags/ai/</link>
       <pubDate>Wed, 26 Nov 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/ai/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>artificial intelligence</title>
+      <title>Artificial Intelligence</title>
       <link>https://linuxera.org/tags/artificial-intelligence/</link>
       <pubDate>Wed, 26 Nov 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/artificial-intelligence/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>context engineering</title>
+      <title>Context Engineering</title>
       <link>https://linuxera.org/tags/context-engineering/</link>
       <pubDate>Wed, 26 Nov 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/context-engineering/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>llm</title>
+      <title>Llm</title>
       <link>https://linuxera.org/tags/llm/</link>
       <pubDate>Wed, 26 Nov 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/llm/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>temperature</title>
+      <title>Temperature</title>
       <link>https://linuxera.org/tags/temperature/</link>
       <pubDate>Wed, 26 Nov 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/temperature/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>top-k</title>
+      <title>Top-K</title>
       <link>https://linuxera.org/tags/top-k/</link>
       <pubDate>Wed, 26 Nov 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/top-k/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>top-p</title>
+      <title>Top-P</title>
       <link>https://linuxera.org/tags/top-p/</link>
       <pubDate>Wed, 26 Nov 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/top-p/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>backup</title>
+      <title>Backup</title>
       <link>https://linuxera.org/tags/backup/</link>
       <pubDate>Thu, 02 Oct 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/backup/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>encrypted etcd</title>
+      <title>Encrypted Etcd</title>
       <link>https://linuxera.org/tags/encrypted-etcd/</link>
       <pubDate>Thu, 02 Oct 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/encrypted-etcd/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>etcd</title>
+      <title>Etcd</title>
       <link>https://linuxera.org/tags/etcd/</link>
       <pubDate>Thu, 02 Oct 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/etcd/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>kubernetes</title>
+      <title>Kubernetes</title>
       <link>https://linuxera.org/tags/kubernetes/</link>
       <pubDate>Thu, 02 Oct 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/kubernetes/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>restore</title>
+      <title>Restore</title>
       <link>https://linuxera.org/tags/restore/</link>
       <pubDate>Thu, 02 Oct 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/restore/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>artificialintelligence</title>
+      <title>Artificialintelligence</title>
       <link>https://linuxera.org/tags/artificialintelligence/</link>
       <pubDate>Tue, 27 May 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/artificialintelligence/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>llms</title>
+      <title>Llms</title>
       <link>https://linuxera.org/tags/llms/</link>
       <pubDate>Tue, 27 May 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/llms/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>rag</title>
+      <title>Rag</title>
       <link>https://linuxera.org/tags/rag/</link>
       <pubDate>Tue, 27 May 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/rag/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>openai</title>
+      <title>Openai</title>
       <link>https://linuxera.org/tags/openai/</link>
       <pubDate>Tue, 25 Mar 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/openai/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>byok</title>
+      <title>Byok</title>
       <link>https://linuxera.org/tags/byok/</link>
       <pubDate>Thu, 25 Apr 2024 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/byok/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>cosing</title>
+      <title>Cosing</title>
       <link>https://linuxera.org/tags/cosing/</link>
       <pubDate>Thu, 25 Apr 2024 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/cosing/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>pki</title>
+      <title>Pki</title>
       <link>https://linuxera.org/tags/pki/</link>
       <pubDate>Thu, 25 Apr 2024 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/pki/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>security</title>
+      <title>Security</title>
       <link>https://linuxera.org/tags/security/</link>
       <pubDate>Thu, 25 Apr 2024 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/security/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>sigstore</title>
+      <title>Sigstore</title>
       <link>https://linuxera.org/tags/sigstore/</link>
       <pubDate>Thu, 25 Apr 2024 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/sigstore/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>networking</title>
+      <title>Networking</title>
       <link>https://linuxera.org/tags/networking/</link>
       <pubDate>Tue, 19 Dec 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/networking/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>vxlan</title>
+      <title>Vxlan</title>
       <link>https://linuxera.org/tags/vxlan/</link>
       <pubDate>Tue, 19 Dec 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/vxlan/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>wireguard</title>
+      <title>Wireguard</title>
       <link>https://linuxera.org/tags/wireguard/</link>
       <pubDate>Tue, 19 Dec 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/wireguard/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>hashicorp</title>
+      <title>Hashicorp</title>
       <link>https://linuxera.org/tags/hashicorp/</link>
       <pubDate>Tue, 14 Nov 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/hashicorp/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>podman</title>
+      <title>Podman</title>
       <link>https://linuxera.org/tags/podman/</link>
       <pubDate>Tue, 14 Nov 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/podman/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>secrets</title>
+      <title>Secrets</title>
       <link>https://linuxera.org/tags/secrets/</link>
       <pubDate>Tue, 14 Nov 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/secrets/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>vault</title>
+      <title>Vault</title>
       <link>https://linuxera.org/tags/vault/</link>
       <pubDate>Tue, 14 Nov 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/vault/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>cert-manager</title>
+      <title>Cert-Manager</title>
       <link>https://linuxera.org/tags/cert-manager/</link>
       <pubDate>Thu, 10 Aug 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/cert-manager/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>cfssl</title>
+      <title>Cfssl</title>
       <link>https://linuxera.org/tags/cfssl/</link>
       <pubDate>Thu, 10 Aug 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/cfssl/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>multirootca</title>
+      <title>Multirootca</title>
       <link>https://linuxera.org/tags/multirootca/</link>
       <pubDate>Thu, 10 Aug 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/multirootca/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>private ca</title>
+      <title>Private Ca</title>
       <link>https://linuxera.org/tags/private-ca/</link>
       <pubDate>Thu, 10 Aug 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/private-ca/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>TLS</title>
       <link>https://linuxera.org/tags/tls/</link>
       <pubDate>Thu, 10 Aug 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/tls/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>gateway-api</title>
+      <title>Gateway-Api</title>
       <link>https://linuxera.org/tags/gateway-api/</link>
       <pubDate>Mon, 24 Apr 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/gateway-api/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>ingress</title>
+      <title>Ingress</title>
       <link>https://linuxera.org/tags/ingress/</link>
       <pubDate>Mon, 24 Apr 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/ingress/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>cgroups</title>
+      <title>Cgroups</title>
       <link>https://linuxera.org/tags/cgroups/</link>
       <pubDate>Thu, 06 Apr 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/cgroups/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>cgroupsv2</title>
+      <title>Cgroupsv2</title>
       <link>https://linuxera.org/tags/cgroupsv2/</link>
       <pubDate>Thu, 06 Apr 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/cgroupsv2/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>openshift</title>
+      <title>Openshift</title>
       <link>https://linuxera.org/tags/openshift/</link>
       <pubDate>Thu, 06 Apr 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/openshift/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>haproxy</title>
+      <title>Haproxy</title>
       <link>https://linuxera.org/tags/haproxy/</link>
       <pubDate>Tue, 21 Mar 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/haproxy/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>loadbalancer</title>
+      <title>Loadbalancer</title>
       <link>https://linuxera.org/tags/loadbalancer/</link>
       <pubDate>Tue, 21 Mar 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/loadbalancer/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>clis</title>
+      <title>Clis</title>
       <link>https://linuxera.org/tags/clis/</link>
       <pubDate>Thu, 19 Jan 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/clis/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>cobra</title>
+      <title>Cobra</title>
       <link>https://linuxera.org/tags/cobra/</link>
       <pubDate>Thu, 19 Jan 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/cobra/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>development</title>
+      <title>Development</title>
       <link>https://linuxera.org/tags/development/</link>
       <pubDate>Thu, 19 Jan 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/development/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>go</title>
+      <title>Go</title>
       <link>https://linuxera.org/tags/go/</link>
       <pubDate>Thu, 19 Jan 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/go/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>golang</title>
+      <title>Golang</title>
       <link>https://linuxera.org/tags/golang/</link>
       <pubDate>Thu, 19 Jan 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/golang/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>client-certificates</title>
+      <title>Client-Certificates</title>
       <link>https://linuxera.org/tags/client-certificates/</link>
       <pubDate>Fri, 13 Jan 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/client-certificates/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>opc</title>
+      <title>Opc</title>
       <link>https://linuxera.org/tags/opc/</link>
       <pubDate>Fri, 13 Jan 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/opc/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>users</title>
+      <title>Users</title>
       <link>https://linuxera.org/tags/users/</link>
       <pubDate>Fri, 13 Jan 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/users/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>admission</title>
+      <title>Admission</title>
       <link>https://linuxera.org/tags/admission/</link>
       <pubDate>Wed, 24 Aug 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/admission/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>capabilities</title>
+      <title>Capabilities</title>
       <link>https://linuxera.org/tags/capabilities/</link>
       <pubDate>Wed, 24 Aug 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/capabilities/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>k8s</title>
+      <title>K8s</title>
       <link>https://linuxera.org/tags/k8s/</link>
       <pubDate>Wed, 24 Aug 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/k8s/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>securitycontext</title>
+      <title>Securitycontext</title>
       <link>https://linuxera.org/tags/securitycontext/</link>
       <pubDate>Wed, 24 Aug 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/securitycontext/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>containers</title>
+      <title>Containers</title>
       <link>https://linuxera.org/tags/containers/</link>
       <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/containers/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>okd</title>
+      <title>Okd</title>
       <link>https://linuxera.org/tags/okd/</link>
       <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/okd/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>origin</title>
+      <title>Origin</title>
       <link>https://linuxera.org/tags/origin/</link>
       <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/origin/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>seccomp</title>
+      <title>Seccomp</title>
       <link>https://linuxera.org/tags/seccomp/</link>
       <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/seccomp/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>syscalls</title>
+      <title>Syscalls</title>
       <link>https://linuxera.org/tags/syscalls/</link>
       <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/syscalls/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>devsecops</title>
+      <title>Devsecops</title>
       <link>https://linuxera.org/tags/devsecops/</link>
       <pubDate>Sat, 27 Mar 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/devsecops/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>linux</title>
+      <title>Linux</title>
       <link>https://linuxera.org/tags/linux/</link>
       <pubDate>Sat, 27 Mar 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/linux/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>profiles</title>
+      <title>Profiles</title>
       <link>https://linuxera.org/tags/profiles/</link>
       <pubDate>Sat, 27 Mar 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/profiles/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>kernel</title>
+      <title>Kernel</title>
       <link>https://linuxera.org/tags/kernel/</link>
       <pubDate>Thu, 25 Mar 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/kernel/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>namespaces</title>
+      <title>Namespaces</title>
       <link>https://linuxera.org/tags/namespaces/</link>
       <pubDate>Thu, 25 Mar 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/namespaces/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>nsenter</title>
+      <title>Nsenter</title>
       <link>https://linuxera.org/tags/nsenter/</link>
       <pubDate>Thu, 25 Mar 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/nsenter/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>selinux</title>
+      <title>Selinux</title>
       <link>https://linuxera.org/tags/selinux/</link>
       <pubDate>Thu, 25 Mar 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/selinux/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>unshare</title>
+      <title>Unshare</title>
       <link>https://linuxera.org/tags/unshare/</link>
       <pubDate>Thu, 25 Mar 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/unshare/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>controllers</title>
+      <title>Controllers</title>
       <link>https://linuxera.org/tags/controllers/</link>
       <pubDate>Wed, 16 Sep 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/controllers/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>olm</title>
+      <title>Olm</title>
       <link>https://linuxera.org/tags/olm/</link>
       <pubDate>Wed, 16 Sep 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/olm/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>operator framework</title>
+      <title>Operator Framework</title>
       <link>https://linuxera.org/tags/operator-framework/</link>
       <pubDate>Wed, 16 Sep 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/operator-framework/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>operator lifecycle manager</title>
+      <title>Operator Lifecycle Manager</title>
       <link>https://linuxera.org/tags/operator-lifecycle-manager/</link>
       <pubDate>Wed, 16 Sep 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/operator-lifecycle-manager/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>operator sdk</title>
+      <title>Operator Sdk</title>
       <link>https://linuxera.org/tags/operator-sdk/</link>
       <pubDate>Wed, 16 Sep 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/operator-sdk/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>operators</title>
+      <title>Operators</title>
       <link>https://linuxera.org/tags/operators/</link>
       <pubDate>Wed, 16 Sep 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/operators/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>metrics</title>
+      <title>Metrics</title>
       <link>https://linuxera.org/tags/metrics/</link>
       <pubDate>Sun, 11 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/metrics/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>prometheus</title>
+      <title>Prometheus</title>
       <link>https://linuxera.org/tags/prometheus/</link>
       <pubDate>Sun, 11 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/prometheus/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>oauth</title>
+      <title>Oauth</title>
       <link>https://linuxera.org/tags/oauth/</link>
       <pubDate>Tue, 30 Jul 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/oauth/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>proxy</title>
+      <title>Proxy</title>
       <link>https://linuxera.org/tags/proxy/</link>
       <pubDate>Tue, 30 Jul 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/proxy/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>ocp</title>
+      <title>Ocp</title>
       <link>https://linuxera.org/tags/ocp/</link>
       <pubDate>Sat, 18 May 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/tags/ocp/</guid>
       <description></description>
     </item>
-    
   </channel>
 </rss>

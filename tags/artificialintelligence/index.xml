@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>artificialintelligence on Linuxera</title>
+    <title>Artificialintelligence on Linuxera</title>
     <link>https://linuxera.org/tags/artificialintelligence/</link>
-    <description>Recent content in artificialintelligence on Linuxera</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Tue, 27 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/artificialintelligence/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in Artificialintelligence on Linuxera</description>
+    <generator>Hugo -- 0.152.2</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 27 May 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://linuxera.org/tags/artificialintelligence/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>A Beginner’s Guide to RAG: What I Wish Someone Told Me</title>
       <link>https://linuxera.org/rag-beginners-guide/</link>
       <pubDate>Tue, 27 May 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/rag-beginners-guide/</guid>
-      <description>A Beginner’s Guide to RAG: What I Wish Someone Told Me In this post, I&amp;rsquo;ll try to provide a beginners guide to RAG, focusing on what I wish someone told me before trying to build a RAG solution.
-Attention
-While I’ve made a strong effort to ensure the information is accurate, I’m far from an expert on the topic, and some details may not be entirely correct. If you notice anything missing or inaccurate, please leave a comment!</description>
+      <description>&lt;h1 id=&#34;a-beginners-guide-to-rag-what-i-wish-someone-told-me&#34;&gt;A Beginner’s Guide to RAG: What I Wish Someone Told Me&lt;/h1&gt;
+&lt;p&gt;In this post, I&amp;rsquo;ll try to provide a beginners guide to RAG, focusing on what I wish someone told me before trying to build a RAG solution.&lt;/p&gt;
+&lt;div class=&#34;admonition attention&#34;&gt;
+    &lt;p class=&#34;admonition-title&#34;&gt;Attention&lt;/p&gt;
+    &lt;p class=&#34;admonition&#34;&gt;While I’ve made a strong effort to ensure the information is accurate, I’m far from an expert on the topic, and some details may not be entirely correct. If you notice anything missing or inaccurate, please leave a comment!&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Introduction to LLM concepts</title>
       <link>https://linuxera.org/introduction-to-llm-concepts/</link>
       <pubDate>Tue, 25 Mar 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/introduction-to-llm-concepts/</guid>
-      <description>Introduction to LLM concepts In this post, I&amp;rsquo;ll cover various LLM concepts and the questions I asked myself while diving deep into the world of LLMs. I expect this post to be updated as I continue to learn more things around LLMs.
-Attention
-This post is the result of my exploratory work on LLMs. While I’ve made a strong effort to ensure the information is accurate, I’m far from an expert on the topic, and some details may not be entirely correct.</description>
+      <description>&lt;h1 id=&#34;introduction-to-llm-concepts&#34;&gt;Introduction to LLM concepts&lt;/h1&gt;
+&lt;p&gt;In this post, I&amp;rsquo;ll cover various LLM concepts and the questions I asked myself while diving deep into the world of LLMs. I expect this post to be updated as I continue to learn more things around LLMs.&lt;/p&gt;
+&lt;div class=&#34;admonition attention&#34;&gt;
+    &lt;p class=&#34;admonition-title&#34;&gt;Attention&lt;/p&gt;
+    &lt;p class=&#34;admonition&#34;&gt;This post is the result of my exploratory work on LLMs. While I’ve made a strong effort to ensure the information is accurate, I’m far from an expert on the topic, and some details may not be entirely correct. If you notice anything missing or inaccurate, please leave a comment!&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

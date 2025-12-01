@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>controllers on Linuxera</title>
+    <title>Controllers on Linuxera</title>
     <link>https://linuxera.org/tags/controllers/</link>
-    <description>Recent content in controllers on Linuxera</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Wed, 16 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/controllers/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in Controllers on Linuxera</description>
+    <generator>Hugo -- 0.152.2</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 13 Feb 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://linuxera.org/tags/controllers/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Integrating our Operators with OLM</title>
       <link>https://linuxera.org/integrating-operators-olm/</link>
       <pubDate>Wed, 16 Sep 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/integrating-operators-olm/</guid>
-      <description>Introduction This post is a continuation of our previous blog Writing Operators using the Operator Framework SDK.
-We will continue working on the operator created on the previous blog, if you want to be able to follow this blog, you will need to run the steps from the previous blog.
-Operator Lifecycle Manager The Operator Lifecycle Manager is an open source toolkit to manage Operators in an effective, automated and scalable way.</description>
+      <description>&lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;This post is a continuation of our previous blog &lt;a href=&#34;https://linuxera.org/writing-operators-using-operator-framework/&#34;&gt;Writing Operators using the Operator Framework SDK&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;We will continue working on the operator created on the previous blog, if you want to be able to follow this blog, you will need to run the steps from the previous blog.&lt;/p&gt;
+&lt;h1 id=&#34;operator-lifecycle-manager&#34;&gt;Operator Lifecycle Manager&lt;/h1&gt;
+&lt;p&gt;The &lt;a href=&#34;https://github.com/operator-framework/operator-lifecycle-manager&#34;&gt;Operator Lifecycle Manager&lt;/a&gt; is an open source toolkit to manage Operators in an effective, automated
+and scalable way. You can learn more &lt;a href=&#34;https://github.com/operator-framework/operator-lifecycle-manager#overview&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Writing Operators using the Operator Framework SDK</title>
       <link>https://linuxera.org/writing-operators-using-operator-framework/</link>
       <pubDate>Sat, 18 May 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/writing-operators-using-operator-framework/</guid>
-      <description>Operators, operators everywhere As you may have noticed, Kubernetes operators are becoming more an more popular those days. In this post we are going to explain the basics around Operators and we will develop a simple Operator using the Operator Framework SDK.
-What is an Operator An operator aims to automate actions usually performed manually while lessening the likelihood of error and simplifying complexity.
-We can think of an operator as a method of packaging, deploying and managing a Kubernetes enabled application.</description>
+      <description>&lt;h1 id=&#34;operators-operators-everywhere&#34;&gt;Operators, operators everywhere&lt;/h1&gt;
+&lt;p&gt;As you may have noticed, &lt;strong&gt;Kubernetes operators&lt;/strong&gt; are becoming more an more popular those days. In this post we are going to explain the basics around Operators and we will develop a simple Operator using the &lt;strong&gt;Operator Framework SDK&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;what-is-an-operator&#34;&gt;What is an Operator&lt;/h2&gt;
+&lt;p&gt;An operator aims to automate actions usually performed manually while lessening the likelihood of error and simplifying complexity.&lt;/p&gt;
+&lt;p&gt;We can think of an operator as a method of packaging, deploying and managing a Kubernetes enabled application. Kubernetes enabled applications are deployed on Kubernetes and managed using the Kubernetes APIs and tooling.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

@@ -1,65 +1,69 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>openshift on Linuxera</title>
+    <title>Openshift on Linuxera</title>
     <link>https://linuxera.org/tags/openshift/</link>
-    <description>Recent content in openshift on Linuxera</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Thu, 06 Apr 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/openshift/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in Openshift on Linuxera</description>
+    <generator>Hugo -- 0.152.2</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 05 Feb 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://linuxera.org/tags/openshift/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CPU and Memory Management on Kubernetes with Cgroupsv2</title>
       <link>https://linuxera.org/cpu-memory-management-kubernetes-cgroupsv2/</link>
       <pubDate>Thu, 06 Apr 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/cpu-memory-management-kubernetes-cgroupsv2/</guid>
-      <description>CPU and Memory Management on Kubernetes with Cgroupsv2 In this post I&amp;rsquo;ll try to explain how CPU and Memory management works under the hood on Kubernetes. If you ever wondered what happens when you set requests and limits for your pods, keep reading!
-Attention
-This is the result of my exploratory work around cgroupsv2 and their application to Kubernetes. Even though I tried really hard to make sure the information in this post is accurate, I&amp;rsquo;m far from being an expert on the topic and some information may not be 100% accurate.</description>
+      <description>&lt;h1 id=&#34;cpu-and-memory-management-on-kubernetes-with-cgroupsv2&#34;&gt;CPU and Memory Management on Kubernetes with Cgroupsv2&lt;/h1&gt;
+&lt;p&gt;In this post I&amp;rsquo;ll try to explain how CPU and Memory management works under the hood on Kubernetes. If you ever wondered what happens when you set &lt;code&gt;requests&lt;/code&gt; and &lt;code&gt;limits&lt;/code&gt; for your pods, keep reading!&lt;/p&gt;
+&lt;div class=&#34;admonition attention&#34;&gt;
+    &lt;p class=&#34;admonition-title&#34;&gt;Attention&lt;/p&gt;
+    &lt;p class=&#34;admonition&#34;&gt;This is the result of my exploratory work around cgroupsv2 and their application to Kubernetes. Even though I tried really hard to make sure the information in this post is accurate, I&amp;rsquo;m far from being an expert on the topic and some information may not be 100% accurate. If you detect something that is missing / wrong, please comment on the post!&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Exposing multiple Kubernetes clusters with a single load balancer and a single public IP</title>
       <link>https://linuxera.org/exposing-multiple-kubernetes-clusters-single-lb-and-ip/</link>
       <pubDate>Tue, 21 Mar 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/exposing-multiple-kubernetes-clusters-single-lb-and-ip/</guid>
-      <description>Exposing multiple Kubernetes clusters with a single load balancer and a single public IP My colleague Alberto Losada and I have been working on a lab lately. The lab is composed of three OpenShift clusters on VMs, these VMs are deployed on an isolated libvirt network, which means that we cannot access them from outside the hypervisor.
-In order to solve this issue, we wanted to expose the three clusters using the public IP available in the hypervisor.</description>
+      <description>&lt;h1 id=&#34;exposing-multiple-kubernetes-clusters-with-a-single-load-balancer-and-a-single-public-ip&#34;&gt;Exposing multiple Kubernetes clusters with a single load balancer and a single public IP&lt;/h1&gt;
+&lt;p&gt;My colleague &lt;a href=&#34;https://twitter.com/_ZaNN_&#34;&gt;Alberto Losada&lt;/a&gt; and I have been working on a lab lately. The lab is composed of three &lt;a href=&#34;https://www.redhat.com/en/technologies/cloud-computing/openshift&#34;&gt;OpenShift&lt;/a&gt; clusters on VMs, these VMs are deployed on an isolated libvirt network, which means that we cannot access them from outside the hypervisor.&lt;/p&gt;
+&lt;p&gt;In order to solve this issue, we wanted to expose the three clusters using the public IP available in the hypervisor. This setup should be valid for any Kubernetes cluster.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>OpenShift 4 User Certificates</title>
       <link>https://linuxera.org/user-certificates-in-openshift4/</link>
       <pubDate>Fri, 13 Jan 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/user-certificates-in-openshift4/</guid>
-      <description>User Certificates in OpenShift 4 Attention
-The information described in this blog post may not be a supported configuration for OpenShift 4. Please, refer to the official docs for supported documentation.
-In this blog we will see how we can create OpenShift Users using client certificates and how to configure the API Server, so we can create client certificates using custom CAs. The information described in this blog was last tested with OpenShift 4.</description>
+      <description>&lt;h1 id=&#34;user-certificates-in-openshift-4&#34;&gt;User Certificates in OpenShift 4&lt;/h1&gt;
+&lt;div class=&#34;admonition attention&#34;&gt;
+    &lt;p class=&#34;admonition-title&#34;&gt;Attention&lt;/p&gt;
+    &lt;p class=&#34;admonition&#34;&gt;The information described in this blog post may not be a supported configuration for OpenShift 4. Please, refer to the &lt;a href=&#34;https://docs.openshift.com&#34;&gt;official docs&lt;/a&gt; for supported documentation.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In this blog we will see how we can create &lt;strong&gt;OpenShift Users&lt;/strong&gt; using client certificates and how to configure the API Server, so we can create client certificates using &lt;strong&gt;custom CAs&lt;/strong&gt;. The information described in this blog was last tested with OpenShift 4.11.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Using OpenShift OAuth Proxy to secure your Applications on OpenShift</title>
       <link>https://linuxera.org/oauth-proxy-secure-applications-openshift/</link>
       <pubDate>Tue, 30 Jul 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/oauth-proxy-secure-applications-openshift/</guid>
-      <description>What is OAuth Proxy A reverse proxy and static file server that provides authentication and authorization to an OpenShift OAuth server or Kubernetes master supporting the 1.6+ remote authorization endpoints to validate access to content. It is intended for use withing OpenShift clusters to make it easy to run both end-user and infrastructure services that do not provider their own authentication.
-[Source]
-Securing an Application with OAuth Proxy In this blog post we are going to deploy OAuth Proxy in front of a simple application.</description>
+      <description>&lt;h1 id=&#34;what-is-oauth-proxy&#34;&gt;What is OAuth Proxy&lt;/h1&gt;
+&lt;p&gt;A reverse proxy and static file server that provides authentication and authorization to an OpenShift OAuth server or Kubernetes master supporting the 1.6+ remote
+authorization endpoints to validate access to content. It is intended for use withing OpenShift clusters to make it easy to run both end-user and infrastructure
+services that do not provider their own authentication.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/openshift/oauth-proxy&#34;&gt;[Source]&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;securing-an-application-with-oauth-proxy&#34;&gt;Securing an Application with OAuth Proxy&lt;/h2&gt;
+&lt;p&gt;In this blog post we are going to deploy OAuth Proxy in front of a &lt;a href=&#34;https://github.com/mvazquezc/reverse-words&#34;&gt;simple application&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Writing Operators using the Operator Framework SDK</title>
       <link>https://linuxera.org/writing-operators-using-operator-framework/</link>
       <pubDate>Sat, 18 May 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/writing-operators-using-operator-framework/</guid>
-      <description>Operators, operators everywhere As you may have noticed, Kubernetes operators are becoming more an more popular those days. In this post we are going to explain the basics around Operators and we will develop a simple Operator using the Operator Framework SDK.
-What is an Operator An operator aims to automate actions usually performed manually while lessening the likelihood of error and simplifying complexity.
-We can think of an operator as a method of packaging, deploying and managing a Kubernetes enabled application.</description>
+      <description>&lt;h1 id=&#34;operators-operators-everywhere&#34;&gt;Operators, operators everywhere&lt;/h1&gt;
+&lt;p&gt;As you may have noticed, &lt;strong&gt;Kubernetes operators&lt;/strong&gt; are becoming more an more popular those days. In this post we are going to explain the basics around Operators and we will develop a simple Operator using the &lt;strong&gt;Operator Framework SDK&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;what-is-an-operator&#34;&gt;What is an Operator&lt;/h2&gt;
+&lt;p&gt;An operator aims to automate actions usually performed manually while lessening the likelihood of error and simplifying complexity.&lt;/p&gt;
+&lt;p&gt;We can think of an operator as a method of packaging, deploying and managing a Kubernetes enabled application. Kubernetes enabled applications are deployed on Kubernetes and managed using the Kubernetes APIs and tooling.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

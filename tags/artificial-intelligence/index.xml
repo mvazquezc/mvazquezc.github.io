@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>artificial intelligence on Linuxera</title>
+    <title>Artificial Intelligence on Linuxera</title>
     <link>https://linuxera.org/tags/artificial-intelligence/</link>
-    <description>Recent content in artificial intelligence on Linuxera</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Wed, 26 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/artificial-intelligence/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in Artificial Intelligence on Linuxera</description>
+    <generator>Hugo -- 0.152.2</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 26 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://linuxera.org/tags/artificial-intelligence/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Turning the Knobs of LLM Text Generation</title>
       <link>https://linuxera.org/turning-the-knobs-of-llm-text-generation/</link>
       <pubDate>Wed, 26 Nov 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/turning-the-knobs-of-llm-text-generation/</guid>
-      <description>Turning the Knobs of LLM Text Generation Ever wonder how much control you actually have over the text an LLM produces? In this post, we will look at three simple but powerful knobs you can tweak to push a model toward more deterministic output or toward something more creative.
-We are talking about top_k, top_p and temperature. But before describing them, we need to understand the two main behaviors we can get from an LLM when it is sampling tokens:</description>
+      <description>&lt;h1 id=&#34;turning-the-knobs-of-llm-text-generation&#34;&gt;Turning the Knobs of LLM Text Generation&lt;/h1&gt;
+&lt;p&gt;Ever wonder how much control you actually have over the text an LLM produces? In this post, we will look at three simple but powerful knobs you can tweak to push a model toward more deterministic output or toward something more creative.&lt;/p&gt;
+&lt;p&gt;We are talking about &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; and &lt;code&gt;temperature&lt;/code&gt;. But before describing them, we need to understand the two main behaviors we can get from an LLM when it is sampling tokens:&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

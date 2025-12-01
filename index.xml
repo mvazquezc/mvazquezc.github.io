@@ -4,255 +4,270 @@
     <title>Linuxera</title>
     <link>https://linuxera.org/</link>
     <description>Recent content on Linuxera</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Wed, 26 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- 0.152.2</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 26 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://linuxera.org/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Turning the Knobs of LLM Text Generation</title>
       <link>https://linuxera.org/turning-the-knobs-of-llm-text-generation/</link>
       <pubDate>Wed, 26 Nov 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/turning-the-knobs-of-llm-text-generation/</guid>
-      <description>Turning the Knobs of LLM Text Generation Ever wonder how much control you actually have over the text an LLM produces? In this post, we will look at three simple but powerful knobs you can tweak to push a model toward more deterministic output or toward something more creative.
-We are talking about top_k, top_p and temperature. But before describing them, we need to understand the two main behaviors we can get from an LLM when it is sampling tokens:</description>
+      <description>&lt;h1 id=&#34;turning-the-knobs-of-llm-text-generation&#34;&gt;Turning the Knobs of LLM Text Generation&lt;/h1&gt;
+&lt;p&gt;Ever wonder how much control you actually have over the text an LLM produces? In this post, we will look at three simple but powerful knobs you can tweak to push a model toward more deterministic output or toward something more creative.&lt;/p&gt;
+&lt;p&gt;We are talking about &lt;code&gt;top_k&lt;/code&gt;, &lt;code&gt;top_p&lt;/code&gt; and &lt;code&gt;temperature&lt;/code&gt;. But before describing them, we need to understand the two main behaviors we can get from an LLM when it is sampling tokens:&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Get data from an etcd backup (encrypted or not!)</title>
       <link>https://linuxera.org/get-data-from-encrypted-etcd-backup/</link>
       <pubDate>Thu, 02 Oct 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/get-data-from-encrypted-etcd-backup/</guid>
-      <description>Get data from an etcd backup (encrypted or not!) The following post aims to provide a step by step procedure to recover data from an etcd snapshot (even if it’s encrypted) from a Kubernetes cluster.
-The post targets the following use cases:
-We have a non-encrypted etcd snapshot file, and we want to get some data from it. We have an encrypted etcd snapshot file, and we want to get some data from it.</description>
+      <description>&lt;h1 id=&#34;get-data-from-an-etcd-backup-encrypted-or-not&#34;&gt;Get data from an etcd backup (encrypted or not!)&lt;/h1&gt;
+&lt;p&gt;The following post aims to provide a step by step procedure to recover data from an etcd snapshot (even if it’s encrypted) from a Kubernetes cluster.&lt;/p&gt;
+&lt;p&gt;The post targets the following use cases:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;We have a non-encrypted etcd snapshot file, and we want to get some data from it.&lt;/li&gt;
+&lt;li&gt;We have an encrypted etcd snapshot file, and we want to get some data from it.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For non-encrypted etcd snapshots, you can read the data with the etcdctl tool directly. In this post, since I have to cover encrypted as well, I&amp;rsquo;ll describe how to consume the restored data from a temporary local kube-apiserver.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>A Beginner’s Guide to RAG: What I Wish Someone Told Me</title>
       <link>https://linuxera.org/rag-beginners-guide/</link>
       <pubDate>Tue, 27 May 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/rag-beginners-guide/</guid>
-      <description>A Beginner’s Guide to RAG: What I Wish Someone Told Me In this post, I&amp;rsquo;ll try to provide a beginners guide to RAG, focusing on what I wish someone told me before trying to build a RAG solution.
-Attention
-While I’ve made a strong effort to ensure the information is accurate, I’m far from an expert on the topic, and some details may not be entirely correct. If you notice anything missing or inaccurate, please leave a comment!</description>
+      <description>&lt;h1 id=&#34;a-beginners-guide-to-rag-what-i-wish-someone-told-me&#34;&gt;A Beginner’s Guide to RAG: What I Wish Someone Told Me&lt;/h1&gt;
+&lt;p&gt;In this post, I&amp;rsquo;ll try to provide a beginners guide to RAG, focusing on what I wish someone told me before trying to build a RAG solution.&lt;/p&gt;
+&lt;div class=&#34;admonition attention&#34;&gt;
+    &lt;p class=&#34;admonition-title&#34;&gt;Attention&lt;/p&gt;
+    &lt;p class=&#34;admonition&#34;&gt;While I’ve made a strong effort to ensure the information is accurate, I’m far from an expert on the topic, and some details may not be entirely correct. If you notice anything missing or inaccurate, please leave a comment!&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Introduction to LLM concepts</title>
       <link>https://linuxera.org/introduction-to-llm-concepts/</link>
       <pubDate>Tue, 25 Mar 2025 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/introduction-to-llm-concepts/</guid>
-      <description>Introduction to LLM concepts In this post, I&amp;rsquo;ll cover various LLM concepts and the questions I asked myself while diving deep into the world of LLMs. I expect this post to be updated as I continue to learn more things around LLMs.
-Attention
-This post is the result of my exploratory work on LLMs. While I’ve made a strong effort to ensure the information is accurate, I’m far from an expert on the topic, and some details may not be entirely correct.</description>
+      <description>&lt;h1 id=&#34;introduction-to-llm-concepts&#34;&gt;Introduction to LLM concepts&lt;/h1&gt;
+&lt;p&gt;In this post, I&amp;rsquo;ll cover various LLM concepts and the questions I asked myself while diving deep into the world of LLMs. I expect this post to be updated as I continue to learn more things around LLMs.&lt;/p&gt;
+&lt;div class=&#34;admonition attention&#34;&gt;
+    &lt;p class=&#34;admonition-title&#34;&gt;Attention&lt;/p&gt;
+    &lt;p class=&#34;admonition&#34;&gt;This post is the result of my exploratory work on LLMs. While I’ve made a strong effort to ensure the information is accurate, I’m far from an expert on the topic, and some details may not be entirely correct. If you notice anything missing or inaccurate, please leave a comment!&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Signing and verifying container images with Cosign and your own PKI</title>
       <link>https://linuxera.org/signing-verifying-container-images-with-cosign-own-pki/</link>
       <pubDate>Thu, 25 Apr 2024 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/signing-verifying-container-images-with-cosign-own-pki/</guid>
-      <description>Signing and verifying container images with Cosign and your own PKI In this post we are going to cover how we can sign and verify container images using Cosign and our own PKI. You can learn more on how to build your own PKI with CFSSL in this post.
-Warning
-The way we will see to sign and verify images in this post is not the recommended approach. For production usage, you should use ephemeral keys as described here.</description>
+      <description>&lt;h1 id=&#34;signing-and-verifying-container-images-with-cosign-and-your-own-pki&#34;&gt;Signing and verifying container images with Cosign and your own PKI&lt;/h1&gt;
+&lt;p&gt;In this post we are going to cover how we can sign and verify container images using &lt;a href=&#34;https://github.com/sigstore/cosign&#34;&gt;Cosign&lt;/a&gt; and our own PKI. You can learn more on how to build your own PKI with CFSSL in &lt;a href=&#34;https://linuxera.org/pki-with-cfssl/&#34;&gt;this post&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&#34;admonition warning&#34;&gt;
+    &lt;p class=&#34;admonition-title&#34;&gt;Warning&lt;/p&gt;
+    &lt;p class=&#34;admonition&#34;&gt;The way we will see to sign and verify images in this post is not the recommended approach. For production usage, you should use ephemeral keys as described &lt;a href=&#34;https://docs.sigstore.dev/signing/signing_with_containers/&#34;&gt;here&lt;/a&gt;. Validity of certificates generated during this post it&amp;rsquo;s not recommended for production usage, make sure in production you have proper validity periods and rotation capabilities in place.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Extending a VXLAN across nodes with Wireguard</title>
       <link>https://linuxera.org/extending-vxlan-across-nodes-with-wireguard/</link>
       <pubDate>Tue, 19 Dec 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/extending-vxlan-across-nodes-with-wireguard/</guid>
-      <description>Extending a VXLAN across nodes with Wireguard Virtualizing environments is something I do quite often in a day-to-day basis, usually, these environments live in different hypervisors. While I don&amp;rsquo;t always need these environments to talk to each other, from time to time I need some sort of connectivity between them.
-Getting the VMs running on these hypervisors routed through the lab network is one of the solutions I have been using for a long time.</description>
+      <description>&lt;h1 id=&#34;extending-a-vxlan-across-nodes-with-wireguard&#34;&gt;Extending a VXLAN across nodes with Wireguard&lt;/h1&gt;
+&lt;p&gt;Virtualizing environments is something I do quite often in a day-to-day basis, usually, these environments live in different hypervisors. While I don&amp;rsquo;t always need these environments to talk to each other, from time to time I need some sort of connectivity between them.&lt;/p&gt;
+&lt;p&gt;Getting the VMs running on these hypervisors routed through the lab network is one of the solutions I have been using for a long time. For the last few days, I have been thinking of extending a virtual network across two hypervisors. This allows me to run VMs on this virtual network and get VMs to talk to each other without having to run these VMs in a routed lab network.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Running Vault on Podman</title>
       <link>https://linuxera.org/running-vault-on-podman/</link>
       <pubDate>Tue, 14 Nov 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/running-vault-on-podman/</guid>
-      <description>Running Vault on Podman This post explains how to run a local Vault deployment on Podman for non-production use. I typically use this setup for my lab environments.
-This setup was tested with:
-Podman v4.7.2 Podman-compose v1.0.6 Vault v1.15.2 Prerequisites Install the vault client, you can get the binary for your O.S here.
-curl -L https://releases.hashicorp.com/vault/1.15.2/vault_1.15.2_linux_amd64.zip -o /tmp/vault.zip unzip /tmp/vault.zip &amp;amp;&amp;amp; rm -f /tmp/vault.zip sudo mv vault /usr/local/bin/ Generate folder for storing the configs, data, and certs.</description>
+      <description>&lt;h1 id=&#34;running-vault-on-podman&#34;&gt;Running Vault on Podman&lt;/h1&gt;
+&lt;p&gt;This post explains how to run a local Vault deployment on Podman for &lt;strong&gt;non-production&lt;/strong&gt; use. I typically use this setup for my lab environments.&lt;/p&gt;
+&lt;p&gt;This setup was tested with:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Podman v4.7.2&lt;/li&gt;
+&lt;li&gt;Podman-compose v1.0.6&lt;/li&gt;
+&lt;li&gt;Vault v1.15.2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Install the vault client, you can get the binary for your O.S &lt;a href=&#34;https://developer.hashicorp.com/vault/install&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl -L https://releases.hashicorp.com/vault/1.15.2/vault_1.15.2_linux_amd64.zip -o /tmp/vault.zip
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;unzip /tmp/vault.zip &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; rm -f /tmp/vault.zip
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mv vault /usr/local/bin/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Generate folder for storing the configs, data, and certs.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Integrating cert-manager with CFSSL Multirootca</title>
       <link>https://linuxera.org/integrating-cert-manager-with-cfssl-multirootca/</link>
       <pubDate>Thu, 10 Aug 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/integrating-cert-manager-with-cfssl-multirootca/</guid>
-      <description>Integrating cert-manager with CFSSL Multirootca In a previous post we saw how we could run our own PKI using the CFSSL tooling. This post assumes you have read the previous one.
-The starting point is an empty Kubernetes cluster, we want to deploy cert-manager on it and on top of that we want to get it configured to issue certificates with our own PKI infrastructure running Multirootca.
-I’ll be using a Kubernetes v1.</description>
+      <description>&lt;h1 id=&#34;integrating-cert-manager-with-cfssl-multirootca&#34;&gt;Integrating cert-manager with CFSSL Multirootca&lt;/h1&gt;
+&lt;p&gt;In a &lt;a href=&#34;https://linuxera.org/pki-with-cfssl/&#34;&gt;previous post&lt;/a&gt; we saw how we could run our own PKI using the &lt;a href=&#34;https://github.com/cloudflare/cfssl&#34;&gt;CFSSL&lt;/a&gt; tooling. This post assumes you have read the previous one.&lt;/p&gt;
+&lt;p&gt;The starting point is an empty Kubernetes cluster, we want to deploy cert-manager on it and on top of that we want to get it configured to issue certificates with our own PKI infrastructure running Multirootca.&lt;/p&gt;
+&lt;p&gt;I’ll be using a Kubernetes v1.27 (latest at the time of this writing). The tool used to create the cluster is &lt;a href=&#34;https://kcli.readthedocs.io/&#34;&gt;kcli&lt;/a&gt; and the command used was:&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>PKI with CFSSL</title>
       <link>https://linuxera.org/pki-with-cfssl/</link>
       <pubDate>Wed, 09 Aug 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/pki-with-cfssl/</guid>
-      <description>PKI with CFSSL In this post we will learn how to deploy our own Public Key Infrastructure (PKI) by using the CFSSL tooling. This may be useful if you want to run your own Certificate Authority (CA) in order to issue certificates for your systems and/or users.
-Introduction to CFSSL CFSSL is a tool set created by Cloudflare and released as Open Source software. Before you continue reading this post I&amp;rsquo;d suggest reading this introductory post to PKI and CFSSL by Cloudflare.</description>
+      <description>&lt;h1 id=&#34;pki-with-cfssl&#34;&gt;PKI with CFSSL&lt;/h1&gt;
+&lt;p&gt;In this post we will learn how to deploy our own Public Key Infrastructure (PKI) by using the &lt;a href=&#34;https://github.com/cloudflare/cfssl&#34;&gt;CFSSL&lt;/a&gt; tooling. This may be useful if you want to run your own Certificate Authority (CA) in order to issue certificates for your systems and/or users.&lt;/p&gt;
+&lt;h2 id=&#34;introduction-to-cfssl&#34;&gt;Introduction to CFSSL&lt;/h2&gt;
+&lt;p&gt;CFSSL is a tool set created by &lt;a href=&#34;https://www.cloudflare.com/&#34;&gt;Cloudflare&lt;/a&gt; and released as Open Source software. Before you continue reading this post I&amp;rsquo;d suggest reading this &lt;a href=&#34;https://blog.cloudflare.com/how-to-build-your-own-public-key-infrastructure/&#34;&gt;introductory post to PKI and CFSSL by Cloudflare&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Gateway API for Kubernetes</title>
       <link>https://linuxera.org/gateway-api-kubernetes/</link>
       <pubDate>Mon, 24 Apr 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/gateway-api-kubernetes/</guid>
-      <description>Gateway API for Kubernetes In this post we will go over a new project by the SIG-NETWORK that aims to evolve Kubernetes service networking.
-I&amp;rsquo;ll be using a Kubernetes v1.26 (latest at the time of this writing). The tool used to create the cluster is kcli and the command used was:
-kcli create kube generic -P ctlplanes=1 -P workers=1 -P ctlplane_memory=4096 -P numcpus=8 -P worker_memory=8192 -P image=fedora37 -P sdn=calico -P version=1.</description>
+      <description>&lt;h1 id=&#34;gateway-api-for-kubernetes&#34;&gt;Gateway API for Kubernetes&lt;/h1&gt;
+&lt;p&gt;In this post we will go over a new project by the &lt;a href=&#34;https://github.com/kubernetes/community/tree/master/sig-network&#34;&gt;SIG-NETWORK&lt;/a&gt; that aims to evolve Kubernetes service networking.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ll be using a Kubernetes v1.26 (latest at the time of this writing). The tool used to create the cluster is &lt;a href=&#34;https://kcli.readthedocs.io/&#34;&gt;kcli&lt;/a&gt; and the command used was:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kcli create kube generic -P &lt;span class=&#34;nv&#34;&gt;ctlplanes&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;workers&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;ctlplane_memory&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;4096&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;numcpus&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;8&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;worker_memory&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;8192&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;fedora37 -P &lt;span class=&#34;nv&#34;&gt;sdn&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;calico -P &lt;span class=&#34;nv&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;1.26 -P &lt;span class=&#34;nv&#34;&gt;ingress&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;false&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;metallb&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;domain&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;linuxera.org gateway-api-cluster
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;introduction-to-kubernetes-gateway-api&#34;&gt;Introduction to Kubernetes Gateway API&lt;/h2&gt;
+&lt;p&gt;As we said in the previous section, Gateway API is a new project by the SIG-NETWORK. This project aims to become the preferred solution for managing external traffic into a Kubernetes cluster.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>CPU and Memory Management on Kubernetes with Cgroupsv2</title>
       <link>https://linuxera.org/cpu-memory-management-kubernetes-cgroupsv2/</link>
       <pubDate>Thu, 06 Apr 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/cpu-memory-management-kubernetes-cgroupsv2/</guid>
-      <description>CPU and Memory Management on Kubernetes with Cgroupsv2 In this post I&amp;rsquo;ll try to explain how CPU and Memory management works under the hood on Kubernetes. If you ever wondered what happens when you set requests and limits for your pods, keep reading!
-Attention
-This is the result of my exploratory work around cgroupsv2 and their application to Kubernetes. Even though I tried really hard to make sure the information in this post is accurate, I&amp;rsquo;m far from being an expert on the topic and some information may not be 100% accurate.</description>
+      <description>&lt;h1 id=&#34;cpu-and-memory-management-on-kubernetes-with-cgroupsv2&#34;&gt;CPU and Memory Management on Kubernetes with Cgroupsv2&lt;/h1&gt;
+&lt;p&gt;In this post I&amp;rsquo;ll try to explain how CPU and Memory management works under the hood on Kubernetes. If you ever wondered what happens when you set &lt;code&gt;requests&lt;/code&gt; and &lt;code&gt;limits&lt;/code&gt; for your pods, keep reading!&lt;/p&gt;
+&lt;div class=&#34;admonition attention&#34;&gt;
+    &lt;p class=&#34;admonition-title&#34;&gt;Attention&lt;/p&gt;
+    &lt;p class=&#34;admonition&#34;&gt;This is the result of my exploratory work around cgroupsv2 and their application to Kubernetes. Even though I tried really hard to make sure the information in this post is accurate, I&amp;rsquo;m far from being an expert on the topic and some information may not be 100% accurate. If you detect something that is missing / wrong, please comment on the post!&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Exposing multiple Kubernetes clusters with a single load balancer and a single public IP</title>
       <link>https://linuxera.org/exposing-multiple-kubernetes-clusters-single-lb-and-ip/</link>
       <pubDate>Tue, 21 Mar 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/exposing-multiple-kubernetes-clusters-single-lb-and-ip/</guid>
-      <description>Exposing multiple Kubernetes clusters with a single load balancer and a single public IP My colleague Alberto Losada and I have been working on a lab lately. The lab is composed of three OpenShift clusters on VMs, these VMs are deployed on an isolated libvirt network, which means that we cannot access them from outside the hypervisor.
-In order to solve this issue, we wanted to expose the three clusters using the public IP available in the hypervisor.</description>
+      <description>&lt;h1 id=&#34;exposing-multiple-kubernetes-clusters-with-a-single-load-balancer-and-a-single-public-ip&#34;&gt;Exposing multiple Kubernetes clusters with a single load balancer and a single public IP&lt;/h1&gt;
+&lt;p&gt;My colleague &lt;a href=&#34;https://twitter.com/_ZaNN_&#34;&gt;Alberto Losada&lt;/a&gt; and I have been working on a lab lately. The lab is composed of three &lt;a href=&#34;https://www.redhat.com/en/technologies/cloud-computing/openshift&#34;&gt;OpenShift&lt;/a&gt; clusters on VMs, these VMs are deployed on an isolated libvirt network, which means that we cannot access them from outside the hypervisor.&lt;/p&gt;
+&lt;p&gt;In order to solve this issue, we wanted to expose the three clusters using the public IP available in the hypervisor. This setup should be valid for any Kubernetes cluster.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Enhanced Version and Build Information for your Go programs with ldflags</title>
       <link>https://linuxera.org/enhanced-version-and-build-information-for-your-go-programs/</link>
       <pubDate>Thu, 19 Jan 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/enhanced-version-and-build-information-for-your-go-programs/</guid>
-      <description>Enhanced Version and Build Information for your Go programs with ldflags In the previous post we show how to create a simple CLI in Go with Cobra. I received a suggestion from one of my colleagues, Andrew Block. He suggested complementing that post with the use of ldflags at build time in order to define specific information to a specific build like build time, git commit, etc.
-Andy is also running a blog, go check it out!</description>
+      <description>&lt;h1 id=&#34;enhanced-version-and-build-information-for-your-go-programs-with-ldflags&#34;&gt;Enhanced Version and Build Information for your Go programs with ldflags&lt;/h1&gt;
+&lt;p&gt;In the &lt;a href=&#34;https://linuxera.org/writing-clis-go-cobra/&#34;&gt;previous post&lt;/a&gt; we show how to create a simple CLI in Go with Cobra. I received a suggestion from one of my colleagues, &lt;a href=&#34;https://twitter.com/sabre1041&#34;&gt;Andrew Block&lt;/a&gt;. He suggested complementing that post with the use of ldflags at build time in order to define specific information to a specific build like build time, git commit, etc.&lt;/p&gt;
+&lt;p&gt;Andy is also running a &lt;a href=&#34;https://blog.andyserver.com/&#34;&gt;blog&lt;/a&gt;, go check it out!&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Writing CLIs in Go with Cobra</title>
       <link>https://linuxera.org/writing-clis-go-cobra/</link>
       <pubDate>Sun, 15 Jan 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/writing-clis-go-cobra/</guid>
-      <description>Writing CLIs in Go using Cobra A few months ago, I was working with my colleague Alberto in a CLI. The language of choice was Go and I manage to learn a thing or two. In today&amp;rsquo;s post we will see a very basic skeleton for a CLI written in Go. This will certainly help me in the future as a template for the next CLI, and maybe it helps you too!</description>
+      <description>&lt;h1 id=&#34;writing-clis-in-go-using-cobra&#34;&gt;Writing CLIs in Go using Cobra&lt;/h1&gt;
+&lt;p&gt;A few months ago, I was working with my colleague &lt;a href=&#34;https://github.com/alknopfler&#34;&gt;Alberto&lt;/a&gt; in a CLI. The language of choice was Go and I manage to learn a thing or two. In today&amp;rsquo;s post we will see a very basic skeleton for a CLI written in Go. This will certainly help me in the future as a &lt;code&gt;template&lt;/code&gt; for the next CLI, and maybe it helps you too!&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>OpenShift 4 User Certificates</title>
       <link>https://linuxera.org/user-certificates-in-openshift4/</link>
       <pubDate>Fri, 13 Jan 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/user-certificates-in-openshift4/</guid>
-      <description>User Certificates in OpenShift 4 Attention
-The information described in this blog post may not be a supported configuration for OpenShift 4. Please, refer to the official docs for supported documentation.
-In this blog we will see how we can create OpenShift Users using client certificates and how to configure the API Server, so we can create client certificates using custom CAs. The information described in this blog was last tested with OpenShift 4.</description>
+      <description>&lt;h1 id=&#34;user-certificates-in-openshift-4&#34;&gt;User Certificates in OpenShift 4&lt;/h1&gt;
+&lt;div class=&#34;admonition attention&#34;&gt;
+    &lt;p class=&#34;admonition-title&#34;&gt;Attention&lt;/p&gt;
+    &lt;p class=&#34;admonition&#34;&gt;The information described in this blog post may not be a supported configuration for OpenShift 4. Please, refer to the &lt;a href=&#34;https://docs.openshift.com&#34;&gt;official docs&lt;/a&gt; for supported documentation.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In this blog we will see how we can create &lt;strong&gt;OpenShift Users&lt;/strong&gt; using client certificates and how to configure the API Server, so we can create client certificates using &lt;strong&gt;custom CAs&lt;/strong&gt;. The information described in this blog was last tested with OpenShift 4.11.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Working with Pod Security Standards</title>
       <link>https://linuxera.org/working-with-pod-security-standards/</link>
       <pubDate>Wed, 24 Aug 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/working-with-pod-security-standards/</guid>
-      <description>Working with Pod Security Standards In Kubernetes v1.25 Pod Security admission has moved to stable, replacing Pod Security Policy admission. This feature has been in beta and enabled by default since Kubernetes v1.23 in this post we are going to cover what&amp;rsquo;s new with Pod Security Admission (PSA) and how it affects the workloads being deployed in our clusters.
-Note
-For this post I&amp;rsquo;ll be running a Kubernetes v1.25 cluster. If you want to try this in your own environment you can use your favorite tool to get a K8s cluster up and running, I&amp;rsquo;ll be using kcli.</description>
+      <description>&lt;h1 id=&#34;working-with-pod-security-standards&#34;&gt;Working with Pod Security Standards&lt;/h1&gt;
+&lt;p&gt;In Kubernetes v1.25 Pod Security admission has moved to stable, replacing Pod Security Policy admission. This feature has been in beta and enabled by default since Kubernetes v1.23 in this post we are going to cover what&amp;rsquo;s new with Pod Security Admission (PSA) and how it affects the workloads being deployed in our clusters.&lt;/p&gt;
+&lt;div class=&#34;admonition tip&#34;&gt;
+    &lt;p class=&#34;admonition-title&#34;&gt;Note&lt;/p&gt;
+    &lt;p class=&#34;admonition&#34;&gt;For this post I&amp;rsquo;ll be running a Kubernetes v1.25 cluster. If you want to try this in your own environment you can use your favorite tool to get a K8s cluster up and running, I&amp;rsquo;ll be using &lt;a href=&#34;https://github.com/karmab/kcli&#34;&gt;kcli&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Capabilities and Seccomp Profiles on Kubernetes</title>
       <link>https://linuxera.org/capabilities-seccomp-kubernetes/</link>
       <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/capabilities-seccomp-kubernetes/</guid>
-      <description>Capabilities and Seccomp Profiles on Kubernetes In a previous post we talked about Linux Capabilities and Secure Compute Profiles, in this post we are going to see how we can leverage them on Kubernetes.
-We will need a Kubernetes cluster, I&amp;rsquo;m going to use kcli in order to get one. Below command will deploy a Kubernetes cluster on VMs:
-NOTE: You can create a parameters file with the cluster configuration as well.</description>
+      <description>&lt;h1 id=&#34;capabilities-and-seccomp-profiles-on-kubernetes&#34;&gt;Capabilities and Seccomp Profiles on Kubernetes&lt;/h1&gt;
+&lt;p&gt;In a &lt;a href=&#34;https://linuxera.org/container-security-capabilities-seccomp/&#34;&gt;previous post&lt;/a&gt; we talked about &lt;strong&gt;Linux Capabilities&lt;/strong&gt; and &lt;strong&gt;Secure Compute Profiles&lt;/strong&gt;, in this post we are going to see how we can leverage them on &lt;a href=&#34;https://kubernetes.io/&#34;&gt;Kubernetes&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;We will need a Kubernetes cluster, I&amp;rsquo;m going to use &lt;a href=&#34;https://github.com/karmab/kcli&#34;&gt;kcli&lt;/a&gt; in order to get one. Below command will deploy a Kubernetes cluster on VMs:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: You can create a &lt;a href=&#34;https://kcli.readthedocs.io/en/latest/index.html#create-a-parameters-yml&#34;&gt;parameters file&lt;/a&gt; with the cluster configuration as well.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Create a Kubernetes 1.20 cluster with 1 master and 1 worker using calico as SDN, nginx as ingress controller, metallb for loadbalancer services and CRI-O as container runtime&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;kcli create kube generic -P &lt;span class=&#34;nv&#34;&gt;ctlplanes&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;workers&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;  -P &lt;span class=&#34;nv&#34;&gt;ctlplane_memory&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;4096&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;numcpus&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;worker_memory&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;4096&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;sdn&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;calico -P &lt;span class=&#34;nv&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;1.20 -P &lt;span class=&#34;nv&#34;&gt;ingress&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;ingress_method&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;nginx -P &lt;span class=&#34;nv&#34;&gt;metallb&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt; -P &lt;span class=&#34;nv&#34;&gt;engine&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;crio -P &lt;span class=&#34;nv&#34;&gt;domain&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;linuxera.org caps-cluster
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;After a few moments we will get the &lt;code&gt;kubeconfig&lt;/code&gt; for accessing our cluster:&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Container Security - Linux Capabilities and Secure Compute Profiles</title>
       <link>https://linuxera.org/container-security-capabilities-seccomp/</link>
       <pubDate>Sat, 27 Mar 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/container-security-capabilities-seccomp/</guid>
-      <description>Container Security - Linux Capabilities and Secure Compute Profiles In this post we are going to see two security mechanisms used in Linux Containers in order to provide a security layer for our workloads.
-We will see how Linux Capabilities and Secure Compute Profiles can be used for limiting the attack surface for our containers.
-The first part of the blog post will be an introduction to Linux Capabilities and Secure Compute Profiles, second part will show how these technologies work through the use of demos.</description>
+      <description>&lt;h1 id=&#34;container-security---linux-capabilities-and-secure-compute-profiles&#34;&gt;Container Security - Linux Capabilities and Secure Compute Profiles&lt;/h1&gt;
+&lt;p&gt;In this post we are going to see two security mechanisms used in Linux Containers in order to provide a security layer for our workloads.&lt;/p&gt;
+&lt;p&gt;We will see how Linux Capabilities and Secure Compute Profiles can be used for limiting the attack surface for our containers.&lt;/p&gt;
+&lt;p&gt;The first part of the blog post will be an introduction to Linux Capabilities and Secure Compute Profiles, second part will show how these technologies work through the use of demos.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Containers under the Hood</title>
       <link>https://linuxera.org/containers-under-the-hood/</link>
       <pubDate>Thu, 25 Mar 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/containers-under-the-hood/</guid>
-      <description>Containers are Linux You probably already heard this expression, in today&amp;rsquo;s post we are going to desmitify container technologies by decomposing them part by part and describing which Linux technologies make containers possible.
-We can describe a container as an isolated process running on a host. In order to isolate the process the container runtimes leverage Linux kernel technologies such as: namespaces, chroots, cgroups, etc. plus security layers like SELinux.</description>
+      <description>&lt;h1 id=&#34;containers-are-linux&#34;&gt;Containers are Linux&lt;/h1&gt;
+&lt;p&gt;You probably already heard this expression, in today&amp;rsquo;s post we are going to desmitify container technologies by decomposing them part by part and describing which Linux technologies make containers possible.&lt;/p&gt;
+&lt;p&gt;We can describe a container as an isolated process running on a host. In order to isolate the process the container runtimes leverage Linux kernel technologies such as: namespaces, chroots, cgroups, etc. plus security layers like SELinux.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Integrating our Operators with OLM</title>
       <link>https://linuxera.org/integrating-operators-olm/</link>
       <pubDate>Wed, 16 Sep 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/integrating-operators-olm/</guid>
-      <description>Introduction This post is a continuation of our previous blog Writing Operators using the Operator Framework SDK.
-We will continue working on the operator created on the previous blog, if you want to be able to follow this blog, you will need to run the steps from the previous blog.
-Operator Lifecycle Manager The Operator Lifecycle Manager is an open source toolkit to manage Operators in an effective, automated and scalable way.</description>
+      <description>&lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;This post is a continuation of our previous blog &lt;a href=&#34;https://linuxera.org/writing-operators-using-operator-framework/&#34;&gt;Writing Operators using the Operator Framework SDK&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;We will continue working on the operator created on the previous blog, if you want to be able to follow this blog, you will need to run the steps from the previous blog.&lt;/p&gt;
+&lt;h1 id=&#34;operator-lifecycle-manager&#34;&gt;Operator Lifecycle Manager&lt;/h1&gt;
+&lt;p&gt;The &lt;a href=&#34;https://github.com/operator-framework/operator-lifecycle-manager&#34;&gt;Operator Lifecycle Manager&lt;/a&gt; is an open source toolkit to manage Operators in an effective, automated
+and scalable way. You can learn more &lt;a href=&#34;https://github.com/operator-framework/operator-lifecycle-manager#overview&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Enabling Prometheus Metrics on your Applications</title>
       <link>https://linuxera.org/prometheus-metrics-on-your-applications/</link>
       <pubDate>Sun, 11 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/prometheus-metrics-on-your-applications/</guid>
-      <description>Instrumenting your Applications We usually see systems being monitored by Ops teams, in fact, there are lots of valuable metrics that help Ops teams understand how the infrastructure they are managing is doing, but when it comes to applications monitoring, we don&amp;rsquo;t see those being monitored that carefully most of the time. Sometimes that ends up in application crashes that might be prevented with a proper monitoring strategy.
-In this blog post we are going to see how we can instrument our applications using Prometheus metrics libraries.</description>
+      <description>&lt;h1 id=&#34;instrumenting-your-applications&#34;&gt;Instrumenting your Applications&lt;/h1&gt;
+&lt;p&gt;We usually see systems being monitored by Ops teams, in fact, there are lots of valuable metrics that help Ops teams understand how the infrastructure they are managing is doing, but when it comes to applications monitoring, we don&amp;rsquo;t see those being monitored that carefully most of the time. Sometimes that ends up in application crashes that might be prevented with a proper monitoring strategy.&lt;/p&gt;
+&lt;p&gt;In this blog post we are going to see how we can instrument our applications using &lt;strong&gt;Prometheus metrics libraries&lt;/strong&gt;. Prometheus metrics libraries are widely adopted, the Prometheus metrics format has become an independent project, OpenMetrics. OpenMetrics is trying to take Prometheus Metrics Format to the next level making it an industry standard.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Using OpenShift OAuth Proxy to secure your Applications on OpenShift</title>
       <link>https://linuxera.org/oauth-proxy-secure-applications-openshift/</link>
       <pubDate>Tue, 30 Jul 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/oauth-proxy-secure-applications-openshift/</guid>
-      <description>What is OAuth Proxy A reverse proxy and static file server that provides authentication and authorization to an OpenShift OAuth server or Kubernetes master supporting the 1.6+ remote authorization endpoints to validate access to content. It is intended for use withing OpenShift clusters to make it easy to run both end-user and infrastructure services that do not provider their own authentication.
-[Source]
-Securing an Application with OAuth Proxy In this blog post we are going to deploy OAuth Proxy in front of a simple application.</description>
+      <description>&lt;h1 id=&#34;what-is-oauth-proxy&#34;&gt;What is OAuth Proxy&lt;/h1&gt;
+&lt;p&gt;A reverse proxy and static file server that provides authentication and authorization to an OpenShift OAuth server or Kubernetes master supporting the 1.6+ remote
+authorization endpoints to validate access to content. It is intended for use withing OpenShift clusters to make it easy to run both end-user and infrastructure
+services that do not provider their own authentication.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/openshift/oauth-proxy&#34;&gt;[Source]&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;securing-an-application-with-oauth-proxy&#34;&gt;Securing an Application with OAuth Proxy&lt;/h2&gt;
+&lt;p&gt;In this blog post we are going to deploy OAuth Proxy in front of a &lt;a href=&#34;https://github.com/mvazquezc/reverse-words&#34;&gt;simple application&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Writing Operators using the Operator Framework SDK</title>
       <link>https://linuxera.org/writing-operators-using-operator-framework/</link>
       <pubDate>Sat, 18 May 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/writing-operators-using-operator-framework/</guid>
-      <description>Operators, operators everywhere As you may have noticed, Kubernetes operators are becoming more an more popular those days. In this post we are going to explain the basics around Operators and we will develop a simple Operator using the Operator Framework SDK.
-What is an Operator An operator aims to automate actions usually performed manually while lessening the likelihood of error and simplifying complexity.
-We can think of an operator as a method of packaging, deploying and managing a Kubernetes enabled application.</description>
+      <description>&lt;h1 id=&#34;operators-operators-everywhere&#34;&gt;Operators, operators everywhere&lt;/h1&gt;
+&lt;p&gt;As you may have noticed, &lt;strong&gt;Kubernetes operators&lt;/strong&gt; are becoming more an more popular those days. In this post we are going to explain the basics around Operators and we will develop a simple Operator using the &lt;strong&gt;Operator Framework SDK&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;what-is-an-operator&#34;&gt;What is an Operator&lt;/h2&gt;
+&lt;p&gt;An operator aims to automate actions usually performed manually while lessening the likelihood of error and simplifying complexity.&lt;/p&gt;
+&lt;p&gt;We can think of an operator as a method of packaging, deploying and managing a Kubernetes enabled application. Kubernetes enabled applications are deployed on Kubernetes and managed using the Kubernetes APIs and tooling.&lt;/p&gt;</description>
     </item>
-    
-    
-    
   </channel>
 </rss>

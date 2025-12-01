@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>private ca on Linuxera</title>
+    <title>Private Ca on Linuxera</title>
     <link>https://linuxera.org/tags/private-ca/</link>
-    <description>Recent content in private ca on Linuxera</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Thu, 10 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/tags/private-ca/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in Private Ca on Linuxera</description>
+    <generator>Hugo -- 0.152.2</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 10 Aug 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://linuxera.org/tags/private-ca/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Integrating cert-manager with CFSSL Multirootca</title>
       <link>https://linuxera.org/integrating-cert-manager-with-cfssl-multirootca/</link>
       <pubDate>Thu, 10 Aug 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/integrating-cert-manager-with-cfssl-multirootca/</guid>
-      <description>Integrating cert-manager with CFSSL Multirootca In a previous post we saw how we could run our own PKI using the CFSSL tooling. This post assumes you have read the previous one.
-The starting point is an empty Kubernetes cluster, we want to deploy cert-manager on it and on top of that we want to get it configured to issue certificates with our own PKI infrastructure running Multirootca.
-I’ll be using a Kubernetes v1.</description>
+      <description>&lt;h1 id=&#34;integrating-cert-manager-with-cfssl-multirootca&#34;&gt;Integrating cert-manager with CFSSL Multirootca&lt;/h1&gt;
+&lt;p&gt;In a &lt;a href=&#34;https://linuxera.org/pki-with-cfssl/&#34;&gt;previous post&lt;/a&gt; we saw how we could run our own PKI using the &lt;a href=&#34;https://github.com/cloudflare/cfssl&#34;&gt;CFSSL&lt;/a&gt; tooling. This post assumes you have read the previous one.&lt;/p&gt;
+&lt;p&gt;The starting point is an empty Kubernetes cluster, we want to deploy cert-manager on it and on top of that we want to get it configured to issue certificates with our own PKI infrastructure running Multirootca.&lt;/p&gt;
+&lt;p&gt;I’ll be using a Kubernetes v1.27 (latest at the time of this writing). The tool used to create the cluster is &lt;a href=&#34;https://kcli.readthedocs.io/&#34;&gt;kcli&lt;/a&gt; and the command used was:&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>PKI with CFSSL</title>
       <link>https://linuxera.org/pki-with-cfssl/</link>
       <pubDate>Wed, 09 Aug 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://linuxera.org/pki-with-cfssl/</guid>
-      <description>PKI with CFSSL In this post we will learn how to deploy our own Public Key Infrastructure (PKI) by using the CFSSL tooling. This may be useful if you want to run your own Certificate Authority (CA) in order to issue certificates for your systems and/or users.
-Introduction to CFSSL CFSSL is a tool set created by Cloudflare and released as Open Source software. Before you continue reading this post I&amp;rsquo;d suggest reading this introductory post to PKI and CFSSL by Cloudflare.</description>
+      <description>&lt;h1 id=&#34;pki-with-cfssl&#34;&gt;PKI with CFSSL&lt;/h1&gt;
+&lt;p&gt;In this post we will learn how to deploy our own Public Key Infrastructure (PKI) by using the &lt;a href=&#34;https://github.com/cloudflare/cfssl&#34;&gt;CFSSL&lt;/a&gt; tooling. This may be useful if you want to run your own Certificate Authority (CA) in order to issue certificates for your systems and/or users.&lt;/p&gt;
+&lt;h2 id=&#34;introduction-to-cfssl&#34;&gt;Introduction to CFSSL&lt;/h2&gt;
+&lt;p&gt;CFSSL is a tool set created by &lt;a href=&#34;https://www.cloudflare.com/&#34;&gt;Cloudflare&lt;/a&gt; and released as Open Source software. Before you continue reading this post I&amp;rsquo;d suggest reading this &lt;a href=&#34;https://blog.cloudflare.com/how-to-build-your-own-public-key-infrastructure/&#34;&gt;introductory post to PKI and CFSSL by Cloudflare&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>
