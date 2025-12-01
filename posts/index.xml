@@ -6,7 +6,17 @@
     <description>Recent content in Posts on Linuxera</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 01 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://linuxera.org/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Spec-Driven Development with Spec Kit</title>
+      <link>https://linuxera.org/spec-driven-development-with-spec-kit/</link>
+      <pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://linuxera.org/spec-driven-development-with-spec-kit/</guid>
+      <description>Spec-Driven Development with Spec Kit In this post we are going to see what Spec-Driven development is and how GitHub&amp;rsquo;s Spec Kit makes it easy to get started.
+What is Spec-Driven Development (SDD) Executable Specifications: Reverses the traditional &amp;ldquo;code is king&amp;rdquo; model by treating natural language specifications as the primary source of truth that directly generates implementation, rather than just serving as passive documentation. Constitutional Governance: Enforces immutable project principles through a &amp;ldquo;Constitution&amp;rdquo; that establishes non-negotiable rules before any coding begins.</description>
+    </item>
+    
     <item>
       <title>Turning the Knobs of LLM Text Generation</title>
       <link>https://linuxera.org/turning-the-knobs-of-llm-text-generation/</link>

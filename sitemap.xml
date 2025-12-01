@@ -3,24 +3,36 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://linuxera.org/tags/ai/</loc>
-    <lastmod>2025-11-26T00:00:00+00:00</lastmod>
+    <lastmod>2025-12-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/artificial-intelligence/</loc>
-    <lastmod>2025-11-26T00:00:00+00:00</lastmod>
+    <lastmod>2025-12-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/</loc>
+    <lastmod>2025-12-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/posts/</loc>
+    <lastmod>2025-12-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/sdd/</loc>
+    <lastmod>2025-12-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/spec-kit/</loc>
+    <lastmod>2025-12-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/spec-driven-development-with-spec-kit/</loc>
+    <lastmod>2025-12-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/</loc>
+    <lastmod>2025-12-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://linuxera.org/tags/vibe-coding/</loc>
+    <lastmod>2025-12-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/context-engineering/</loc>
     <lastmod>2025-11-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://linuxera.org/</loc>
-    <lastmod>2025-11-26T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://linuxera.org/tags/llm/</loc>
-    <lastmod>2025-11-26T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://linuxera.org/posts/</loc>
-    <lastmod>2025-11-26T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://linuxera.org/tags/</loc>
     <lastmod>2025-11-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://linuxera.org/tags/temperature/</loc>
